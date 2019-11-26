@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <link rel="alternate" href="/atom.xml" title="码上有约" type="application/atom+xml">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    hostname: new URL('https://www.msyy233.com').hostname,
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.5.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: 'search.json',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="文件系统IO分为Direct IO和Buffer IO、其中BufferIO也叫Normal IO、除此之外还有一个MMAP内存映射技术、由于涉及很多Linux内核知识、所以这里只讲述关键的知识点、用于学习Java NIO的时候不会太过疑惑、其余详细的系统底层知识有机会额外花时间讲述、 一、缓存IO多数文件系统的默认IO操作都是缓存IO、在Linux的缓存IO机制中、操作系统会将IO的数据缓存在文">
+<meta name="keywords" content="直接IO,内存映射,MMAP,缓存IO,io,nio,Linux">
+<meta property="og:type" content="article">
+<meta property="og:title" content="缓存IO、直接IO与内存映射">
+<meta property="og:url" content="https:&#x2F;&#x2F;www.msyy233.com&#x2F;posts&#x2F;51696.html">
+<meta property="og:site_name" content="码上有约">
+<meta property="og:description" content="文件系统IO分为Direct IO和Buffer IO、其中BufferIO也叫Normal IO、除此之外还有一个MMAP内存映射技术、由于涉及很多Linux内核知识、所以这里只讲述关键的知识点、用于学习Java NIO的时候不会太过疑惑、其余详细的系统底层知识有机会额外花时间讲述、 一、缓存IO多数文件系统的默认IO操作都是缓存IO、在Linux的缓存IO机制中、操作系统会将IO的数据缓存在文">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http:&#x2F;&#x2F;assets.msyy233.com&#x2F;20180902&#x2F;15562879f.png!blog">
+<meta property="og:image" content="http:&#x2F;&#x2F;assets.msyy233.com&#x2F;20180904&#x2F;224713f87.png!blog">
+<meta property="og:image" content="http:&#x2F;&#x2F;assets.msyy233.com&#x2F;20180902&#x2F;155905e63.png!blog">
+<meta property="og:image" content="http:&#x2F;&#x2F;assets.msyy233.com&#x2F;20180904&#x2F;224339bed.png!blog">
+<meta property="og:image" content="http:&#x2F;&#x2F;assets.msyy233.com&#x2F;20180902&#x2F;155933022.png!blog">
+<meta property="og:image" content="http:&#x2F;&#x2F;assets.msyy233.com&#x2F;20180904&#x2F;22502433f.png!blog">
+<meta property="og:image" content="http:&#x2F;&#x2F;assets.msyy233.com&#x2F;20180904&#x2F;2300473bb.png!blog">
+<meta property="og:image" content="http:&#x2F;&#x2F;assets.msyy233.com&#x2F;20180904&#x2F;230120c43.png!blog">
+<meta property="og:updated_time" content="2019-03-13T14:02:37.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http:&#x2F;&#x2F;assets.msyy233.com&#x2F;20180902&#x2F;15562879f.png!blog">
+
+<link rel="canonical" href="https://www.msyy233.com/posts/51696.html">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>缓存IO、直接IO与内存映射 | 码上有约</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="stylesheet" href="/css/prism-duotone-light.css" type="text/css"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">码上有约</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">为一桩事业呕心沥血、为一种梦想至死不渝</p>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="搜索..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://www.msyy233.com/posts/51696.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="程小明">
+      <meta itemprop="description" content="唯有坚持不懈">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="码上有约">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          缓存IO、直接IO与内存映射
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-03-09 22:02:37" itemprop="dateCreated datePublished" datetime="2019-03-09T22:02:37+08:00">2019-03-09</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-03-13 22:02:37" itemprop="dateModified" datetime="2019-03-13T22:02:37+08:00">2019-03-13</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/io/" itemprop="url" rel="index">
+                    <span itemprop="name">io</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span id="/posts/51696.html" class="post-meta-item leancloud_visitors" data-flag-title="缓存IO、直接IO与内存映射" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>文件系统IO分为Direct IO和Buffer IO、其中BufferIO也叫Normal IO、除此之外还有一个MMAP内存映射技术、<strong>由于涉及很多Linux内核知识、所以这里只讲述关键的知识点、用于学习Java NIO的时候不会太过疑惑</strong>、其余详细的系统底层知识有机会额外花时间讲述、</p>
+<h1 id="一、缓存IO"><a href="#一、缓存IO" class="headerlink" title="一、缓存IO"></a>一、缓存IO</h1><p>多数文件系统的默认IO操作都是缓存IO、在Linux的缓存IO机制中、操作系统会将IO的数据缓存在文件系统的页缓存（page cache）中、也就是说、数据会先被拷贝到操作系统内核的缓冲区中、然后才会从操作系统内核的缓冲区拷贝到应用程序的地址空间、这里可以看看<a href="https://www.msyy233.com/posts/52540.html">IO的概念和5种IO模型</a>中的IO交互章节、下面是两张概念图、第二张更简洁便于理解、</p>
+<a id="more"></a>
+<p><img src="http://assets.msyy233.com/20180902/15562879f.png!blog" alt="缓存IO1"></p>
+<p><img src="http://assets.msyy233.com/20180904/224713f87.png!blog" alt="缓存IO2"></p>
+<p>缓存IO优点：</p>
+<ol>
+<li>在一定程度上分离了内核空间和用户空间、保护系统本身的运行安全</li>
+<li>减少读盘的次数、从而提高性能</li>
+</ol>
+<p>缓存IO缺点：</p>
+<ol>
+<li>应用程序地址空间（用户空间）和缓存（内核空间）之间进行多次数据拷贝操作、这些数据拷贝操作所带来的CPU以及内存开销是非常大的</li>
+</ol>
+<blockquote>
+<p><strong>自缓存应用（self-caching applications）</strong><br>但是对于某些特殊的应用程序来说、避开操作系统内核缓冲区而直接在应用程序地址空间和磁盘之间传输数据会比使用操作系统内核缓冲区获取更好的性能、自缓存应用程序就是其中的一种、自缓存应用程序会有它自己的数据缓存机制、比如它会将数据缓存在应用程序地址空间、这类应用程序完全不需要使用操作系统内核中的高速缓冲存储器、<strong>数据库管理系统是这类应用程序的一个代表、</strong><br>对于自缓存应用程序来说、缓存IO明显不是一个好的选择、由此引出下一章要介绍的Linux中的直接IO技术、Linux中的直接IO技术非常适用于自缓存这类应用程序、该技术省略掉缓存IO技术中操作系统内核缓冲区的使用、数据直接在应用程序地址空间和磁盘之间进行传输、从而使得自缓存应用程序可以省略掉复杂的系统级别的缓存结构、而执行程序自己定义的数据读写管理、从而降低系统级别的管理对应用程序访问数据的影响、</p>
+</blockquote>
+<h1 id="二、直接IO"><a href="#二、直接IO" class="headerlink" title="二、直接IO"></a>二、直接IO</h1><p>在这一章中简单介绍一下Linux中提供的直接IO机制、该机制为自缓存应用程序提供了很好的支持、因为上一章引用也说了自缓存应用、所以不再详细介绍、直接IO中数据均直接在用户地址空间（用户空间）和磁盘之间直接进行传输、完全不需要页缓存的支持、同样是两张概念图、</p>
+<p><img src="http://assets.msyy233.com/20180902/155905e63.png!blog" alt="直接IO1"></p>
+<p><img src="http://assets.msyy233.com/20180904/224339bed.png!blog" alt="直接IO2"></p>
+<p>直接IO优点：</p>
+<ol>
+<li>减少一次从内核缓冲区到用户程序缓存的数据复制、这种访问文件的方式通常是在对数据的缓存管理由应用程序实现的数据库管理系统中、应用程序明确地知道应该缓存哪些数据、应该失效哪些数据、操作系统只是简单地缓存最近一次从磁盘读取的数据、</li>
+</ol>
+<p>直接IO缺点:</p>
+<ol>
+<li>如果访问的数据不在应用程序缓存中、那么每次访问数据都会直接从磁盘加载、这种直接加载会非常缓慢</li>
+</ol>
+<h1 id="三、内存映射"><a href="#三、内存映射" class="headerlink" title="三、内存映射"></a>三、内存映射</h1><p>如果说直接IO和缓存IO是相对的、而内存映射是另外一个概念、这里先给出<a href="http://man7.org/linux/man-pages/man2/mmap.2.html" target="_blank" rel="noopener">nmap官方文档</a>、反正我是看不懂、不过这章我会详细配图讲解、因为IO系列博客主要是为了学习Java NIO、而Java NIO中的直接IO使用的其实是内存映射技术、这里很多内容来自书籍《深入分析Java Web技术内幕》以及参考资料、  </p>
+<p><img src="http://assets.msyy233.com/20180902/155933022.png!blog" alt="内存映射1"></p>
+<p><img src="http://assets.msyy233.com/20180904/22502433f.png!blog" alt="内存映射2"></p>
+<blockquote>
+<p>内存映射方式是指操作系统将内存中的某一块区域与磁盘中的文件关联起来、当要访问内存中一段数据时、转换为访问文件的某一段数据、这种方式的目的同样是减少数据从内核空间缓存到用户空间缓存的数据复制操作、因为这两个空间的数据是共享的、</p>
+</blockquote>
+<p><strong><em>Java NIO Buffer中的非直接缓冲区指的就是缓存IO、而直接缓冲区并不是Linux概念上面的直接IO、而是内存映射、请看下面的对比图、</em></strong></p>
+<p><img src="http://assets.msyy233.com/20180904/2300473bb.png!blog" alt="非直接缓冲区"><br><img src="http://assets.msyy233.com/20180904/230120c43.png!blog" alt="直接缓冲区">  </p>
+<p>Java NIO中建立直接缓冲区、其实是在JVM内存外开辟内存、在每次调用基础操作系统的一个本机IO之前或者之后、虚拟机都会避免将缓冲区的内容复制到中间缓冲区（或者从中间缓冲区复制内容）、缓冲区的内容驻留在物理内存内、会少一次复制过程、如果需要循环使用缓冲区、用直接缓冲区可以很大地提高性能、虽然直接缓冲区使JVM可以进行高效的IO操作、但它使用的内存是操作系统分配的、绕过了JVM堆栈、<strong>nmap的建立和销毁比堆栈上的缓冲区要更大的开销、</strong>  </p>
+<p>这里既然说下重点、博主的知识并没有这么深度、但是看过一些文章、以下内容来自其中<a href="https://mp.weixin.qq.com/s/aQtaDdnGxoGLvmXf7iuhLQ" target="_blank" rel="noopener">一篇</a></p>
+<ol>
+<li>nmap在Java中一次只能映射1.5~2G的文件内存、如果是更大的文件、要么需要对文件做物理拆分、切分成多文件、要么需要对文件映射做逻辑拆分、大文件分段映射、RocketMQ也使用了nmap、但是它通过限制了单文件大小来避免这个问题。</li>
+<li>nmap之所以快、是因为借助了内存来加速、mappedByteBuffer的put行为实际是对内存进行的操作、实际的刷盘行为依赖于操作系统的定时刷盘或者手动调用mappedByteBuffer.force()接口来刷盘、否则将会导致机器卡死（实测后的结论）、如果内存优先、那么使用nmap存在较难的控制问题、这也是为什么RocketMQ默认配置就是8G内存、另外RocketMQ实现中也存在定时force线程</li>
+</ol>
+<p><strong>nmap在内存较为富足并且数据量小的场景下存在优势（大多数文章的结论认为nmap适合大文件的读写、可能不是很严谨）</strong></p>
+<h1 id="四、总结"><a href="#四、总结" class="headerlink" title="四、总结"></a>四、总结</h1><p>没啥好总结的、因为这篇就是网上总结的、</p>
+<p><strong>参考资料：</strong><br><a href="https://www.ibm.com/developerworks/cn/linux/l-cn-directio/" target="_blank" rel="noopener">Linux中直接I/O机制的介绍</a><br><a href="https://www.cnblogs.com/wuchanming/p/4360277.html" target="_blank" rel="noopener">Linux用户空间与内核空间（理解高端内存）</a><br><a href="https://www.cnblogs.com/stevenczp/p/7496089.html" target="_blank" rel="noopener">缓冲IO/直接IO/内存映射</a>  </p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E7%9B%B4%E6%8E%A5IO/" rel="tag"># 直接IO</a>
+              <a href="/tags/%E5%86%85%E5%AD%98%E6%98%A0%E5%B0%84/" rel="tag"># 内存映射</a>
+              <a href="/tags/MMAP/" rel="tag"># MMAP</a>
+              <a href="/tags/%E7%BC%93%E5%AD%98IO/" rel="tag"># 缓存IO</a>
+              <a href="/tags/io/" rel="tag"># io</a>
+              <a href="/tags/nio/" rel="tag"># nio</a>
+              <a href="/tags/Linux/" rel="tag"># Linux</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/posts/7105.html" rel="prev" title="常见开源协议简介">
+      <i class="fa fa-chevron-left"></i> 常见开源协议简介
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/posts/25037.html" rel="next" title="常见APM技术选型">
+      常见APM技术选型 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    
+  <div class="comments" id="comments">
+    <div id="lv-container" data-id="city" data-uid="MTAyMC8zNjMxOC8xMjg1Mw=="></div>
+  </div>
+  
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#一、缓存IO"><span class="nav-number">1.</span> <span class="nav-text">一、缓存IO</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#二、直接IO"><span class="nav-number">2.</span> <span class="nav-text">二、直接IO</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#三、内存映射"><span class="nav-number">3.</span> <span class="nav-text">三、内存映射</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#四、总结"><span class="nav-number">4.</span> <span class="nav-text">四、总结</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">程小明</p>
+  <div class="site-description" itemprop="description">唯有坚持不懈</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">15</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">45</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="feed-link motion-element">
+    <a href="/atom.xml" rel="alternate">
+      <i class="fa fa-rss"></i>RSS
+    </a>
+  </div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/chenghm123" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;chenghm123" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/1963116645" title="新浪微博 → https:&#x2F;&#x2F;weibo.com&#x2F;1963116645" rel="noopener" target="_blank"><i class="fa fa-fw fa-weibo"></i>新浪微博</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/mailto:chenghm123@qq.com" title="邮件 → mailto:chenghm123@qq.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>邮件</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.zhihu.com/people/chenghm123" title="知乎 → https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;chenghm123" rel="noopener" target="_blank"><i class="fa fa-fw fa-question-circle-o"></i>知乎</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">程小明</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.0.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.5.0
+  </div>
+
+        
+
+
+
+
+
+
+  <script>
+  function leancloudSelector(url) {
+    return document.getElementById(url).querySelector('.leancloud-visitors-count');
+  }
+  if (CONFIG.page.isPost) {
+    function addCount(Counter) {
+      var visitors = document.querySelector('.leancloud_visitors');
+      var url = visitors.getAttribute('id').trim();
+      var title = visitors.getAttribute('data-flag-title').trim();
+
+      Counter('get', `/classes/Counter?where=${JSON.stringify({ url })}`)
+        .then(response => response.json())
+        .then(({ results }) => {
+          if (results.length > 0) {
+            var counter = results[0];
+            Counter('put', '/classes/Counter/' + counter.objectId, { time: { '__op': 'Increment', 'amount': 1 } })
+              .then(response => response.json())
+              .then(() => {
+                leancloudSelector(url).innerText = counter.time + 1;
+              })
+              .catch(error => {
+                console.log('Failed to save visitor count', error);
+              })
+          } else {
+              Counter('post', '/classes/Counter', { title: title, url: url, time: 1 })
+                .then(response => response.json())
+                .then(() => {
+                  leancloudSelector(url).innerText = 1;
+                })
+                .catch(error => {
+                  console.log('Failed to create', error);
+                });
+          }
+        })
+        .catch(error => {
+          console.log('LeanCloud Counter Error', error);
+        });
+    }
+  } else {
+    function showTime(Counter) {
+      var visitors = document.querySelectorAll('.leancloud_visitors');
+      var entries = [...visitors].map(element => {
+        return element.getAttribute('id').trim();
+      });
+
+      Counter('get', `/classes/Counter?where=${JSON.stringify({ url: { '$in': entries } })}`)
+        .then(response => response.json())
+        .then(({ results }) => {
+          if (results.length === 0) {
+            document.querySelectorAll('.leancloud_visitors .leancloud-visitors-count').forEach(element => {
+              element.innerText = 0;
+            });
+            return;
+          }
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.url;
+            var time = item.time;
+            leancloudSelector(url).innerText = time;
+          }
+          for (var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = leancloudSelector(url);
+            if (element.innerText == '') {
+              element.innerText = 0;
+            }
+          }
+        })
+        .catch(error => {
+          console.log('LeanCloud Counter Error', error);
+        });
+    }
+  }
+
+  fetch('https://app-router.leancloud.cn/2/route?appId=XReLv1GKgcKWqfWdIDOlBEfi-gzGzoHsz')
+    .then(response => response.json())
+    .then(({ api_server }) => {
+      var Counter = (method, url, data) => {
+        return fetch(`https://${api_server}/1.1${url}`, {
+          method: method,
+          headers: {
+            'X-LC-Id': 'XReLv1GKgcKWqfWdIDOlBEfi-gzGzoHsz',
+            'X-LC-Key': 'd7Y6fcYWUyXTumQnGMP82SnD',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data)
+        });
+      };
+      if (CONFIG.page.isPost) {
+        if (CONFIG.hostname !== location.hostname) return;
+        addCount(Counter);
+      } else if (document.querySelectorAll('.post-title-link').length >= 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/pisces.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+  <script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script>
+  window.livereOptions = {
+    refer: location.pathname.replace(CONFIG.root, '').replace('index.html', '')
+  };
+  (function(d, s) {
+    var j, e = d.getElementsByTagName(s)[0];
+    if (typeof LivereTower === 'function') { return; }
+    j = d.createElement(s);
+    j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+    j.async = true;
+    e.parentNode.insertBefore(j, e);
+  })(document, 'script');
+</script>
+
+</body>
+</html>

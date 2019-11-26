@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <link rel="alternate" href="/atom.xml" title="码上有约" type="application/atom+xml">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    hostname: new URL('https://www.msyy233.com').hostname,
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.5.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: 'search.json',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="Spring有两个自带接口、BeanFactory和FactoryBean、这两个接口虽然名字差不多、但是实际上确实完全不一样的两种东西  一、BeanFactoryBeanFactory定义了IOC容器的最基本形式、并提供了IOC容器应遵守的的最基本的接口、  也就是Spring IOC所遵守的最底层和最基本的编程规范、  在Spring代码中、BeanFactory只是个接口、并不是 IOC">
+<meta name="keywords" content="Spring,BeanFactory,FactoryBean">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Spring的BeanFactory和FactoryBean">
+<meta property="og:url" content="https:&#x2F;&#x2F;www.msyy233.com&#x2F;posts&#x2F;17047.html">
+<meta property="og:site_name" content="码上有约">
+<meta property="og:description" content="Spring有两个自带接口、BeanFactory和FactoryBean、这两个接口虽然名字差不多、但是实际上确实完全不一样的两种东西  一、BeanFactoryBeanFactory定义了IOC容器的最基本形式、并提供了IOC容器应遵守的的最基本的接口、  也就是Spring IOC所遵守的最底层和最基本的编程规范、  在Spring代码中、BeanFactory只是个接口、并不是 IOC">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http:&#x2F;&#x2F;assets.msyy233.com&#x2F;20180623&#x2F;12423018b.png!blog">
+<meta property="og:image" content="http:&#x2F;&#x2F;assets.msyy233.com&#x2F;20180623&#x2F;124259128.png!blog">
+<meta property="og:image" content="http:&#x2F;&#x2F;assets.msyy233.com&#x2F;20180623&#x2F;1243281a2.png!blog">
+<meta property="og:image" content="http:&#x2F;&#x2F;assets.msyy233.com&#x2F;20180623&#x2F;124505511.png!blog">
+<meta property="og:updated_time" content="2018-06-24T04:30:37.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http:&#x2F;&#x2F;assets.msyy233.com&#x2F;20180623&#x2F;12423018b.png!blog">
+
+<link rel="canonical" href="https://www.msyy233.com/posts/17047.html">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>Spring的BeanFactory和FactoryBean | 码上有约</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="stylesheet" href="/css/prism-duotone-light.css" type="text/css"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">码上有约</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">为一桩事业呕心沥血、为一种梦想至死不渝</p>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="搜索..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://www.msyy233.com/posts/17047.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="程小明">
+      <meta itemprop="description" content="唯有坚持不懈">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="码上有约">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Spring的BeanFactory和FactoryBean
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2018-06-23 12:30:37" itemprop="dateCreated datePublished" datetime="2018-06-23T12:30:37+08:00">2018-06-23</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2018-06-24 12:30:37" itemprop="dateModified" datetime="2018-06-24T12:30:37+08:00">2018-06-24</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/spring/" itemprop="url" rel="index">
+                    <span itemprop="name">spring</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span id="/posts/17047.html" class="post-meta-item leancloud_visitors" data-flag-title="Spring的BeanFactory和FactoryBean" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>﻿<strong>Spring有两个自带接口、BeanFactory和FactoryBean、这两个接口虽然名字差不多、但是实际上确实完全不一样的两种东西</strong></p>
+<hr>
+<h2 id="一、BeanFactory"><a href="#一、BeanFactory" class="headerlink" title="一、BeanFactory"></a>一、BeanFactory</h2><p>BeanFactory定义了IOC容器的最基本形式、并提供了IOC容器应遵守的的最基本的接口、  也就是Spring IOC所遵守的最底层和最基本的编程规范、  在Spring代码中、BeanFactory只是个接口、并不是 IOC 容器的具体实现</p>
+<p>但是Spring容器给出了很多种实现、如DefaultListableBeanFactory、XmlBeanFactory、ApplicationContext等、都是附加了某种功能的实现、具体我们可以在Eclipse中打开类结构</p>
+<a id="more"></a>
+
+<p><img src="http://assets.msyy233.com/20180623/12423018b.png!blog" alt="BeanFactory类结构图"></p>
+<p><img src="http://assets.msyy233.com/20180623/124259128.png!blog" alt="BeanFactory类体系图"></p>
+<pre class=" language-java"><code class="language-java"><span class="token keyword">package</span> org<span class="token punctuation">.</span>springframework<span class="token punctuation">.</span>beans<span class="token punctuation">.</span>factory<span class="token punctuation">;</span>
+
+<span class="token keyword">import</span> org<span class="token punctuation">.</span>springframework<span class="token punctuation">.</span>beans<span class="token punctuation">.</span>BeansException<span class="token punctuation">;</span>
+
+<span class="token keyword">public</span> <span class="token keyword">interface</span> <span class="token class-name">BeanFactory</span> <span class="token punctuation">{</span>
+    String FACTORY_BEAN_PREFIX <span class="token operator">=</span> <span class="token string">"&amp;"</span><span class="token punctuation">;</span>
+    Object <span class="token function">getBean</span><span class="token punctuation">(</span>String name<span class="token punctuation">)</span> <span class="token keyword">throws</span> BeansException<span class="token punctuation">;</span>
+    <span class="token operator">&lt;</span>T<span class="token operator">></span> T <span class="token function">getBean</span><span class="token punctuation">(</span>String name<span class="token punctuation">,</span> Class<span class="token operator">&lt;</span>T<span class="token operator">></span> requiredType<span class="token punctuation">)</span> <span class="token keyword">throws</span> BeansException<span class="token punctuation">;</span>
+    <span class="token operator">&lt;</span>T<span class="token operator">></span> T <span class="token function">getBean</span><span class="token punctuation">(</span>Class<span class="token operator">&lt;</span>T<span class="token operator">></span> requiredType<span class="token punctuation">)</span> <span class="token keyword">throws</span> BeansException<span class="token punctuation">;</span>
+    Object <span class="token function">getBean</span><span class="token punctuation">(</span>String name<span class="token punctuation">,</span> Object<span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span> args<span class="token punctuation">)</span> <span class="token keyword">throws</span> BeansException<span class="token punctuation">;</span>
+    <span class="token operator">&lt;</span>T<span class="token operator">></span> T <span class="token function">getBean</span><span class="token punctuation">(</span>Class<span class="token operator">&lt;</span>T<span class="token operator">></span> requiredType<span class="token punctuation">,</span> Object<span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span> args<span class="token punctuation">)</span> <span class="token keyword">throws</span> BeansException<span class="token punctuation">;</span>
+    <span class="token keyword">boolean</span> <span class="token function">containsBean</span><span class="token punctuation">(</span>String name<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">boolean</span> <span class="token function">isSingleton</span><span class="token punctuation">(</span>String name<span class="token punctuation">)</span> <span class="token keyword">throws</span> NoSuchBeanDefinitionException<span class="token punctuation">;</span>
+    <span class="token keyword">boolean</span> <span class="token function">isPrototype</span><span class="token punctuation">(</span>String name<span class="token punctuation">)</span> <span class="token keyword">throws</span> NoSuchBeanDefinitionException<span class="token punctuation">;</span>
+    <span class="token keyword">boolean</span> <span class="token function">isTypeMatch</span><span class="token punctuation">(</span>String name<span class="token punctuation">,</span> Class<span class="token operator">&lt;</span><span class="token operator">?</span><span class="token operator">></span> targetType<span class="token punctuation">)</span> <span class="token keyword">throws</span> NoSuchBeanDefinitionException<span class="token punctuation">;</span>
+    Class<span class="token operator">&lt;</span><span class="token operator">?</span><span class="token operator">></span> <span class="token function">getType</span><span class="token punctuation">(</span>String name<span class="token punctuation">)</span> <span class="token keyword">throws</span> NoSuchBeanDefinitionException<span class="token punctuation">;</span>
+    String<span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token function">getAliases</span><span class="token punctuation">(</span>String name<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+<p><strong>在该接口中定义了一下6种方法</strong></p>
+<ul>
+<li>boolean containsBean(String)：如果BeanFactory包含给定名称的bean定义(或bean实例)、则返回true、</li>
+<li>Object getBean(String)：返回以给定名字注册的bean实例、根据bean的配置情况、如果为singleton模式将返回一个共享的实例、否则将返回一个新建的实例、如果没有找到指定的bean、该方法可能会抛出BeansException异常(实际上将抛出NoSuchBeanDefinitionException异常)、在对bean进行实例化和预处理时也可能抛出异常</li>
+<li>Object getBean(String, Class)：返回以给定名称注册的bean实例、并转换为给定class类型的实例、如果转换失败、相应的异常(BeanNotOfRequiredTypeException)将被抛出、上面的getBean(String)方法也适用该规则</li>
+<li>Class getType(String name)：返回给定名称的bean的Class、如果没有找到指定的bean实例、则抛出NoSuchBeanDefinitionException异常</li>
+<li>boolean isSingleton(String)：判断给定名称的bean定义(或bean实例)是否为singleton模式(singleton将在bean的作用域中讨论)、如果bean没找到、则抛出NoSuchBeanDefinitionException异常</li>
+<li>String[] getAliases(String)：返回给定bean名称的所有别名</li>
+</ul>
+<p><strong>我们初学Spring的时候ClassPathXmlApplicationContext创建获取Bean的对象、实际这就是个BeanFactory实现、看个例子应该能够更好理解</strong></p>
+<pre class=" language-java"><code class="language-java"><span class="token comment" spellcheck="true">// BeanFactory实现之一XmlBeanFactory</span>
+Resource resource <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">FileSystemResource</span><span class="token punctuation">(</span><span class="token string">"applicationContext.xml"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+BeanFactory factory1 <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">XmlBeanFactory</span><span class="token punctuation">(</span>resource<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment" spellcheck="true">// AppliactionContext也是BeanFactoryshixian实现、当然包括子类ClassPathXmlApplicationContext</span>
+ApplicationContext context <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ClassPathXmlApplicationContext</span><span class="token punctuation">(</span>
+    <span class="token keyword">new</span> <span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token punctuation">{</span><span class="token string">"applicationContext.xml"</span><span class="token punctuation">,</span> <span class="token string">"applicationContext-part.xml"</span><span class="token punctuation">}</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span>
+BeanFactory factory2 <span class="token operator">=</span> <span class="token punctuation">(</span>BeanFactory<span class="token punctuation">)</span> context<span class="token punctuation">;</span>
+
+<span class="token comment" spellcheck="true">// 无论哪种实现都能获取Spring管理的Bean</span>
+Object o1 <span class="token operator">=</span> factory1<span class="token punctuation">.</span><span class="token function">getBean</span><span class="token punctuation">(</span><span class="token string">"beanName"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+Object o2 <span class="token operator">=</span> factory2<span class="token punctuation">.</span><span class="token function">getBean</span><span class="token punctuation">(</span><span class="token string">"beanName"</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<p><strong>BeanFactory总结：</strong></p>
+<ul>
+<li>BeanFactory它的职责包括：实例化、定位、配置应用程序中的对象及建立这些对象间的依赖</li>
+<li>BeanFactory是访问Spring beans的一个容器、所有的Spring Beans的定义都会在这里被统一的处理</li>
+</ul>
+<p>换句话说、BeanFactory Interface是一个应用组件（Spring Bean）的集中注册器和配置器、从一般意义上来讲、BeanFactory是用来加载和管理Spring Bean Definition的</p>
+<hr>
+<h2 id="二、FactoryBean"><a href="#二、FactoryBean" class="headerlink" title="二、FactoryBean"></a>二、FactoryBean</h2><p>一般情况下、Spring通过反射机制利用<code>&lt;bean&gt;</code> 的class属性指定实现类实例化Bean、在某些情况下、实例化Bean过程比较复杂、如果按照传统的方式、则需要在<code>&lt;bean&gt;</code>中提供大量的配置信息、配置方式的灵活性是受限的、这时采用编码的方式可能会得到一个简单的方案</p>
+<p>Spring为此提供了一个<code>org.springframework.bean.factory.FactoryBean</code>的工厂类接口、用户可以通过实现该接口定制实例化Bean的逻辑、FactoryBean接口对于Spring框架来说占用重要的地位、Spring自身就提供了70多个FactoryBean的实现、它们隐藏了实例化一些复杂Bean的细节、给上层应用带来了便利、从Spring 3.0开始、FactoryBean开始支持泛型、即接口声明改为<code>FactoryBean&lt;T&gt;</code>的形式、同样使用Eclipse打开类结构</p>
+<p><img src="http://assets.msyy233.com/20180623/1243281a2.png!blog" alt="FactoryBean类结构图"></p>
+<p><img src="http://assets.msyy233.com/20180623/124505511.png!blog" alt="FactoryBean类体系图"></p>
+<pre class=" language-java"><code class="language-java"><span class="token keyword">package</span> org<span class="token punctuation">.</span>springframework<span class="token punctuation">.</span>beans<span class="token punctuation">.</span>factory<span class="token punctuation">;</span>
+
+<span class="token keyword">public</span> <span class="token keyword">interface</span> <span class="token class-name">FactoryBean</span><span class="token operator">&lt;</span>T<span class="token operator">></span> <span class="token punctuation">{</span>
+    T <span class="token function">getObject</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">throws</span> Exception<span class="token punctuation">;</span>
+    Class<span class="token operator">&lt;</span><span class="token operator">?</span><span class="token operator">></span> <span class="token function">getObjectType</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">boolean</span> <span class="token function">isSingleton</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+<p>在该接口中还定义了以下3个方法：</p>
+<ul>
+<li>T getObject()：返回由FactoryBean创建的Bean实例、如果isSingleton()返回 true、则该实例会放到Spring容器中单实例缓存池中</li>
+<li>Class getObjectType()：返回FactoryBean 创建的 Bean 类型、当配置文件中<code>&lt;bean&gt;</code>的class属性配置的实现类是FactoryBean时、通过getBean()方法返回的不是FactoryBean本身、而是FactoryBean的getObject()方法所返回的对象、相当于FactoryBean#getObject()代理了getBean()方法</li>
+<li>boolean isSingleton()：返回由FactoryBean创建的Bean实例的作用域是singleton还是prototype</li>
+</ul>
+<p><strong>FactoryBean总结：</strong></p>
+<ul>
+<li>通常情况下、Bean无须自己实现工厂模式、Spring容器担任工厂角色</li>
+<li>少数情况下、容器中的Bean本身就是工厂、其作用是产生其它bean实例、作用是产生其他bean实例</li>
+</ul>
+<p>这种Bean没有什么特别的要求、仅需要提供一个工厂方法、该方法用来返回其他bean实例、由工厂Bean产生的其他Bean实例、不再由Spring容器产生、因此与普通Bean的配置不同、不再需要提供class元素</p>
+<p><strong>有关FactoryBean的具体使用实例请参见：</strong><a href="#">利用Spring FactoryBean封装HttpClient(我还没写)</a></p>
+<hr>
+<h2 id="三、区别"><a href="#三、区别" class="headerlink" title="三、区别"></a>三、区别</h2><p>BeanFactory是个Factory、也就是IOC容器或对象工厂、FactoryBean是个Bean、在Spring中、所有的Bean都是由BeanFactory来进行管理的、但对FactoryBean而言、这个Bean不是简单的Bean、而是一个能生产或者修饰对象生成的工厂Bean、它的实现与设计模式中的工厂模式和修饰器模式结合（更加偏向工厂模式）</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Spring/" rel="tag"># Spring</a>
+              <a href="/tags/BeanFactory/" rel="tag"># BeanFactory</a>
+              <a href="/tags/FactoryBean/" rel="tag"># FactoryBean</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/posts/52540.html" rel="prev" title="IO的概念和5种IO模型">
+      <i class="fa fa-chevron-left"></i> IO的概念和5种IO模型
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/posts/12817.html" rel="next" title="Excel生成SQL INSERT语句">
+      Excel生成SQL INSERT语句 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    
+  <div class="comments" id="comments">
+    <div id="lv-container" data-id="city" data-uid="MTAyMC8zNjMxOC8xMjg1Mw=="></div>
+  </div>
+  
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、BeanFactory"><span class="nav-number">1.</span> <span class="nav-text">一、BeanFactory</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、FactoryBean"><span class="nav-number">2.</span> <span class="nav-text">二、FactoryBean</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、区别"><span class="nav-number">3.</span> <span class="nav-text">三、区别</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">程小明</p>
+  <div class="site-description" itemprop="description">唯有坚持不懈</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">15</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">45</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="feed-link motion-element">
+    <a href="/atom.xml" rel="alternate">
+      <i class="fa fa-rss"></i>RSS
+    </a>
+  </div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/chenghm123" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;chenghm123" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/1963116645" title="新浪微博 → https:&#x2F;&#x2F;weibo.com&#x2F;1963116645" rel="noopener" target="_blank"><i class="fa fa-fw fa-weibo"></i>新浪微博</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/mailto:chenghm123@qq.com" title="邮件 → mailto:chenghm123@qq.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>邮件</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.zhihu.com/people/chenghm123" title="知乎 → https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;chenghm123" rel="noopener" target="_blank"><i class="fa fa-fw fa-question-circle-o"></i>知乎</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">程小明</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.0.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.5.0
+  </div>
+
+        
+
+
+
+
+
+
+  <script>
+  function leancloudSelector(url) {
+    return document.getElementById(url).querySelector('.leancloud-visitors-count');
+  }
+  if (CONFIG.page.isPost) {
+    function addCount(Counter) {
+      var visitors = document.querySelector('.leancloud_visitors');
+      var url = visitors.getAttribute('id').trim();
+      var title = visitors.getAttribute('data-flag-title').trim();
+
+      Counter('get', `/classes/Counter?where=${JSON.stringify({ url })}`)
+        .then(response => response.json())
+        .then(({ results }) => {
+          if (results.length > 0) {
+            var counter = results[0];
+            Counter('put', '/classes/Counter/' + counter.objectId, { time: { '__op': 'Increment', 'amount': 1 } })
+              .then(response => response.json())
+              .then(() => {
+                leancloudSelector(url).innerText = counter.time + 1;
+              })
+              .catch(error => {
+                console.log('Failed to save visitor count', error);
+              })
+          } else {
+              Counter('post', '/classes/Counter', { title: title, url: url, time: 1 })
+                .then(response => response.json())
+                .then(() => {
+                  leancloudSelector(url).innerText = 1;
+                })
+                .catch(error => {
+                  console.log('Failed to create', error);
+                });
+          }
+        })
+        .catch(error => {
+          console.log('LeanCloud Counter Error', error);
+        });
+    }
+  } else {
+    function showTime(Counter) {
+      var visitors = document.querySelectorAll('.leancloud_visitors');
+      var entries = [...visitors].map(element => {
+        return element.getAttribute('id').trim();
+      });
+
+      Counter('get', `/classes/Counter?where=${JSON.stringify({ url: { '$in': entries } })}`)
+        .then(response => response.json())
+        .then(({ results }) => {
+          if (results.length === 0) {
+            document.querySelectorAll('.leancloud_visitors .leancloud-visitors-count').forEach(element => {
+              element.innerText = 0;
+            });
+            return;
+          }
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.url;
+            var time = item.time;
+            leancloudSelector(url).innerText = time;
+          }
+          for (var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = leancloudSelector(url);
+            if (element.innerText == '') {
+              element.innerText = 0;
+            }
+          }
+        })
+        .catch(error => {
+          console.log('LeanCloud Counter Error', error);
+        });
+    }
+  }
+
+  fetch('https://app-router.leancloud.cn/2/route?appId=XReLv1GKgcKWqfWdIDOlBEfi-gzGzoHsz')
+    .then(response => response.json())
+    .then(({ api_server }) => {
+      var Counter = (method, url, data) => {
+        return fetch(`https://${api_server}/1.1${url}`, {
+          method: method,
+          headers: {
+            'X-LC-Id': 'XReLv1GKgcKWqfWdIDOlBEfi-gzGzoHsz',
+            'X-LC-Key': 'd7Y6fcYWUyXTumQnGMP82SnD',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data)
+        });
+      };
+      if (CONFIG.page.isPost) {
+        if (CONFIG.hostname !== location.hostname) return;
+        addCount(Counter);
+      } else if (document.querySelectorAll('.post-title-link').length >= 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/pisces.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+  <script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script>
+  window.livereOptions = {
+    refer: location.pathname.replace(CONFIG.root, '').replace('index.html', '')
+  };
+  (function(d, s) {
+    var j, e = d.getElementsByTagName(s)[0];
+    if (typeof LivereTower === 'function') { return; }
+    j = d.createElement(s);
+    j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+    j.async = true;
+    e.parentNode.insertBefore(j, e);
+  })(document, 'script');
+</script>
+
+</body>
+</html>

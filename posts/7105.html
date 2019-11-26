@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <link rel="alternate" href="/atom.xml" title="码上有约" type="application/atom+xml">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    hostname: new URL('https://www.msyy233.com').hostname,
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.5.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: 'search.json',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="当Adobe、Microsoft、Sun等一系列巨头开始表现出对开源的青睐时、开源的时代早已到来、现今存在的开源协议很多、而经过Open Source Initiative组织通过批准的开源协议目前有83种、我们在常见的开源协议如BSD、GPL、LGPL、MIT等都是OSI批准的协议、如果要开源自己的代码、最好也是选择这些被批准的开源协议、这里我们来看四种最常用的开源协议及它们的适用范围、供那些准">
+<meta name="keywords" content="Apache,BSD,GPL,LGPL,MIT,开源协议">
+<meta property="og:type" content="article">
+<meta property="og:title" content="常见开源协议简介">
+<meta property="og:url" content="https:&#x2F;&#x2F;www.msyy233.com&#x2F;posts&#x2F;7105.html">
+<meta property="og:site_name" content="码上有约">
+<meta property="og:description" content="当Adobe、Microsoft、Sun等一系列巨头开始表现出对开源的青睐时、开源的时代早已到来、现今存在的开源协议很多、而经过Open Source Initiative组织通过批准的开源协议目前有83种、我们在常见的开源协议如BSD、GPL、LGPL、MIT等都是OSI批准的协议、如果要开源自己的代码、最好也是选择这些被批准的开源协议、这里我们来看四种最常用的开源协议及它们的适用范围、供那些准">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-07-25T13:21:37.000Z">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://www.msyy233.com/posts/7105.html">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>常见开源协议简介 | 码上有约</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="stylesheet" href="/css/prism-duotone-light.css" type="text/css"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">码上有约</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">为一桩事业呕心沥血、为一种梦想至死不渝</p>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="搜索..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://www.msyy233.com/posts/7105.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="程小明">
+      <meta itemprop="description" content="唯有坚持不懈">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="码上有约">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          常见开源协议简介
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2018-07-23 21:21:37" itemprop="dateCreated datePublished" datetime="2018-07-23T21:21:37+08:00">2018-07-23</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2018-07-25 21:21:37" itemprop="dateModified" datetime="2018-07-25T21:21:37+08:00">2018-07-25</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/other/" itemprop="url" rel="index">
+                    <span itemprop="name">other</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span id="/posts/7105.html" class="post-meta-item leancloud_visitors" data-flag-title="常见开源协议简介" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>当Adobe、Microsoft、Sun等一系列巨头开始表现出对开源的青睐时、开源的时代早已到来、现今存在的开源协议很多、而经过Open Source Initiative组织通过批准的开源协议目前有<a href="http://www.opensource.org/licenses/alphabetical" target="_blank" rel="noopener">83种</a>、我们在常见的开源协议如BSD、GPL、LGPL、MIT等都是OSI批准的协议、如果要开源自己的代码、最好也是选择这些被批准的开源协议、这里我们来看四种最常用的开源协议及它们的适用范围、供那些准备开源或者使用开源产品的开发人员/厂家参考  </p>
+<h2 id="BSD开源协议-original-BSD-license-FreeBSD-license-Original-BSD-license"><a href="#BSD开源协议-original-BSD-license-FreeBSD-license-Original-BSD-license" class="headerlink" title="BSD开源协议(original BSD license/FreeBSD license/Original BSD license)"></a>BSD开源协议(original BSD license/FreeBSD license/Original BSD license)</h2><p>BSD开源协议是一个给于使用者很大自由的协议、基本上使用者可以为所欲为、可以自由的使用、修改源代码、也可以将修改后的代码作为开源或者专有软件再发布、但为所欲为的前提当你发布使用了BSD协议的代码或则以BSD协议代码为基础做二次开发自己的产品时、需要满足三个条件：</p>
+<ol>
+<li><p>如果再发布的产品中包含源代码、则在源代码中必须带有原来代码中的BSD协议、如果再发布的只是二进制类库/软件、则需要在类库/软件的文档和版权声明中包含原来代码中的BSD协议、</p>
+</li>
+<li><p>不可以用开源代码的作者/机构名字和原来产品的名字做市场推广、</p>
+</li>
+<li><p>BSD代码鼓励代码共享、但需要尊重代码作者的著作权、BSD由于允许使用者修改和重新发布代码、也允许使用或在BSD代码上开发商业软件发布和销售、因此是对商业集成很友好的协议、而很多的公司企业在选用开源产品的时候都首选BSD协议，因为可以完全控制这些第三方的代码、在必要的时候可以修改或者二次开发、</p>
+</li>
+</ol>
+<a id="more"></a>
+<h2 id="Apache-Licence-2-0-Apache-License-Version-2-0-Apache-License-Version-1-1-Apache-License-Version-1-0"><a href="#Apache-Licence-2-0-Apache-License-Version-2-0-Apache-License-Version-1-1-Apache-License-Version-1-0" class="headerlink" title="Apache Licence 2.0(Apache License, Version 2.0/Apache License, Version 1.1/Apache License, Version 1.0)"></a>Apache Licence 2.0(Apache License, Version 2.0/Apache License, Version 1.1/Apache License, Version 1.0)</h2><p>Apache Licence是著名的非盈利开源组织Apache采用的协议、该协议和BSD类似、同样鼓励代码共享和尊重原作者的著作权、同样允许代码修改、再发布(作为开源或商业软件)、需要满足的条件也和BSD类似:</p>
+<ol>
+<li><p>需要给代码的用户一份Apache Licence、如果你修改了代码、需要在被修改的文件中说明、在延伸的代码中(修改和有源代码衍生的代码中)需要带有原来代码中的协议、商标、专利声明和其他原来作者规定需要包含的说明、</p>
+</li>
+<li><p>如果再发布的产品中包含一个Notice文件、则在Notice文件中需要带有Apache Licence、你可以在Notice中增加自己的许可、但不可以表现为对Apache Licence构成更改、</p>
+</li>
+<li><p>Apache Licence也是对商业应用友好的许可、使用者也可以在需要的时候修改代码来满足需要并作为开源或商业产品发布/销售、</p>
+</li>
+</ol>
+<h2 id="GPL-GNU-General-Public-License"><a href="#GPL-GNU-General-Public-License" class="headerlink" title="GPL(GNU General Public License)"></a>GPL(GNU General Public License)</h2><p>我们很熟悉的Linux就是采用了GPL、GPL协议和BSD、Apache Licence等鼓励代码重用的许可很不一样、GPL的出发点是代码的开源/免费使用和引用/修改/衍生代码的开源/免费使用、但不允许修改后和衍生的代码做为闭源的商业软件发布和销售、这也就是为什么我们能用免费的各种linux、包括商业公司的linux和linux上各种各样的由个人、组织、以及商业软件公司开发的免费软件了、<br>GPL协议的主要内容是只要在一个软件中使用(“使用”指类库引用、修改后的代码或者衍生代码)GPL协议的产品、则该软件产品必须也采用GPL协议、既必须也是开源和免费、这就是所谓的”传染性”、GPL协议的产品作为一个单独的产品使用没有任何问题、还可以享受免费的优势、<br>由于GPL严格要求使用了GPL类库的软件产品必须使用GPL协议、对于使用GPL协议的开源代码、商业软件或者对代码有保密要求的部门就不适合集成/采用作为类库和二次开发的基础、其它细节如再发布的时候需要伴随GPL协议等和BSD/Apache等类似、</p>
+<h2 id="LGPL-GNU-Lesser-General-Public-License"><a href="#LGPL-GNU-Lesser-General-Public-License" class="headerlink" title="LGPL(GNU Lesser General Public License)"></a>LGPL(GNU Lesser General Public License)</h2><p>LGPL是GPL的一个为主要为类库使用设计的开源协议、和GPL要求任何使用/修改/衍生之GPL类库的的软件必须采用GPL协议不同、LGPL允许商业软件通过类库引用(link)方式使用LGPL类库而不需要开源商业软件的代码、这使得采用LGPL协议的开源代码可以被商业软件作为类库引用并发布和销售、<br>但是如果修改LGPL协议的代码或者衍生、则所有修改的代码、涉及修改部分的额外代码和衍生的代码都必须采用LGPL协议、因此LGPL协议的开源代码很适合作为第三方类库被商业软件引用、但不适合希望以LGPL协议代码为基础、通过修改和衍生的方式做二次开发的商业软件采用、GPL/LGPL都保障原作者的知识产权，避免有人利用开源代码复制并开发类似的产品、</p>
+<h2 id="MIT-MIT"><a href="#MIT-MIT" class="headerlink" title="MIT(MIT)"></a>MIT(MIT)</h2><p>MIT是和BSD一样宽范的许可协议、作者只想保留版权、而无任何其他了限制、也就是说、你必须在你的发行版里包含原许可协议的声明、无论你是以二进制发布的还是以源代码发布的、</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Apache/" rel="tag"># Apache</a>
+              <a href="/tags/BSD/" rel="tag"># BSD</a>
+              <a href="/tags/GPL/" rel="tag"># GPL</a>
+              <a href="/tags/LGPL/" rel="tag"># LGPL</a>
+              <a href="/tags/MIT/" rel="tag"># MIT</a>
+              <a href="/tags/%E5%BC%80%E6%BA%90%E5%8D%8F%E8%AE%AE/" rel="tag"># 开源协议</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/posts/61738.html" rel="prev" title="位运算和移位运算">
+      <i class="fa fa-chevron-left"></i> 位运算和移位运算
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/posts/51696.html" rel="next" title="缓存IO、直接IO与内存映射">
+      缓存IO、直接IO与内存映射 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    
+  <div class="comments" id="comments">
+    <div id="lv-container" data-id="city" data-uid="MTAyMC8zNjMxOC8xMjg1Mw=="></div>
+  </div>
+  
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#BSD开源协议-original-BSD-license-FreeBSD-license-Original-BSD-license"><span class="nav-number">1.</span> <span class="nav-text">BSD开源协议(original BSD license/FreeBSD license/Original BSD license)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Apache-Licence-2-0-Apache-License-Version-2-0-Apache-License-Version-1-1-Apache-License-Version-1-0"><span class="nav-number">2.</span> <span class="nav-text">Apache Licence 2.0(Apache License, Version 2.0/Apache License, Version 1.1/Apache License, Version 1.0)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#GPL-GNU-General-Public-License"><span class="nav-number">3.</span> <span class="nav-text">GPL(GNU General Public License)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#LGPL-GNU-Lesser-General-Public-License"><span class="nav-number">4.</span> <span class="nav-text">LGPL(GNU Lesser General Public License)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MIT-MIT"><span class="nav-number">5.</span> <span class="nav-text">MIT(MIT)</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">程小明</p>
+  <div class="site-description" itemprop="description">唯有坚持不懈</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">15</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">45</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="feed-link motion-element">
+    <a href="/atom.xml" rel="alternate">
+      <i class="fa fa-rss"></i>RSS
+    </a>
+  </div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/chenghm123" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;chenghm123" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/1963116645" title="新浪微博 → https:&#x2F;&#x2F;weibo.com&#x2F;1963116645" rel="noopener" target="_blank"><i class="fa fa-fw fa-weibo"></i>新浪微博</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/mailto:chenghm123@qq.com" title="邮件 → mailto:chenghm123@qq.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>邮件</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.zhihu.com/people/chenghm123" title="知乎 → https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;chenghm123" rel="noopener" target="_blank"><i class="fa fa-fw fa-question-circle-o"></i>知乎</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">程小明</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.0.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.5.0
+  </div>
+
+        
+
+
+
+
+
+
+  <script>
+  function leancloudSelector(url) {
+    return document.getElementById(url).querySelector('.leancloud-visitors-count');
+  }
+  if (CONFIG.page.isPost) {
+    function addCount(Counter) {
+      var visitors = document.querySelector('.leancloud_visitors');
+      var url = visitors.getAttribute('id').trim();
+      var title = visitors.getAttribute('data-flag-title').trim();
+
+      Counter('get', `/classes/Counter?where=${JSON.stringify({ url })}`)
+        .then(response => response.json())
+        .then(({ results }) => {
+          if (results.length > 0) {
+            var counter = results[0];
+            Counter('put', '/classes/Counter/' + counter.objectId, { time: { '__op': 'Increment', 'amount': 1 } })
+              .then(response => response.json())
+              .then(() => {
+                leancloudSelector(url).innerText = counter.time + 1;
+              })
+              .catch(error => {
+                console.log('Failed to save visitor count', error);
+              })
+          } else {
+              Counter('post', '/classes/Counter', { title: title, url: url, time: 1 })
+                .then(response => response.json())
+                .then(() => {
+                  leancloudSelector(url).innerText = 1;
+                })
+                .catch(error => {
+                  console.log('Failed to create', error);
+                });
+          }
+        })
+        .catch(error => {
+          console.log('LeanCloud Counter Error', error);
+        });
+    }
+  } else {
+    function showTime(Counter) {
+      var visitors = document.querySelectorAll('.leancloud_visitors');
+      var entries = [...visitors].map(element => {
+        return element.getAttribute('id').trim();
+      });
+
+      Counter('get', `/classes/Counter?where=${JSON.stringify({ url: { '$in': entries } })}`)
+        .then(response => response.json())
+        .then(({ results }) => {
+          if (results.length === 0) {
+            document.querySelectorAll('.leancloud_visitors .leancloud-visitors-count').forEach(element => {
+              element.innerText = 0;
+            });
+            return;
+          }
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.url;
+            var time = item.time;
+            leancloudSelector(url).innerText = time;
+          }
+          for (var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = leancloudSelector(url);
+            if (element.innerText == '') {
+              element.innerText = 0;
+            }
+          }
+        })
+        .catch(error => {
+          console.log('LeanCloud Counter Error', error);
+        });
+    }
+  }
+
+  fetch('https://app-router.leancloud.cn/2/route?appId=XReLv1GKgcKWqfWdIDOlBEfi-gzGzoHsz')
+    .then(response => response.json())
+    .then(({ api_server }) => {
+      var Counter = (method, url, data) => {
+        return fetch(`https://${api_server}/1.1${url}`, {
+          method: method,
+          headers: {
+            'X-LC-Id': 'XReLv1GKgcKWqfWdIDOlBEfi-gzGzoHsz',
+            'X-LC-Key': 'd7Y6fcYWUyXTumQnGMP82SnD',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data)
+        });
+      };
+      if (CONFIG.page.isPost) {
+        if (CONFIG.hostname !== location.hostname) return;
+        addCount(Counter);
+      } else if (document.querySelectorAll('.post-title-link').length >= 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/pisces.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+  <script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script>
+  window.livereOptions = {
+    refer: location.pathname.replace(CONFIG.root, '').replace('index.html', '')
+  };
+  (function(d, s) {
+    var j, e = d.getElementsByTagName(s)[0];
+    if (typeof LivereTower === 'function') { return; }
+    j = d.createElement(s);
+    j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+    j.async = true;
+    e.parentNode.insertBefore(j, e);
+  })(document, 'script');
+</script>
+
+</body>
+</html>

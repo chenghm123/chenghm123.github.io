@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <link rel="alternate" href="/atom.xml" title="码上有约" type="application/atom+xml">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    hostname: new URL('https://www.msyy233.com').hostname,
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.5.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: 'search.json',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="本文资料来源：Oracle® Database Quick Installation Guide（linux_x64）Oracle® Database Quick Installation Guide（linux_x86） 一、下载下载地址：Oracle Database Software Downloads">
+<meta name="keywords" content="oracle,静默安装">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Oracle11gR2 Centos6.x静默安装">
+<meta property="og:url" content="https:&#x2F;&#x2F;www.msyy233.com&#x2F;posts&#x2F;28521.html">
+<meta property="og:site_name" content="码上有约">
+<meta property="og:description" content="本文资料来源：Oracle® Database Quick Installation Guide（linux_x64）Oracle® Database Quick Installation Guide（linux_x86） 一、下载下载地址：Oracle Database Software Downloads">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http:&#x2F;&#x2F;assets.msyy233.com&#x2F;20180726&#x2F;095340854.png!blog">
+<meta property="og:image" content="http:&#x2F;&#x2F;assets.msyy233.com&#x2F;20180726&#x2F;095616767.png!blog">
+<meta property="og:image" content="http:&#x2F;&#x2F;assets.msyy233.com&#x2F;20180726&#x2F;134111560.png!blog">
+<meta property="og:updated_time" content="2017-12-17T06:32:37.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http:&#x2F;&#x2F;assets.msyy233.com&#x2F;20180726&#x2F;095340854.png!blog">
+
+<link rel="canonical" href="https://www.msyy233.com/posts/28521.html">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>Oracle11gR2 Centos6.x静默安装 | 码上有约</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="stylesheet" href="/css/prism-duotone-light.css" type="text/css"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">码上有约</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">为一桩事业呕心沥血、为一种梦想至死不渝</p>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="搜索..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://www.msyy233.com/posts/28521.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="程小明">
+      <meta itemprop="description" content="唯有坚持不懈">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="码上有约">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Oracle11gR2 Centos6.x静默安装
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2017-12-14 14:32:37" itemprop="dateCreated datePublished" datetime="2017-12-14T14:32:37+08:00">2017-12-14</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2017-12-17 14:32:37" itemprop="dateModified" datetime="2017-12-17T14:32:37+08:00">2017-12-17</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/oracle/" itemprop="url" rel="index">
+                    <span itemprop="name">oracle</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span id="/posts/28521.html" class="post-meta-item leancloud_visitors" data-flag-title="Oracle11gR2 Centos6.x静默安装" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>本文资料来源：<br><a href="http://docs.oracle.com/cd/E11882_01/install.112/e24326/toc.htm" target="_blank" rel="noopener">Oracle® Database Quick Installation Guide（linux_x64）</a><br><a href="http://docs.oracle.com/cd/E11882_01/install.112/e24324/toc.htm" target="_blank" rel="noopener">Oracle® Database Quick Installation Guide（linux_x86）</a></p>
+<h2 id="一、下载"><a href="#一、下载" class="headerlink" title="一、下载"></a>一、下载</h2><p>下载地址：<a href="http://www.oracle.com/technetwork/database/enterprise-edition/downloads/index.html" target="_blank" rel="noopener">Oracle Database Software Downloads</a><br><img src="http://assets.msyy233.com/20180726/095340854.png!blog" alt="Oracle许可证">    </p>
+<a id="more"></a>
+<p><img src="http://assets.msyy233.com/20180726/095616767.png!blog" alt="Oracle11gR2"><br>第一张图勾选圈出的选项同意许可证协议、第二张图选择正确的版本下载（注意是11gR2的Linux版本）、</p>
+<h2 id="二、准备"><a href="#二、准备" class="headerlink" title="二、准备"></a>二、准备</h2><h3 id="（一）内存空间"><a href="#（一）内存空间" class="headerlink" title="（一）内存空间"></a>（一）内存空间</h3><p>安装Oracle11gR2实例必须满足：<br><strong>最小：</strong> 1 GB内存<br><strong>建议：</strong> 2GB内存或更多  </p>
+<p>查询内存命令：<code>grep MemTotal /proc/meminfo</code> 也可以用<code>free</code>或<code>top</code>  </p>
+<p>建议用以下表格关系来根据内存大小配置交换空间大小  </p>
+<table>
+<thead>
+<tr>
+<th>有效内存</th>
+<th>交换分区</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1GB到2GB之间</td>
+<td>1.5倍内存大小</td>
+</tr>
+<tr>
+<td>2GB到16GB之间</td>
+<td>等于内存大小</td>
+</tr>
+<tr>
+<td>超过16GB</td>
+<td>16 GB</td>
+</tr>
+</tbody></table>
+<h3 id="（一）磁盘空间"><a href="#（一）磁盘空间" class="headerlink" title="（一）磁盘空间"></a>（一）磁盘空间</h3><p>安装分区5G以上（不包含数据文件）、详情参照表格、<code>/tmp</code>文件夹至少1GB空闲空间  </p>
+<table>
+<thead>
+<tr>
+<th>安装版本</th>
+<th>软件大小</th>
+<th>数据大小</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Enterprise Edition</td>
+<td>4.7 GB</td>
+<td>1.7 GB</td>
+</tr>
+<tr>
+<td>Standard Edition</td>
+<td>4.6 GB</td>
+<td>1.5 GB</td>
+</tr>
+</tbody></table>
+<h2 id="三、安装"><a href="#三、安装" class="headerlink" title="三、安装"></a>三、安装</h2><ol>
+<li><p>依赖包安装 —— <span style="color:red"><strong>root用户操作</strong></span>（以下安装包为个人整理）  </p>
+<ul>
+<li><p>Centos6.x 32位所需安装包：</p>
+<pre class=" language-bash"><code class="language-bash"><span class="token comment" spellcheck="true"># 32位系统只会安装i686包</span>
+yum -y <span class="token function">install</span> binutils compat-libcap1 compat-libstdc++-33 gcc gcc-c++ \
+glibc glibc-devel ksh libgcc libstdc++ libstdc++-devel libaio \
+libaio-devel <span class="token function">make</span> sysstat unixODBC unixODBC-devel elfutils-libelf-devel</code></pre>
+</li>
+<li><p>Centos6.x 64位所需安装包：  </p>
+<pre class=" language-bash"><code class="language-bash"><span class="token comment" spellcheck="true"># 64位系统需要x86_64包</span>
+yum -y <span class="token function">install</span> gcc.x86_64 make.x86_64 binutils.x86_64 glibc.x86_64 \
+compat-libstdc++-33.x86_64 elfutils-libelf.x86_64 \
+elfutils-libelf-devel.x86_64 glibc-common.x86_64 glibc-devel.x86_64 \
+glibc-headers.x86_64 gcc-c++.x86_64 libaio-devel.x86_64 libgcc.x86_64 \
+libstdc++.x86_64 libstdc++-devel.x86_64 sysstat.x86_64 unixODBC.x86_64 \
+unixODBC-devel.x86_64 expat.x86_64 ksh.x86_64</code></pre>
+<pre class=" language-bash"><code class="language-bash"><span class="token comment" spellcheck="true"># 64位系统需要i686包</span>
+yum -y <span class="token function">install</span> libaio.i686 glibc.i686 compat-libstdc++-33.i686 \
+elfutils-libelf.i686 elfutils-libelf-devel.i686 libaio-devel.i686 \
+libgcc.i686 libstdc++.i686 unixODBC.i686 unixODBC-devel.i686</code></pre>
+</li>
+</ul>
+</li>
+</ol>
+<ol start="2">
+<li><p>Oracle用户创建 —— <span style="color:red"><strong>root用户操作</strong></span></p>
+<ul>
+<li><p>创建Oracle 安装用户组：<code>/usr/sbin/groupadd oinstall</code></p>
+</li>
+<li><p>创建Oracle DBA用户组：<code>/usr/sbin/groupadd dba</code></p>
+</li>
+<li><p>创建Oracle 用户：<code>/usr/sbin/useradd -g oinstall -G dba oracle</code></p>
+</li>
+<li><p>设置Oracle 用户密码：<code>passwd oracle</code>  </p>
+</li>
+</ul>
+</li>
+</ol>
+<ol start="3">
+<li><p>系统参数配置 —— <span style="color:red"><strong>root用户操作</strong></span></p>
+<ul>
+<li><p>打开<code>vi /etc/sysctl.conf</code>添加以下参数配置（官网给的最小配置）：</p>
+<pre><code> fs.aio-max-nr = 1048576
+ fs.file-max = 6815744
+ kernel.shmall = 2097152
+ kernel.shmmax = 536870912
+ kernel.shmmni = 4096
+ kernel.sem = 250 32000 100 128
+ net.ipv4.ip_local_port_range = 9000 65500
+ net.core.rmem_default = 262144
+ net.core.rmem_max = 4194304
+ net.core.wmem_default = 262144
+ net.core.wmem_max = 1048576</code></pre></li>
+<li><p>修改完成后执行<code>/sbin/sysctl -p</code>使配置立即生效</p>
+</li>
+</ul>
+</li>
+</ol>
+<ol start="4">
+<li><p>Oracle用户限制 —— <span style="color:red"><strong>root用户操作</strong></span></p>
+<ul>
+<li><p>打开<code>vi /etc/security/limits.conf</code>添加以下参数配置（官网给的最小配置）：</p>
+<pre><code>oracle          soft    nofile          1024
+oracle          hard    nofile          65536
+oracle          soft    nproc           2047
+oracle          hard    nproc           16384
+oracle          soft    stack           10240
+oracle          hard    stack           32768</code></pre></li>
+<li><p>修改完成后重新登录oracle用户查看是否生效（参考官网-如下图：）<br>  <img src="http://assets.msyy233.com/20180726/134111560.png!blog" alt="官网用户权限相关"></p>
+</li>
+</ul>
+</li>
+</ol>
+<ol start="5">
+<li><p>创建安装目录与权限 ——  <font color='red'><strong>root用户操作</strong></font></p>
+<ul>
+<li><p>创建安装目录：<code>mkdir -p /u01/app/</code></p>
+</li>
+<li><p>修改安装目录所属用户和组：<code>chown -R oracle:oinstall /u01/app/</code></p>
+</li>
+<li><p>修改安装目录权限：<code>chmod -R 775 /u01/app/</code></p>
+</li>
+</ul>
+</li>
+</ol>
+<ol start="6">
+<li><p>安装Oracle数据库软件 —— <font color='red'><strong>oracle用户操作</strong></font></p>
+<ul>
+<li><p>解压Oracle数据库软件压缩文件<code>unzip ~/linux.x64_11gR2_database_1of2.zip &amp;&amp; unzip ~/linux.x64_11gR2_database_1of2.zip</code></p>
+</li>
+<li><p>打开<code>vi ~/.bash_profile</code>添加以下安装所需环境变量：</p>
+<pre class=" language-bash"><code class="language-bash"> ORACLE_BASE<span class="token operator">=</span>/u01/app/oracle
+ ORACLE_SID<span class="token operator">=</span>orcl
+ <span class="token function">export</span> ORACLE_BASE ORACLE_SID</code></pre>
+</li>
+<li><p>编辑静默安装模板文件（软件相关配置）、模板文件在解压后的目录下<code>database/response/db_install.rsp</code>、<a href="http://blog.chinaunix.net/uid-23886490-id-3565908.html" target="_blank" rel="noopener">模板文件的详解</a>参考其他的博客吧、这里不再详细说明</p>
+</li>
+<li><p>执行安装 <code>~/database/runInstaller -silent -force -responseFile ~/database/response/db_install.rsp</code></p>
+</li>
+</ul>
+</li>
+<li><p>执行清单权限相关脚本 ——  <font color='red'><strong>root用户操作</strong></font></p>
+<ul>
+<li>运行 <code>/u01/app/oraInventory/orainstRoot.sh &amp;&amp; /u01/app/oracle/product/11.2.0/dbhome_1/root.sh</code><blockquote>
+<p>orainstRoot.sh：设置产品目录位置与拥有该目录的操作系统组、并产生/etc/oraInst.loc<br>root.sh：用来设置必要的操作系统权限、并将orahome、oraenv、coraenv复制到/usr/local/bin目录下、生成/etc/oratab、其中存放一些数据库相关信息</p>
+</blockquote>
+</li>
+</ul>
+</li>
+</ol>
+<ol start="8">
+<li><p>配置Oracle数据库 ——  <font color='red'><strong>oracle用户操作</strong></font></p>
+<ul>
+<li><p>打开<code>vi ~/.bash_profile</code>添加以下软件所需环境变量：</p>
+<pre class=" language-bash"><code class="language-bash">ORACLE_HOME<span class="token operator">=</span><span class="token variable">$ORACLE_BASE</span>/product/11.2.0/dbhome_1
+TNS_ADMIN<span class="token operator">=</span><span class="token variable">$ORACLE_HOME</span>/network/admin
+PATH<span class="token operator">=</span><span class="token variable">$PATH</span><span class="token keyword">:</span><span class="token variable">$ORACLE_HOME</span>/bin
+LD_LIBRARY_PATH<span class="token operator">=</span><span class="token variable">$LD_LIBRARY_PATH</span><span class="token keyword">:</span><span class="token variable">$ORACLE_HOME</span>/lib:/lib:/usr/lib:/usr/local/lib
+CLASSPATH<span class="token operator">=</span><span class="token variable">$CLASSPATH</span><span class="token keyword">:</span><span class="token variable">$ORACLE_HOME</span>/jlib:<span class="token variable">$ORACLE_HOME</span>/rdbms/jlib:<span class="token variable">$ORACLE_HOME</span>/network/jlib:<span class="token variable">$ORACLE_HOME</span>/lib:<span class="token variable">$ORACLE_HOME</span>/ctx/lib
+ORACLE_OWNER<span class="token operator">=</span>oracle
+SPFILE_PATH<span class="token operator">=</span><span class="token variable">$ORACLE_HOME</span>/dbs
+ORA_NLS10<span class="token operator">=</span><span class="token variable">$ORACLE_HOME</span>/nls/data
+<span class="token function">export</span> ORACLE_HOME TNS_ADMIN PATH LD_LIBRARY_PATH CLASSPATH ORACLE_OWNER SPFILE_PATH ORA_NLS10</code></pre>
+</li>
+<li><p>配置监听 <code>$ORACLE_HOME/bin/netca /silent /responseFile ~/database/response/netca.rsp</code></p>
+</li>
+<li><p>编辑数据库实例模板文件（<em>实例相关配置</em>）、模板文件在解压后的目录下<code>database/response/dbca.rsp</code>、<a href="http://blog.csdn.net/yinzhipeng123/article/details/53144589" target="_blank" rel="noopener">模板文件的详解</a>参考其他的博客吧、这里不再详细说明</p>
+</li>
+<li><p>创建实例 <code>$ORACLE_HOME/bin/dbca -silent -responseFile ~/database/response/dbca.rsp</code></p>
+</li>
+</ul>
+</li>
+</ol>
+<h2 id="四、配置"><a href="#四、配置" class="headerlink" title="四、配置"></a>四、配置</h2><h3 id="（一）自启动"><a href="#（一）自启动" class="headerlink" title="（一）自启动"></a>（一）自启动</h3><ol>
+<li>修改vi /etc/oratab ——  <font color='red'><strong>root用户操作</strong></font><pre class=" language-bash"><code class="language-bash"><span class="token comment" spellcheck="true"># This file is used by ORACLE utilities.  It is created by root.sh</span>
+<span class="token comment" spellcheck="true"># and updated by the Database Configuration Assistant when creating</span>
+<span class="token comment" spellcheck="true"># a database.</span>
+ <span class="token comment" spellcheck="true">#</span>
+<span class="token comment" spellcheck="true"># A colon, ':', is used as the field terminator.  A new line terminates</span>
+<span class="token comment" spellcheck="true"># the entry.  Lines beginning with a pound sign, '#', are comments.</span>
+<span class="token comment" spellcheck="true">#</span>
+<span class="token comment" spellcheck="true"># Entries are of the form:</span>
+<span class="token comment" spellcheck="true">#   $ORACLE_SID:$ORACLE_HOME:&lt;N|Y>:</span>
+<span class="token comment" spellcheck="true">#</span>
+<span class="token comment" spellcheck="true"># The first and second fields are the system identifier and home</span>
+<span class="token comment" spellcheck="true"># directory of the database respectively.  The third filed indicates</span>
+<span class="token comment" spellcheck="true"># to the dbstart utility that the database should , "Y", or should not,</span>
+<span class="token comment" spellcheck="true"># "N", be brought up at system boot time.</span>
+<span class="token comment" spellcheck="true">#</span>
+<span class="token comment" spellcheck="true"># Multiple entries with the same $ORACLE_SID are not allowed.</span>
+<span class="token comment" spellcheck="true">#</span>
+<span class="token comment" spellcheck="true"># 改变此处N为Y</span>
+MFGS:/u01/app/oracle/product/11.2.0/dbhome_1:Y</code></pre>
+</li>
+</ol>
+<ol start="2">
+<li><p>配置自启动脚本 ——  <font color='red'><strong>root用户操作</strong></font></p>
+<pre class=" language-bash"><code class="language-bash"><span class="token shebang important">#!/bin/sh</span>
+<span class="token comment" spellcheck="true">#chkconfig: 345 91 91</span>
+<span class="token comment" spellcheck="true">#description: oracle autorun services</span>
+<span class="token comment" spellcheck="true">#/etc/init.d/oracle</span>
+<span class="token comment" spellcheck="true">#</span>
+<span class="token comment" spellcheck="true">#Run-level Stratup script for the Oracle Instance, Listener, and Web Interface</span>
+
+AUTO_FILE_NAME<span class="token operator">=</span>oracle
+<span class="token function">export</span> ORACLE_BASE<span class="token operator">=</span>/u01/app/oracle
+<span class="token function">export</span> ORACLE_HOME<span class="token operator">=</span><span class="token variable">$ORACLE_BASE</span>/product/11.2.0/dbhome_1
+<span class="token function">export</span> ORACLE_SID<span class="token operator">=</span>orcl
+<span class="token function">export</span> PATH<span class="token operator">=</span><span class="token variable">$PATH</span><span class="token keyword">:</span><span class="token variable">$ORACLE_HOME</span>/bin
+
+ORA_OWNR<span class="token operator">=</span><span class="token string">"oracle"</span>
+
+<span class="token keyword">case</span> <span class="token string">"<span class="token variable">$1</span>"</span> <span class="token keyword">in</span>
+ start<span class="token punctuation">)</span>
+     <span class="token function">su</span> <span class="token variable">$ORA_OWNR</span> -lc <span class="token variable">$ORACLE_HOME</span>/bin/dbstart
+     <span class="token function">touch</span> /var/lock/subsys/<span class="token variable">$AUTO_FILE_NAME</span>
+     <span class="token keyword">echo</span> <span class="token string">"Oracle Start Successful!"</span>
+     <span class="token punctuation">;</span><span class="token punctuation">;</span>
+ stop<span class="token punctuation">)</span>
+     <span class="token function">su</span> <span class="token variable">$ORA_OWNR</span> -lc <span class="token variable">$ORACLE_HOME</span>/bin/dbshut
+   <span class="token function">rm</span> -f /var/lock/subsys/<span class="token variable">$AUTO_FILE_NAME</span>
+     <span class="token keyword">echo</span> <span class="token string">"Oracle Stop Successful!"</span>
+     <span class="token punctuation">;</span><span class="token punctuation">;</span>
+ reload<span class="token operator">|</span>restart<span class="token punctuation">)</span>
+     <span class="token variable">$0</span> stop
+     <span class="token variable">$0</span> start
+     <span class="token punctuation">;</span><span class="token punctuation">;</span>
+ *<span class="token punctuation">)</span>
+     <span class="token keyword">echo</span> <span class="token string">"Usage: <span class="token variable"><span class="token variable">`</span><span class="token function">basename</span> $0<span class="token variable">`</span></span> {start|stop|reload|restart}"</span>
+     <span class="token keyword">exit</span> 1
+esac
+<span class="token keyword">exit</span> 0
+
+<span class="token comment" spellcheck="true">#chmod 755 /etc/init.d/oracle</span>
+<span class="token comment" spellcheck="true">#chkconfig --add oracle</span>
+<span class="token comment" spellcheck="true">#chkconfig --list oracle</span></code></pre>
+</li>
+</ol>
+<h2 id="五、完成"><a href="#五、完成" class="headerlink" title="五、完成"></a>五、完成</h2>
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/oracle/" rel="tag"># oracle</a>
+              <a href="/tags/%E9%9D%99%E9%BB%98%E5%AE%89%E8%A3%85/" rel="tag"># 静默安装</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/posts/9116.html" rel="prev" title="Maven Nexus OSS 2.xx 教程">
+      <i class="fa fa-chevron-left"></i> Maven Nexus OSS 2.xx 教程
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/posts/1678.html" rel="next" title="Windows和Linux下JDK安装配置">
+      Windows和Linux下JDK安装配置 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    
+  <div class="comments" id="comments">
+    <div id="lv-container" data-id="city" data-uid="MTAyMC8zNjMxOC8xMjg1Mw=="></div>
+  </div>
+  
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、下载"><span class="nav-number">1.</span> <span class="nav-text">一、下载</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、准备"><span class="nav-number">2.</span> <span class="nav-text">二、准备</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#（一）内存空间"><span class="nav-number">2.1.</span> <span class="nav-text">（一）内存空间</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#（一）磁盘空间"><span class="nav-number">2.2.</span> <span class="nav-text">（一）磁盘空间</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、安装"><span class="nav-number">3.</span> <span class="nav-text">三、安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四、配置"><span class="nav-number">4.</span> <span class="nav-text">四、配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#（一）自启动"><span class="nav-number">4.1.</span> <span class="nav-text">（一）自启动</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#五、完成"><span class="nav-number">5.</span> <span class="nav-text">五、完成</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">程小明</p>
+  <div class="site-description" itemprop="description">唯有坚持不懈</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">15</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">45</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="feed-link motion-element">
+    <a href="/atom.xml" rel="alternate">
+      <i class="fa fa-rss"></i>RSS
+    </a>
+  </div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/chenghm123" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;chenghm123" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/1963116645" title="新浪微博 → https:&#x2F;&#x2F;weibo.com&#x2F;1963116645" rel="noopener" target="_blank"><i class="fa fa-fw fa-weibo"></i>新浪微博</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/mailto:chenghm123@qq.com" title="邮件 → mailto:chenghm123@qq.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>邮件</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.zhihu.com/people/chenghm123" title="知乎 → https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;chenghm123" rel="noopener" target="_blank"><i class="fa fa-fw fa-question-circle-o"></i>知乎</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">程小明</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.0.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.5.0
+  </div>
+
+        
+
+
+
+
+
+
+  <script>
+  function leancloudSelector(url) {
+    return document.getElementById(url).querySelector('.leancloud-visitors-count');
+  }
+  if (CONFIG.page.isPost) {
+    function addCount(Counter) {
+      var visitors = document.querySelector('.leancloud_visitors');
+      var url = visitors.getAttribute('id').trim();
+      var title = visitors.getAttribute('data-flag-title').trim();
+
+      Counter('get', `/classes/Counter?where=${JSON.stringify({ url })}`)
+        .then(response => response.json())
+        .then(({ results }) => {
+          if (results.length > 0) {
+            var counter = results[0];
+            Counter('put', '/classes/Counter/' + counter.objectId, { time: { '__op': 'Increment', 'amount': 1 } })
+              .then(response => response.json())
+              .then(() => {
+                leancloudSelector(url).innerText = counter.time + 1;
+              })
+              .catch(error => {
+                console.log('Failed to save visitor count', error);
+              })
+          } else {
+              Counter('post', '/classes/Counter', { title: title, url: url, time: 1 })
+                .then(response => response.json())
+                .then(() => {
+                  leancloudSelector(url).innerText = 1;
+                })
+                .catch(error => {
+                  console.log('Failed to create', error);
+                });
+          }
+        })
+        .catch(error => {
+          console.log('LeanCloud Counter Error', error);
+        });
+    }
+  } else {
+    function showTime(Counter) {
+      var visitors = document.querySelectorAll('.leancloud_visitors');
+      var entries = [...visitors].map(element => {
+        return element.getAttribute('id').trim();
+      });
+
+      Counter('get', `/classes/Counter?where=${JSON.stringify({ url: { '$in': entries } })}`)
+        .then(response => response.json())
+        .then(({ results }) => {
+          if (results.length === 0) {
+            document.querySelectorAll('.leancloud_visitors .leancloud-visitors-count').forEach(element => {
+              element.innerText = 0;
+            });
+            return;
+          }
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.url;
+            var time = item.time;
+            leancloudSelector(url).innerText = time;
+          }
+          for (var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = leancloudSelector(url);
+            if (element.innerText == '') {
+              element.innerText = 0;
+            }
+          }
+        })
+        .catch(error => {
+          console.log('LeanCloud Counter Error', error);
+        });
+    }
+  }
+
+  fetch('https://app-router.leancloud.cn/2/route?appId=XReLv1GKgcKWqfWdIDOlBEfi-gzGzoHsz')
+    .then(response => response.json())
+    .then(({ api_server }) => {
+      var Counter = (method, url, data) => {
+        return fetch(`https://${api_server}/1.1${url}`, {
+          method: method,
+          headers: {
+            'X-LC-Id': 'XReLv1GKgcKWqfWdIDOlBEfi-gzGzoHsz',
+            'X-LC-Key': 'd7Y6fcYWUyXTumQnGMP82SnD',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data)
+        });
+      };
+      if (CONFIG.page.isPost) {
+        if (CONFIG.hostname !== location.hostname) return;
+        addCount(Counter);
+      } else if (document.querySelectorAll('.post-title-link').length >= 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/pisces.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+  <script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script>
+  window.livereOptions = {
+    refer: location.pathname.replace(CONFIG.root, '').replace('index.html', '')
+  };
+  (function(d, s) {
+    var j, e = d.getElementsByTagName(s)[0];
+    if (typeof LivereTower === 'function') { return; }
+    j = d.createElement(s);
+    j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+    j.async = true;
+    e.parentNode.insertBefore(j, e);
+  })(document, 'script');
+</script>
+
+</body>
+</html>
