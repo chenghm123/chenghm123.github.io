@@ -210,7 +210,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://www.msyy233.com/posts/33024.html">
+    <link itemprop="mainEntityOfPage" href="https://www.msyy233.com/posts/29966.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/uploads/avatar.jpg">
@@ -224,7 +224,7 @@
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
           
-            <a href="/posts/33024.html" class="post-title-link" itemprop="url">Java不定长参数</a>
+            <a href="/posts/29966.html" class="post-title-link" itemprop="url">JavaEE通过路径或域名获取资源</a>
         </h1>
 
         <div class="post-meta">
@@ -256,7 +256,7 @@
             </span>
 
           
-            <span id="/posts/33024.html" class="post-meta-item leancloud_visitors" data-flag-title="Java不定长参数" title="阅读次数">
+            <span id="/posts/29966.html" class="post-meta-item leancloud_visitors" data-flag-title="JavaEE通过路径或域名获取资源" title="阅读次数">
               <span class="post-meta-item-icon">
                 <i class="fa fa-eye"></i>
               </span>
@@ -273,12 +273,15 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p><em>在Java5中提供了不定长参数（varargs:variable number of arguments）、也就是在方法定义中可以使用个数不确定的参数、对于同一方法可以使用不同个数的参数调用、下面介绍如何定义不定长参数、以及如何使用不定长参数、</em></p>
-<hr>
-<h2 id="一、不定长参数的基本使用"><a href="#一、不定长参数的基本使用" class="headerlink" title="一、不定长参数的基本使用"></a>一、不定长参数的基本使用</h2><p><strong>定义实参个数可变的方法：只要在一个形参的类型与参数名之间加上三个连续的 “.”（即 “…”、英文里的句中省略号）、就可以让它和不确定个实参相匹配。</strong></p>
+          <h2 id="一、通过路径"><a href="#一、通过路径" class="headerlink" title="一、通过路径"></a>一、通过路径</h2><h3 id="1、使用ServletContext"><a href="#1、使用ServletContext" class="headerlink" title="1、使用ServletContext"></a>1、使用ServletContext</h3><pre><code class="java">/*
+ * 这里将获取的path是web项目的全路径
+ * 例如：E:/workspace/webapp/
+ * webapp是我web项目的根目录
+ */ 
+String path = servletContext.getRealPath(&quot;/&quot;);</code></pre>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/posts/33024.html#more" rel="contents">
+              <a class="btn" href="/posts/29966.html#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
