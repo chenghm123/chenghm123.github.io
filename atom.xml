@@ -178,7 +178,7 @@
     <link href="https://www.msyy233.com/posts/61738.html"/>
     <id>https://www.msyy233.com/posts/61738.html</id>
     <published>2018-06-26T00:20:18.000Z</published>
-    <updated>2018-06-29T00:20:18.000Z</updated>
+    <updated>2019-11-26T01:50:38.502Z</updated>
     
     <summary type="html">
     
@@ -186,7 +186,7 @@
 &lt;ul&gt;
 &lt;li&gt;&amp;amp;：相同位的两个数字都为1、则为1；若有一个不为1、则为0、&lt;br&gt; 例：00101 &amp;amp; 11100 = 00100&lt;/li&gt;
 &lt;li&gt;|：相同位只要一个为1即为1、&lt;br&gt; 例：00101 | 11100 = 11101&lt;/li&gt;
-&lt;li&gt;&lt;del&gt;：运算的定义是把内存中的0和1全部取反、使用not运算时要格外小心、你需要注意整数类型有没有符号、如果not的对象是无符号整数（不能表示负数）、那么得到的值就是它与该类型上界的差、因为无符号类型的数是用00到$FFFF依次表示的、&lt;br&gt; 例：&lt;/del&gt;‭00101 = 11010&lt;/li&gt;
+&lt;li&gt;~：运算的定义是把内存中的0和1全部取反、使用not运算时要格外小心、你需要注意整数类型有没有符号、如果not的对象是无符号整数（不能表示负数）、那么得到的值就是它与该类型上界的差、因为无符号类型的数是用00到$FFFF依次表示的、&lt;br&gt; 例：~‭00101 = 11010&lt;/li&gt;
 &lt;li&gt;^：相同位不同则为1、相同则为0、&lt;br&gt; 例：00101 ^ 11100 = 11001&lt;/li&gt;
 &lt;/ul&gt;
     
