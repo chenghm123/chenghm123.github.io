@@ -1,0 +1,910 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"www.msyy233.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
+  </script>
+
+  <meta name="description" content="日志的基本概念日志就是按照时间顺序追加的、完全有序的记录序列、其实就是一种特殊的文件格式、文件是一个字节数组、而这里日志是一个记录数据、只是相对于文件来说、这里每条记录都是按照时间的相对顺序排列的、可以说日志是最简单的一种存储模型、由于日志本身固有的特性、记录从左向右开始顺序插入、也就意味着左边的记录相较于右边的记录“更老”、也就是说我们可以不用依赖于系统时钟、但是针对业务场景来说、又比较依赖正确">
+<meta property="og:type" content="article">
+<meta property="og:title" content="关于分布式日志平台的思考">
+<meta property="og:url" content="https://www.msyy233.com/posts/14778.html">
+<meta property="og:site_name" content="码上有约">
+<meta property="og:description" content="日志的基本概念日志就是按照时间顺序追加的、完全有序的记录序列、其实就是一种特殊的文件格式、文件是一个字节数组、而这里日志是一个记录数据、只是相对于文件来说、这里每条记录都是按照时间的相对顺序排列的、可以说日志是最简单的一种存储模型、由于日志本身固有的特性、记录从左向右开始顺序插入、也就意味着左边的记录相较于右边的记录“更老”、也就是说我们可以不用依赖于系统时钟、但是针对业务场景来说、又比较依赖正确">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://assets.msyy233.com/20191126/153813590.png!blog">
+<meta property="og:image" content="http://assets.msyy233.com/20191226/103619397.png!blog">
+<meta property="og:image" content="http://assets.msyy233.com/20191226/101013f11.png!blog">
+<meta property="og:image" content="http://assets.msyy233.com/20200713/223923e00.png!blog">
+<meta property="og:image" content="http://assets.msyy233.com/20200713/224011256.png!blog">
+<meta property="og:image" content="http://assets.msyy233.com/20200713/224231a56.jpg!blog">
+<meta property="og:image" content="http://assets.msyy233.com/20200713/22462319d.jpg!blog">
+<meta property="og:image" content="http://assets.msyy233.com/20191230/163410611.png!blog">
+<meta property="og:image" content="http://assets.msyy233.com/20191230/1640528f2.png!blog">
+<meta property="og:image" content="http://assets.msyy233.com/20200102/104213fef.png!blog">
+<meta property="og:image" content="http://assets.msyy233.com/20191230/1634548a8.png!blog">
+<meta property="og:image" content="http://assets.msyy233.com/20200102/104409cee.png!blog">
+<meta property="og:image" content="http://assets.msyy233.com/20200102/104431b75.png!blog">
+<meta property="og:image" content="http://assets.msyy233.com/20191230/163521e8b.png!blog">
+<meta property="og:image" content="http://assets.msyy233.com/20200102/104924460.png!blog">
+<meta property="og:image" content="http://assets.msyy233.com/20200102/104945f1b.png!blog">
+<meta property="og:image" content="http://assets.msyy233.com/20200102/1054278bf.png!blog">
+<meta property="og:image" content="http://assets.msyy233.com/20200102/10564328a.png!blog">
+<meta property="article:published_time" content="2020-06-13T03:06:22.640Z">
+<meta property="article:modified_time" content="2020-07-13T15:01:44.014Z">
+<meta property="article:author" content="程大明">
+<meta property="article:tag" content="logstash">
+<meta property="article:tag" content="elk">
+<meta property="article:tag" content="kibana">
+<meta property="article:tag" content="filebeat">
+<meta property="article:tag" content="kafka">
+<meta property="article:tag" content="elasticsearch">
+<meta property="article:tag" content="flume">
+<meta property="article:tag" content="fluentd">
+<meta property="article:tag" content="fluent-bit">
+<meta property="article:tag" content="efk">
+<meta property="article:tag" content="es">
+<meta property="article:tag" content="日志平台">
+<meta property="article:tag" content="日志分析">
+<meta property="article:tag" content="实时计算">
+<meta property="article:tag" content="storm">
+<meta property="article:tag" content="flink">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://assets.msyy233.com/20191126/153813590.png!blog">
+
+<link rel="canonical" href="https://www.msyy233.com/posts/14778.html">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>关于分布式日志平台的思考 | 码上有约</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="码上有约" type="application/atom+xml">
+<link rel="stylesheet" href="/css/prism-duotone-light.css" type="text/css"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">码上有约</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">为一桩事业呕心沥血、为一种梦想至死不渝</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://www.msyy233.com/posts/14778.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+      <meta itemprop="name" content="程大明">
+      <meta itemprop="description" content="唯有坚持不懈">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="码上有约">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          关于分布式日志平台的思考
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-06-13 11:06:22" itemprop="dateCreated datePublished" datetime="2020-06-13T11:06:22+08:00">2020-06-13</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-07-13 23:01:44" itemprop="dateModified" datetime="2020-07-13T23:01:44+08:00">2020-07-13</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/log/" itemprop="url" rel="index"><span itemprop="name">log</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/posts/14778.html" class="post-meta-item leancloud_visitors" data-flag-title="关于分布式日志平台的思考" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="日志的基本概念"><a href="#日志的基本概念" class="headerlink" title="日志的基本概念"></a>日志的基本概念</h1><p>日志就是按照时间顺序追加的、完全有序的记录序列、其实就是一种特殊的文件格式、文件是一个字节数组、而这里日志是一个记录数据、只是相对于文件来说、这里每条记录都是按照时间的相对顺序排列的、可以说日志是最简单的一种存储模型、<br>由于日志本身固有的特性、记录从左向右开始顺序插入、也就意味着左边的记录相较于右边的记录“更老”、也就是说我们可以不用依赖于系统时钟、但是针对业务场景来说、又比较依赖正确的时间、总之日志对于分析系统来说相当重要、</p>
+<h1 id="常见的日志框架"><a href="#常见的日志框架" class="headerlink" title="常见的日志框架"></a>常见的日志框架</h1><p>目前主流几款日志框架为log4j、logback、log4j2、jdk-logging等、当然绝大多数情况下大家都使用了sl4j框架作为日志门面、<br>不同日志框架API也相差不大、基本都是依赖Append记录、例如：log4j2和log4j都有自己和官方实现的Kafka Append、logback可能需要自己开发、<br>在Append的背后还有Encoder/Layout、简单的说就是日志输出的格式、不同框架的命名虽然不同、但是概念也是完全相同的、实现自己的Encoder/Layout格式化Event输出到文件、再通过收集工具处理、与直接改造Append输出到对应后端是日志收集的常见做法、</p>
+<p>除了logback原生实现了sl4j门面、其他的框架大都提供了对应的桥接工具包、大体逻辑可以参考下图：</p>
+<a id="more"></a>
+<p><img src="http://assets.msyy233.com/20191126/153813590.png!blog" alt="日志桥接模式"></p>
+<h1 id="日志平台技术栈"><a href="#日志平台技术栈" class="headerlink" title="日志平台技术栈"></a>日志平台技术栈</h1><h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>日志主要包括系统日志、应用程序日志和安全日志、系统运维和开发人员可以通过日志了解服务器软硬件信息、检查配置过程中的错误及错误发生的原因、经常分析日志可以了解服务器的负荷、性能安全性、从而及时采取措施纠正错误、<br>通常、日志被分散在储存不同的设备上、如果你管理数十上百台服务器、你还在使用依次登录每台机器的传统方法查阅日志、这样是不是感觉很繁琐和效率低下、当务之急我们使用集中化的日志管理、将所有服务器上的日志收集汇总、<br>集中化管理日志后、日志的统计和检索又成为一件比较麻烦的事情、一般我们使用grep、awk和wc等Linux命令能实现检索和统计、但是对于要求更高的查询、排序和统计等要求和庞大的机器数量依然使用这样的方法难免有点力不从心、<br>大数据时代、随着数据量不断增长、存储与计算集群的规模也逐渐扩大、几百上千台的云计算环境已不鲜见、现在的集群所需要解决的问题不仅仅是高性能、高可靠性、高可扩展性、还需要面对易维护性以及数据平台内部的数据共享性等诸多挑战、优秀的系统运维平台既能实现数据平台各组件的集中式管理、方便系统运维人员日常监测、提升运维效率，又能反馈系统运行状态给系统开发人员、<strong>实现并解决上述功能和痛点的系统就是日志平台</strong>、</p>
+<h2 id="阶段"><a href="#阶段" class="headerlink" title="阶段"></a>阶段</h2><ol>
+<li><p><strong>初阶</strong>：日志没有集中式处理、只做事后追查、黑客入侵后删除日志无法察觉、使用数据库存储日志、无法胜任复杂事务处理、</p>
+</li>
+<li><p><strong>中阶</strong>：将日志收集后集中管理查询、作为代表的解决方案有ELK、能够进行简单的搜索、分析、但是日志间无关联性、并且不具备实时分析告警等功能、</p>
+</li>
+<li><p><strong>高阶</strong>：建立出日志与日志间建立联系、再进行集中收集管理、配合流处理框架实时分析告警、企业定制业务关联、高速便捷查询同时、精准对一些异常进行告警、</p>
+</li>
+</ol>
+<h2 id="收集"><a href="#收集" class="headerlink" title="收集"></a>收集</h2><p>日志收集技术目前庞杂广泛、且没有其中一个技术能够异常出彩、难以筛选、并且每个产品因为定位不同、绝大部分居然并没有太多可比性、调研有以下产品、这里会对每个产品有个简单的介绍、</p>
+<h3 id="Filebeat"><a href="#Filebeat" class="headerlink" title="Filebeat"></a>Filebeat</h3><p>目前搜索结果最多的收集工具、也是Elastic家族一员、热度也是相当高、可能有大批量ELK用户吧、  </p>
+<h4 id="基本功能"><a href="#基本功能" class="headerlink" title="基本功能"></a>基本功能</h4><blockquote>
+<p>支持<strong>输入</strong>端：Log、Stdin、Container、Kafka、UDP、Docker、Redis、TCP、Syslog、s3、NetFlow、Google Pub/Sub<br>支持<strong>输出</strong>端：Elasticsearch、Logstash、Kafka、Redis、File、Console、Elastic Cloud  </p>
+</blockquote>
+<p>内置了常见的<strong>日志模块</strong>、可以几行代码就达到基本框架的收集、</p>
+<blockquote>
+<p>目前支持模块：Apache、Auditd、AWS、azure、CEF、Cisco、Coredns、Elasticsearch、Envoyproxy、Google Cloud、haproxy、IBM MQ、Icinga、IIS、Iptables、Kafka、Kibana、Logstash、MISP、MongoDB、MSSQL、MySQL、nats、NetFlow、Nginx、Osquery、Palo Alto Networks、PostgreSQL、RabbitMQ、Redis、Santa、Suricata、System、Traefik、Zeek (Bro) Module</p>
+</blockquote>
+<p>支持<strong>背压敏感协议</strong>、当与Elastic家族其他组件整合时、例如Logstash与Elasticsearch作为输出端、当它们很忙的时候会减慢读取与传输速度、一旦恢复正常、那么将恢复原来的速度、</p>
+<p>另外还支持<strong>多行日志、JSON解析、动态配置和processors</strong>、关于processors大致就是流式处理、示意：<code>event -&gt; processor1 -&gt; event1 -&gt; processor2 -&gt; event2</code></p>
+<p>Filebeat是Beats家族的一员、最初的目的就是为了解决Logstash太重而设计、非常轻量、性能和稳定性也很高、当然你也可以<strong>基于libbeats定制自己的Beats</strong>、</p>
+<h4 id="代码结构"><a href="#代码结构" class="headerlink" title="代码结构"></a>代码结构</h4><p><img src="http://assets.msyy233.com/20191226/103619397.png!blog" alt="filebeat"><br>从代码的实现角度来看、filebeat大概可以分以下几个模块：</p>
+<ul>
+<li>input：找到配置的日志文件、启动harvester</li>
+<li>harvester：读取文件、发送至处理程序spooler</li>
+<li>spooler：缓存日志数据、直到可以发送至publisher</li>
+<li>publisher：发送日志至后端、同时通知registrar</li>
+<li>registrar：记录日志文件被采集的状态</li>
+</ul>
+<h4 id="内部逻辑"><a href="#内部逻辑" class="headerlink" title="内部逻辑"></a>内部逻辑</h4><p><img src="http://assets.msyy233.com/20191226/101013f11.png!blog" alt="filebeat"><br>当你开启filebeat程序的时候、它抽象出一个crawler的结构体、crawler会根据配置创建，然后遍历并运行每个input、获取匹配的日志文件后、会对每一个日志文件启动harvester进程、每一个harvester进程读取一个日志文件的新内容、并发送这些新的日志数据到spooler集合这些事件、最后filebeat会通过publisher发送集合的数据到你指定的地点并记录到registrar</p>
+<h4 id="性能问题"><a href="#性能问题" class="headerlink" title="性能问题"></a>性能问题</h4><p>值得注意正常启动filebeat、一般确实只会占用30-40MB内存、但是在容器云上偶发性的某些节点上的<strong>filebeat容器内存占用超过配置的pod limit限制、并且不停的触发的OOM、</strong><br>究其原因、一般容器化环境中、特别是裸机上运行的容器个数可能会比较多、导致创建大量的harvester去采集日志、如果没有很好的配置filebeat、会有较大概率导致内存急剧上升、  </p>
+<p>filebeat内存占据较大的部分还是memqueue、所有采集到的日志都会先发送至memqueue聚集、再通过output发送出去、每条日志的数据在filebeat中都被组装为event结构、<strong>filebeat默认配置的memqueue缓存的event个数为4096</strong>、可通过queue.mem.events设置、默认最大的<strong>一条日志的event大小限制为10MB</strong>、可通过max_bytes设置、<strong>4096 * 10MB = 40GB</strong>、极端场景下、filebeat至少占据40GB的内存、特别是配置了<strong>multiline多行模式</strong>的情况下、如果multiline配置有误、单个event误采集为上千条日志的数据、很可能导致memqueue占据了大量内存、致使内存爆炸、</p>
+<p>合理的配置<strong>日志文件的匹配规则、限制单行日志大小、根据实际情况配置memqueue缓存的个数</strong>、才能在实际使用中规避filebeat的内存占用过大的问题、</p>
+<h4 id="灵活扩展"><a href="#灵活扩展" class="headerlink" title="灵活扩展"></a>灵活扩展</h4><p>一般情况下filebeat可满足大部分的日志采集需求、但是仍然避免不了一些特殊的场景需要我们对filebeat进行定制化开发、当然filebeat本身的设计也提供了良好的扩展性、</p>
+<p>Beats系列目前只提供了像elasticsearch、kafka、logstash等几类output客户端、如果我们想要filebeat直接发送至其他后端、需要定制化开发自己的output、同样、如果需要对日志做过滤处理或者增加元信息、也可以自制processor插件  </p>
+<p>无论是增加output还是写个processor、filebeat提供的大体思路基本相同、一般来讲有3种方式：</p>
+<ol>
+<li><p>在现有的源码上开发、output或者processor都提供了类似Run、Stop等的接口、只需要实现该类接口、然后在init方法中注册相应的插件初始化方法即可、但由于golang中init方法是在import包时才被调用、所以需要在初始化filebeat的代码中手动import</p>
+</li>
+<li><p>复制一份filebeat的main.go、import我们自研的插件库、然后重新编译、本质上和方式1区别不大、</p>
+</li>
+<li><p>filebeat还提供了基于golang plugin的插件机制、需要把自研的插件编译成.so共享链接库、然后在filebeat启动参数中通过-plugin指定库所在路径、不过实际上一方面golang plugin还不够成熟稳定、一方面自研的插件依然需要依赖相同版本的libbeat库、而且还需要相同的golang版本编译、坑可能更多、不太推荐、</p>
+</li>
+</ol>
+<h4 id="集中配置"><a href="#集中配置" class="headerlink" title="集中配置"></a>集中配置</h4><p>非常遗憾、目前Beats系列集中配置的管理界面只支持Kibana、并且这个功能还是商业版本、需要购买Elastic Gold、不过官方已经申明在不久的将来、还计划公开一个API、以便更轻松地与外部工具和系统集成、未来可以基于API开发自己的统一管理UI</p>
+<h3 id="Fluent-bit"><a href="#Fluent-bit" class="headerlink" title="Fluent-bit"></a>Fluent-bit</h3><p>这个是Fluentd对标Filebeat的组件、虽然性能很高、但由于<strong>只支持Centos7</strong>、考虑公司还是有些系统跑在Centos6上面、并且项目本身热度也不高、所以并没有深入研究、</p>
+<h3 id="Flume"><a href="#Flume" class="headerlink" title="Flume"></a>Flume</h3><p>这个严格来说只能算数据传输工具、并非日志收集工具、并且当数据爆发时、就要考虑性能、Flume有多种收集方式、但是Flume以文件大小为分割来发送一个event、这造成了日志在采集的过程中、很难被结构化、日志只能按照原来的模样原样保存、Flume在收集log的时候经常会出现<code>Line length exceeds max (2048), truncating line!</code>、这个对于一些并且不需要完整性的event没影响、但是遇到需要解析log的情况就有问题了、有时一个json或者其他格式的log被截断了，解析也会出问题，所以在source的属性配置里可以通过参数deserializer.maxLineLength调高默认的2048、  </p>
+<p>总的来说Flume更倾向于传输而非收集、目前美团是实用此技术收集日志的、但是我认为作为一款单纯的日志收集工具并不合适、并且性能也比较难把控、</p>
+<h3 id="Logstash"><a href="#Logstash" class="headerlink" title="Logstash"></a>Logstash</h3><p>这个工具就不说了、我们公司也在运用、网上评价都是功能很强大、性能妥妥的不行、而且对于一些定制化场景肯定也是不行的、可以用Flink + Drools代替。</p>
+<h3 id="Fluentd"><a href="#Fluentd" class="headerlink" title="Fluentd"></a>Fluentd</h3><p>比较依赖结构化，且性能较差；笔者不是很熟，但是公司有实践经验，目前也是希望替换成Filebeat。</p>
+<h2 id="管道"><a href="#管道" class="headerlink" title="管道"></a>管道</h2><p>管道部分并没有太难以筛选、基本业界都是使用Kafka、下面Kafka的一点介绍、</p>
+<h3 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h3><ul>
+<li><p>Broker : Kafka集群包含一个或多个服务器，这种服务器被称为broker。</p>
+</li>
+<li><p>Topic : 每条发布到Kafka集群的消息都有一个类别，这个类别被称为Topic。（物理上不同Topic的消息分开存储，逻辑上一个Topic的消息虽然保存于一个或多个broker上但用户只需指定消息的Topic即可生产或消费数据而不必关心数据存于何处）</p>
+</li>
+<li><p>Partition : Partition是物理上的概念，每个Topic包含一个或多个Partition，多个Partition均匀分布在多个Broker节点上。</p>
+</li>
+<li><p>Producer : 消息生产者，负责发布消息到Kafka broker，一个典型的Kafka集群中包含若干Producer，Kafka支持水平扩展，一般broker数量越多，集群吞吐率越高。</p>
+</li>
+<li><p>Consumer :消息消费者，向Kafka broker读取消息的客户端。同一个消费组，一个Partition只支持一个消费线程来消费消息。</p>
+</li>
+<li><p>Consumer Group : 每个Consumer属于一个特定的Consumer Group（可为每个Consumer指定group name，若不指定group name则属于默认的group）。</p>
+</li>
+</ul>
+<p><img src="http://assets.msyy233.com/20200713/223923e00.png!blog" alt="拓扑结构图"></p>
+<p><img src="http://assets.msyy233.com/20200713/224011256.png!blog" alt="Zookeeper存储结构"></p>
+<h3 id="Partiton-Replication原则"><a href="#Partiton-Replication原则" class="headerlink" title="Partiton Replication原则"></a>Partiton Replication原则</h3><p>Kafka把topic中一个Partition大文件分成多个小文件段，多个Partition均匀分布在多个Broker节点上。通过索引信息可以快速定位message和确定response的最大大小；通过index元数据全部映射到memory，可以避免segment file的IO磁盘操作；通过索引文件稀疏存储，可以大幅降低index文件元数据占用空间大小。</p>
+<p><img src="http://assets.msyy233.com/20200713/224231a56.jpg!blog" alt="4个Partition，2 Replication"></p>
+<p><img src="http://assets.msyy233.com/20200713/22462319d.jpg!blog" alt="4个Partition，2 Replication"></p>
+<h3 id="高可用"><a href="#高可用" class="headerlink" title="高可用"></a>高可用</h3><ul>
+<li>replication机制，多副本默认自动均匀分配在各集群节点上。</li>
+<li>Kafka Broker Leader遴选机制，每个Broker都有均等分配Partition的Leader机会。Kakfa Broker集群受Zookeeper管理。</li>
+</ul>
+<h3 id="Partition中segment文件存储结构"><a href="#Partition中segment文件存储结构" class="headerlink" title="Partition中segment文件存储结构"></a>Partition中segment文件存储结构</h3><ul>
+<li>segment有index和data两部分组成，后缀为.index，.log，.index为索引文件，.log数据文件。index采用稀疏存储方式，并不是每一条数据都对应一条索引数据。</li>
+<li>第一个segment文件从0开始，后续的文件名采用上一个文件的最大offset+1命名。</li>
+<li>data数据采用顺序写入。</li>
+</ul>
+<h3 id="Kafka性能瓶颈"><a href="#Kafka性能瓶颈" class="headerlink" title="Kafka性能瓶颈"></a>Kafka性能瓶颈</h3><ul>
+<li>增加partition能提高Kafka吞吐量，当partition数据达到阈值时。增加partition会引起Kafka吞吐量下降。</li>
+<li>当Topic数量达到一定阈值时，增加Topic，Kafka吞吐量明显下降。由于Kafka的每个Topic、每个分区都会对应一个物理文件。当Topic数量增加时，消息分散的落盘策略会导致磁盘IO竞争激烈成为瓶颈。</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Topic数量</th>
+<th>发送端并发数</th>
+<th>发送端RT（ms）</th>
+<th>发送端TPS</th>
+<th>消费端TPS</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>64</td>
+<td>800</td>
+<td>5</td>
+<td>13.6w</td>
+<td>13.6w</td>
+</tr>
+<tr>
+<td>128</td>
+<td>256</td>
+<td>23</td>
+<td>8500</td>
+<td>8500</td>
+</tr>
+<tr>
+<td>256</td>
+<td>256</td>
+<td>133</td>
+<td>2352</td>
+<td>2352</td>
+</tr>
+</tbody></table>
+<h2 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h2><p>分析部分考虑使用流处理框架、通过订阅Kafka的日志、进行不同逻辑处理、现阶段新系统选择Flink已经是不争的事实、由于功能定位上都较为相似、Storm和Flink主要是对比性能就可以了、以下为对比资料、</p>
+<h3 id="功能对比"><a href="#功能对比" class="headerlink" title="功能对比"></a>功能对比</h3><table>
+<thead>
+<tr>
+<th>功能</th>
+<th>Storm</th>
+<th>Flink</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>状态管理</td>
+<td>无状态，需用户自行进行状态管理</td>
+<td>有状态</td>
+</tr>
+<tr>
+<td>窗口支持</td>
+<td>对事件窗口支持较弱，缓存整个窗口的所有数据，窗口结束时一起计算</td>
+<td>窗口支持较为完善，自带一些窗口聚合方法，并且会自动管理窗口状态。</td>
+</tr>
+<tr>
+<td>消息传递</td>
+<td>At Most Once<br>At Least Once</td>
+<td>At Most Once<br>At Least Once<br> Exactly Once</td>
+</tr>
+<tr>
+<td>容错方式</td>
+<td><a href="http://storm.apache.org/releases/1.1.0/Guaranteeing-message-processing.html" target="_blank" rel="noopener">ACK机制</a> ：对每个消息进行全链路跟踪，失败或超时进行重发。</td>
+<td><a href="https://ci.apache.org/projects/flink/flink-docs-master/internals/stream_checkpointing.html#checkpointing" target="_blank" rel="noopener">检查点机制</a> ：通过分布式一致性快照机制，对数据流和算子状态进行保存。在发生错误时，使系统能够进行回滚。</td>
+</tr>
+<tr>
+<td>应用现状</td>
+<td>在美团点评实时计算业务中已有较为成熟的运用，有管理平台、常用 API 和相应的文档，大量实时作业基于 Storm 构建。</td>
+<td>在美团点评实时计算业务中已有一定应用，但是管理平台、API 及文档等仍需进一步完善。</td>
+</tr>
+</tbody></table>
+<h3 id="性能对比"><a href="#性能对比" class="headerlink" title="性能对比"></a>性能对比</h3><p>这里主要通过以下两个指标来衡量各场景性能、  </p>
+<p>吞吐量（Throughput）：<strong><em>单位时间内由计算框架成功地传送数据的数量，本次测试吞吐量的单位为：条/秒。反映了系统的负载能力，在相应的资源条件下，单位时间内系统能处理多少数据。</em></strong> 吞吐量常用于资源规划，同时也用于协助分析系统性能瓶颈，从而进行相应的资源调整以保证系统能达到用户所要求的处理能力。假设商家每小时能做二十份午餐（吞吐量 20 份/小时），一个外卖小哥每小时只能送两份（吞吐量 2 份/小时），这个系统的瓶颈就在小哥配送这个环节，可以给该商家安排十个外卖小哥配送。</p>
+<p>延迟（Latency）：<strong><em>数据从进入系统到流出系统所用的时间，本次测试延迟的单位为：毫秒。反映了系统处理的实时性。金融交易分析等大量实时计算业务对延迟有较高要求，延迟越低，数据实时性越强。</em></strong> 假设商家做一份午餐需要 5 分钟，小哥配送需要 25 分钟，这个流程中用户感受到了 30 分钟的延迟。如果更换配送方案后延迟变成了 60 分钟，等送到了饭菜都凉了，这个新的方案就是无法接受的。</p>
+<p>对比测试的参数配置：</p>
+<ul>
+<li>Storm 和 Flink 默认均为 At Least Once 语义。</li>
+<li>Storm 开启 ACK，ACKer 数量为 1。</li>
+<li>Flink 的 Checkpoint 时间间隔为 30 秒，默认 StateBackend 为 Memory。</li>
+</ul>
+<h4 id="集群参数"><a href="#集群参数" class="headerlink" title="集群参数"></a>集群参数</h4><table>
+<thead>
+<tr>
+<th>参数项</th>
+<th>参数值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>CPU</td>
+<td>QEMU Virtual CPU version 1.1.2 2.6GHz</td>
+</tr>
+<tr>
+<td>Core</td>
+<td>8</td>
+</tr>
+<tr>
+<td>Memory</td>
+<td>16GB</td>
+</tr>
+<tr>
+<td>Disk</td>
+<td>500G</td>
+</tr>
+<tr>
+<td>OS</td>
+<td>CentOS release 6.5 (Final)</td>
+</tr>
+</tbody></table>
+<h4 id="框架参数"><a href="#框架参数" class="headerlink" title="框架参数"></a>框架参数</h4><table>
+<thead>
+<tr>
+<th>参数项</th>
+<th>Storm 配置</th>
+<th>Flink 配置</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Version</td>
+<td>Storm 1.1.0-mt002</td>
+<td>Flink 1.3.0</td>
+</tr>
+<tr>
+<td>Master Memory</td>
+<td>2600M</td>
+<td>2600M</td>
+</tr>
+<tr>
+<td>Slave Memory</td>
+<td>1600M * 16</td>
+<td>12800M * 2</td>
+</tr>
+<tr>
+<td>Parallelism</td>
+<td>2 supervisor<br>16 worker</td>
+<td>2 Task Manager<br>16 Task slots</td>
+</tr>
+</tbody></table>
+<h4 id="测试内容"><a href="#测试内容" class="headerlink" title="测试内容"></a>测试内容</h4><h5 id="场景一：“输入-输出”简单处理"><a href="#场景一：“输入-输出”简单处理" class="headerlink" title="场景一：“输入-输出”简单处理"></a>场景一：“输入-输出”简单处理</h5><p>通过对“输入-输出”这样简单处理逻辑场景的测试，尽可能减少其它因素的干扰，反映两个框架本身的性能。 同时测算框架处理能力的极限，处理更加复杂的逻辑的性能不会比纯粹“输入-输出”更高。</p>
+<p><img src="http://assets.msyy233.com/20191230/163410611.png!blog" alt="Identity"></p>
+<p>主要模拟“输入-输出”简单处理场景，反映两个框架<strong>本身的性能</strong>：</p>
+<ul>
+<li>输入数据为“msgId, eventTime”，其中 eventTime 视为数据生成时间。单条输入数据约 20 B。</li>
+<li>进入作业处理流程时记录 inTime，作业处理完成后（准备输出时）记录 outTime。</li>
+<li>作业从 Kafka Topic Data 中读取数据后，在字符串末尾追加时间戳，然后直接输出到 Kafka。</li>
+<li>输出数据为“msgId, eventTime, inTime, outTime”。单条输出数据约 50 B。</li>
+</ul>
+<p><img src="http://assets.msyy233.com/20191230/1640528f2.png!blog" alt="Identity"><br><img src="http://assets.msyy233.com/20200102/104213fef.png!blog" alt="Identity"><br><strong>此场景 <span style="color:red">Flink吞吐约为Storm的 3-5 倍、满吞吐时Flink的延迟约为Storm的一半。</span></strong></p>
+<h5 id="场景二：用户作业耗时较长"><a href="#场景二：用户作业耗时较长" class="headerlink" title="场景二：用户作业耗时较长"></a>场景二：用户作业耗时较长</h5><p>如果用户的处理逻辑较为复杂，或是访问了数据库等外部组件，其执行时间会增大，作业的性能会受到影响。因此，我们测试了用户作业耗时较长的场景下两个框架的调度性能。  </p>
+<p><img src="http://assets.msyy233.com/20191230/1634548a8.png!blog" alt="Sleep"></p>
+<p>主要模拟用户作业耗时较长的场景，反映<strong>复杂用户逻辑对框架差异的削弱</strong>，比较两个框架的<strong>调度性能</strong>：</p>
+<ul>
+<li>输入数据和输出数据均与之前场景一相同。</li>
+<li>读入数据后，等待一定时长（1 ms）后在字符串末尾追加时间戳后输出</li>
+</ul>
+<p><img src="http://assets.msyy233.com/20200102/104409cee.png!blog" alt="Sleep"><br><img src="http://assets.msyy233.com/20200102/104431b75.png!blog" alt="Sleep"><br><strong>此场景 <span style="color:red">两个框架的吞吐能力基本一致，Sleep 1 毫秒时，Flink的延迟仍低于Storm。</span></strong></p>
+<h5 id="场景三：窗口统计场景"><a href="#场景三：窗口统计场景" class="headerlink" title="场景三：窗口统计场景"></a>场景三：窗口统计场景</h5><p>实时计算中常有对时间窗口或计数窗口进行统计的需求，例如一天中每五分钟的访问量，每 100 个订单中有多少个使用了优惠等。Flink 在窗口支持上的功能比 Storm 更加强大，API 更加完善，但是我们同时也想了解在窗口统计这个常用场景下两个框架的性能。</p>
+<p><img src="http://assets.msyy233.com/20191230/163521e8b.png!blog" alt="Windowed Word Count"></p>
+<p>主要模拟窗口统计场景，反映两个框架在进行<strong>窗口统计时性能</strong>的差异。</p>
+<ul>
+<li>输入为 JSON 格式，包含 msgId、eventTime 和一个由若干单词组成的句子，单词之间由空格分隔。单条输入数据约 150 B。</li>
+<li>读入数据后解析 JSON，然后将句子分割为相应单词，带 eventTime 和 inTime 时间戳发给 CountWindow 进行单词计数，同时记录一个窗口中最大最小的 eventTime 和 inTime，最后带 outTime 时间戳输出到 Kafka 相应的 Topic。</li>
+<li>Spout/Source 及 OutputBolt/Output/Sink 并发度恒为 1，增大并发度时仅增大 JSONParser、CountWindow 的并发度。</li>
+<li>由于 Storm 对 window 的支持较弱，CountWindow 使用一个 HashMap 手动实现，Flink 用了原生的 CountWindow 和相应的 Reduce 函数。</li>
+</ul>
+<p><img src="http://assets.msyy233.com/20200102/104924460.png!blog" alt="Windowed Word Count"><br><img src="http://assets.msyy233.com/20200102/104945f1b.png!blog" alt="Windowed Word Count"><br><strong>此场景 <span style="color:red">Flink吞吐依然为Storm的3倍以上，当QPS逐渐增大的时候，Flink在延迟上的优势开始体现出来。</span></strong></p>
+<h5 id="精确计算场景"><a href="#精确计算场景" class="headerlink" title="精确计算场景"></a>精确计算场景</h5><p>Storm 仅能保证“至多一次” (At Most Once) 和“至少一次” (At Least Once) 的消息投递语义，即可能存在重复发送的情况。有很多业务场景对数据的精确性要求较高，希望消息投递不重不漏。Flink 支持“恰好一次” (Exactly Once) 的语义，但是在限定的资源条件下，更加严格的精确度要求可能带来更高的代价，从而影响性能。因此，我们测试了在不同消息投递语义下两个框架的性能，希望为精确计算场景的资源规划提供数据参考。</p>
+<p>使用与场景三相同测试方法进行了精确计算场景的测试，用来评测Flink<strong>恰好一次投递的性能</strong>。</p>
+<p><img src="http://assets.msyy233.com/20200102/1054278bf.png!blog" alt="Exactly Once"><br><img src="http://assets.msyy233.com/20200102/10564328a.png!blog" alt="Exactly Once"></p>
+<p><strong>此场景 <span style="color:red">Flink的Exactly Once吞吐较At Least Once而言下降了6.3%，Exactly Once 的延迟中位数曲线与 At Least Once 基本贴合，在延迟上性能没有太大差异</span></strong></p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>绝大部分情况、几乎不用犹豫该使用哪个框架、除非涉及到老系统迁移、否则<strong>Flink总会是最优选</strong>、</p>
+<h2 id="存储"><a href="#存储" class="headerlink" title="存储"></a>存储</h2><p>存储部分主要是Hbase&amp;Hadoop和Elasticsearch之间做些选择、由于日志肯定是需要多维度搜索的、否则集中管理的意义不大、Elasticsearch在达到准实时搜索的同时也支持比较高的数据量、Hbase&amp;Hadoop虽然也可以加入Solr组件来支持、但是毕竟不是非常合适、而且要维护一套大数据集群成本也很高、这里就不介绍了、只对Elasticsearch进行一些介绍、</p>
+<h1 id="分布式日志平台"><a href="#分布式日志平台" class="headerlink" title="分布式日志平台"></a>分布式日志平台</h1><h2 id="查询"><a href="#查询" class="headerlink" title="查询"></a>查询</h2><p>简单的日志查询没有任何意义，日志信息需要上下文关联，做到上下文关联的方式可以借助多种方案。例如：通过分布式链路追踪工具将追踪ID输出到日志、通过改造日志实现关系查询的串联（也许需要一个强大的引擎）。</p>
+<h2 id="处理"><a href="#处理" class="headerlink" title="处理"></a>处理</h2><p>对于一些数据指标的运算吧，简单说说就是链路明细、链路概览、链路索引、异常统计等等吧。</p>
+<h2 id="告警"><a href="#告警" class="headerlink" title="告警"></a>告警</h2><p>实施处理的数据就可以实时告警、基础功能不再赘述。</p>
+<h1 id="落地的技术考量"><a href="#落地的技术考量" class="headerlink" title="落地的技术考量"></a>落地的技术考量</h1><h2 id="Filebeat-1"><a href="#Filebeat-1" class="headerlink" title="Filebeat"></a>Filebeat</h2><p>Fluentd和Filebeat都足够优秀、让人难以抉择、但是最终我决定选用二者中选择Filebeat、主要有以下原因：</p>
+<ol>
+<li>同为开源产品、但从Github Star发展势头来看、Filebeat虽然晚两年但是发展势头是慢慢赶超Fluentd的、</li>
+<li>Filebeat与Elastic家族其他产品具有更好的集成性、例如：我需要保证审计日志百分百不丢失、就可以使用Filebeat直接输出的ES、Fluentd虽然也支持输出但并不支持背压敏感协议、</li>
+<li>相比基于ruby的Fluentd、golang技术栈的Filebeat对使用容器化的公司更友好、更具可定制性、</li>
+<li>未来官方会开放一个集中管理的API、这对大规模的集群管理很有帮助、而Fluentd并没有找到相关的资料、</li>
+<li>网络搜索结果Filebeat的资料数量是Fluentd的三倍、</li>
+<li>除了Filebeat以外、官方还扩展了很多其他beats、这对以后可能存在的功能扩展做了预留、</li>
+</ol>
+<h2 id="Kafka"><a href="#Kafka" class="headerlink" title="Kafka"></a>Kafka</h2><p>在满足要求的情况下Kafka的性能几乎是RocketMQ的1.5倍、我想不出还有什么消息中间件的性能可以超过Kafka、又或者说比Kakfa更适合做日志管道、</p>
+<h2 id="Flink"><a href="#Flink" class="headerlink" title="Flink"></a>Flink</h2><p>我不明白经过上面的技术栈对比、还有什么不选择Flink的理由、Exactly Once支持、有状态、完善的窗口支持同时又保证了高性能、高吞吐量难道不香吗？</p>
+<h2 id="Elasticsearch"><a href="#Elasticsearch" class="headerlink" title="Elasticsearch"></a>Elasticsearch</h2><p>如果你只是需要一套日志存储系统、毫无疑问类似Hadoop这样的大数据系列是更好的选择、但是如果你需要的是一套日志检索系统那么选择ES吧、没有理由、因为它就是最优的选择、</p>
+<h2 id="Vue"><a href="#Vue" class="headerlink" title="Vue"></a>Vue</h2><p>我在是否使用Kibana考虑了很久、毕竟整个技术选型大部分是Elastic家族的产品、尤其是比较重要的存储和收集、无论如何他们对同为Elastic家族的Kibana支持是最好的、但是Kibana在个性化的一些查询中可能会显得力不从心、这里可以参考上个章节的分布式日志平台想关功能、不仅仅如此、Kibana在对多租户的支持方向也非常不友好、而对Kibana进行二次开发的学习成本太高、因此展示这边可能使用自研更合适、而我之所以选用Vue是因为我们德邦快递公司前端技术架构使用了它、</p>
+<h1 id="最终的实施步骤"><a href="#最终的实施步骤" class="headerlink" title="最终的实施步骤"></a>最终的实施步骤</h1><p>实施步骤省略。这里引出一个问题，经过艰苦努力，终于完成了基本的日志查询问题，可是如此海量的日志所需要的硬件资源也是个高昂的费用，如何才能让数据发挥应有的价值？也许可以思考一下“数字化运营平台”。</p>
+<h1 id="总结-1"><a href="#总结-1" class="headerlink" title="总结"></a>总结</h1><p>单纯的日志平台并没有任何意义，实现上述基础功能可以直接找供应商，也许落地成本更低。但是目前供应商能做的还是单个工具，如何进行整合，实现有价值的“数字化平台”才是我们需要思考的。</p>
+<hr>
+<p><strong>参考资料：</strong><br><a href="https://tech.meituan.com/2017/11/17/flink-benchmark.html" target="_blank" rel="noopener">流计算框架 Flink 与 Storm 的性能对比</a><br><a href="https://zhuanlan.zhihu.com/p/79579389" target="_blank" rel="noopener">Kafka史上最详细原理总结</a></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/logstash/" rel="tag"># logstash</a>
+              <a href="/tags/elk/" rel="tag"># elk</a>
+              <a href="/tags/kibana/" rel="tag"># kibana</a>
+              <a href="/tags/filebeat/" rel="tag"># filebeat</a>
+              <a href="/tags/kafka/" rel="tag"># kafka</a>
+              <a href="/tags/elasticsearch/" rel="tag"># elasticsearch</a>
+              <a href="/tags/flume/" rel="tag"># flume</a>
+              <a href="/tags/fluentd/" rel="tag"># fluentd</a>
+              <a href="/tags/fluent-bit/" rel="tag"># fluent-bit</a>
+              <a href="/tags/efk/" rel="tag"># efk</a>
+              <a href="/tags/es/" rel="tag"># es</a>
+              <a href="/tags/%E6%97%A5%E5%BF%97%E5%B9%B3%E5%8F%B0/" rel="tag"># 日志平台</a>
+              <a href="/tags/%E6%97%A5%E5%BF%97%E5%88%86%E6%9E%90/" rel="tag"># 日志分析</a>
+              <a href="/tags/%E5%AE%9E%E6%97%B6%E8%AE%A1%E7%AE%97/" rel="tag"># 实时计算</a>
+              <a href="/tags/storm/" rel="tag"># storm</a>
+              <a href="/tags/flink/" rel="tag"># flink</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/posts/49866.html" rel="prev" title="Java NIO系列（一）核心组件">
+      <i class="fa fa-chevron-left"></i> Java NIO系列（一）核心组件
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="lv-container" data-id="city" data-uid="MTAyMC8zNjMxOC8xMjg1Mw=="></div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#日志的基本概念"><span class="nav-number">1.</span> <span class="nav-text">日志的基本概念</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#常见的日志框架"><span class="nav-number">2.</span> <span class="nav-text">常见的日志框架</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#日志平台技术栈"><span class="nav-number">3.</span> <span class="nav-text">日志平台技术栈</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#背景"><span class="nav-number">3.1.</span> <span class="nav-text">背景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#阶段"><span class="nav-number">3.2.</span> <span class="nav-text">阶段</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#收集"><span class="nav-number">3.3.</span> <span class="nav-text">收集</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Filebeat"><span class="nav-number">3.3.1.</span> <span class="nav-text">Filebeat</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#基本功能"><span class="nav-number">3.3.1.1.</span> <span class="nav-text">基本功能</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#代码结构"><span class="nav-number">3.3.1.2.</span> <span class="nav-text">代码结构</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#内部逻辑"><span class="nav-number">3.3.1.3.</span> <span class="nav-text">内部逻辑</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#性能问题"><span class="nav-number">3.3.1.4.</span> <span class="nav-text">性能问题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#灵活扩展"><span class="nav-number">3.3.1.5.</span> <span class="nav-text">灵活扩展</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#集中配置"><span class="nav-number">3.3.1.6.</span> <span class="nav-text">集中配置</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Fluent-bit"><span class="nav-number">3.3.2.</span> <span class="nav-text">Fluent-bit</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Flume"><span class="nav-number">3.3.3.</span> <span class="nav-text">Flume</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Logstash"><span class="nav-number">3.3.4.</span> <span class="nav-text">Logstash</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Fluentd"><span class="nav-number">3.3.5.</span> <span class="nav-text">Fluentd</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#管道"><span class="nav-number">3.4.</span> <span class="nav-text">管道</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#基本概念"><span class="nav-number">3.4.1.</span> <span class="nav-text">基本概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Partiton-Replication原则"><span class="nav-number">3.4.2.</span> <span class="nav-text">Partiton Replication原则</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#高可用"><span class="nav-number">3.4.3.</span> <span class="nav-text">高可用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Partition中segment文件存储结构"><span class="nav-number">3.4.4.</span> <span class="nav-text">Partition中segment文件存储结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Kafka性能瓶颈"><span class="nav-number">3.4.5.</span> <span class="nav-text">Kafka性能瓶颈</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#分析"><span class="nav-number">3.5.</span> <span class="nav-text">分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#功能对比"><span class="nav-number">3.5.1.</span> <span class="nav-text">功能对比</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#性能对比"><span class="nav-number">3.5.2.</span> <span class="nav-text">性能对比</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#集群参数"><span class="nav-number">3.5.2.1.</span> <span class="nav-text">集群参数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#框架参数"><span class="nav-number">3.5.2.2.</span> <span class="nav-text">框架参数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#测试内容"><span class="nav-number">3.5.2.3.</span> <span class="nav-text">测试内容</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#场景一：“输入-输出”简单处理"><span class="nav-number">3.5.2.3.1.</span> <span class="nav-text">场景一：“输入-输出”简单处理</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#场景二：用户作业耗时较长"><span class="nav-number">3.5.2.3.2.</span> <span class="nav-text">场景二：用户作业耗时较长</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#场景三：窗口统计场景"><span class="nav-number">3.5.2.3.3.</span> <span class="nav-text">场景三：窗口统计场景</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#精确计算场景"><span class="nav-number">3.5.2.3.4.</span> <span class="nav-text">精确计算场景</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结"><span class="nav-number">3.5.3.</span> <span class="nav-text">总结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#存储"><span class="nav-number">3.6.</span> <span class="nav-text">存储</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#分布式日志平台"><span class="nav-number">4.</span> <span class="nav-text">分布式日志平台</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#查询"><span class="nav-number">4.1.</span> <span class="nav-text">查询</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#处理"><span class="nav-number">4.2.</span> <span class="nav-text">处理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#告警"><span class="nav-number">4.3.</span> <span class="nav-text">告警</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#落地的技术考量"><span class="nav-number">5.</span> <span class="nav-text">落地的技术考量</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Filebeat-1"><span class="nav-number">5.1.</span> <span class="nav-text">Filebeat</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Kafka"><span class="nav-number">5.2.</span> <span class="nav-text">Kafka</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Flink"><span class="nav-number">5.3.</span> <span class="nav-text">Flink</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Elasticsearch"><span class="nav-number">5.4.</span> <span class="nav-text">Elasticsearch</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Vue"><span class="nav-number">5.5.</span> <span class="nav-text">Vue</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#最终的实施步骤"><span class="nav-number">6.</span> <span class="nav-text">最终的实施步骤</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#总结-1"><span class="nav-number">7.</span> <span class="nav-text">总结</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="程大明"
+      src="/uploads/avatar.jpg">
+  <p class="site-author-name" itemprop="name">程大明</p>
+  <div class="site-description" itemprop="description">唯有坚持不懈</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">16</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">61</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/chenghm123" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;chenghm123" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/1963116645" title="新浪微博 → https:&#x2F;&#x2F;weibo.com&#x2F;1963116645" rel="noopener" target="_blank"><i class="fab fa-weibo fa-fw"></i>新浪微博</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:chenghm123@qq.com" title="邮件 → mailto:chenghm123@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>邮件</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.zhihu.com/people/chenghm123" title="知乎 → https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;chenghm123" rel="noopener" target="_blank"><i class="fa fa-question-circle fa-fw"></i>知乎</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">程大明</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+<script>
+  (function() {
+    function leancloudSelector(url) {
+      url = encodeURI(url);
+      return document.getElementById(url).querySelector('.leancloud-visitors-count');
+    }
+
+    function addCount(Counter) {
+      var visitors = document.querySelector('.leancloud_visitors');
+      var url = decodeURI(visitors.id);
+      var title = visitors.dataset.flagTitle;
+
+      Counter('get', '/classes/Counter?where=' + encodeURIComponent(JSON.stringify({ url })))
+        .then(response => response.json())
+        .then(({ results }) => {
+          if (results.length > 0) {
+            var counter = results[0];
+            leancloudSelector(url).innerText = counter.time + 1;
+            Counter('put', '/classes/Counter/' + counter.objectId, { time: { '__op': 'Increment', 'amount': 1 } })
+              .catch(error => {
+                console.error('Failed to save visitor count', error);
+              });
+          } else {
+              Counter('post', '/classes/Counter', { title, url, time: 1 })
+                .then(response => response.json())
+                .then(() => {
+                  leancloudSelector(url).innerText = 1;
+                })
+                .catch(error => {
+                  console.error('Failed to create', error);
+                });
+          }
+        })
+        .catch(error => {
+          console.error('LeanCloud Counter Error', error);
+        });
+    }
+
+    function showTime(Counter) {
+      var visitors = document.querySelectorAll('.leancloud_visitors');
+      var entries = [...visitors].map(element => {
+        return decodeURI(element.id);
+      });
+
+      Counter('get', '/classes/Counter?where=' + encodeURIComponent(JSON.stringify({ url: { '$in': entries } })))
+        .then(response => response.json())
+        .then(({ results }) => {
+          for (let url of entries) {
+            let target = results.find(item => item.url === url);
+            leancloudSelector(url).innerText = target ? target.time : 0;
+          }
+        })
+        .catch(error => {
+          console.error('LeanCloud Counter Error', error);
+        });
+    }
+
+    let { app_id, app_key, server_url } = {"enable":true,"app_id":"XReLv1GKgcKWqfWdIDOlBEfi-gzGzoHsz","app_key":"d7Y6fcYWUyXTumQnGMP82SnD","server_url":null,"security":false};
+    function fetchData(api_server) {
+      var Counter = (method, url, data) => {
+        return fetch(`${api_server}/1.1${url}`, {
+          method,
+          headers: {
+            'X-LC-Id'     : app_id,
+            'X-LC-Key'    : app_key,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data)
+        });
+      };
+      if (CONFIG.page.isPost) {
+        if (CONFIG.hostname !== location.hostname) return;
+        addCount(Counter);
+      } else if (document.querySelectorAll('.post-title-link').length >= 1) {
+        showTime(Counter);
+      }
+    }
+
+    let api_server = app_id.slice(-9) !== '-MdYXbMMI' ? server_url : `https://${app_id.slice(0, 8).toLowerCase()}.api.lncldglobal.com`;
+
+    if (api_server) {
+      fetchData(api_server);
+    } else {
+      fetch('https://app-router.leancloud.cn/2/route?appId=' + app_id)
+        .then(response => response.json())
+        .then(({ api_server }) => {
+          fetchData('https://' + api_server);
+        });
+    }
+  })();
+</script>
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script>
+NexT.utils.loadComments(document.querySelector('#lv-container'), () => {
+  window.livereOptions = {
+    refer: location.pathname.replace(CONFIG.root, '').replace('index.html', '')
+  };
+  (function(d, s) {
+    var j, e = d.getElementsByTagName(s)[0];
+    if (typeof LivereTower === 'function') { return; }
+    j = d.createElement(s);
+    j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+    j.async = true;
+    e.parentNode.insertBefore(j, e);
+  })(document, 'script');
+});
+</script>
+
+</body>
+</html>

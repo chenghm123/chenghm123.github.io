@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://www.msyy233.com/"/>
-  <updated>2019-08-04T16:01:38.319Z</updated>
+  <updated>2020-07-13T15:01:44.014Z</updated>
   <id>https://www.msyy233.com/</id>
   
   <author>
@@ -17,10 +17,63 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>关于分布式日志平台的思考</title>
+    <link href="https://www.msyy233.com/posts/14778.html"/>
+    <id>https://www.msyy233.com/posts/14778.html</id>
+    <published>2020-06-13T03:06:22.640Z</published>
+    <updated>2020-07-13T15:01:44.014Z</updated>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;日志的基本概念&quot;&gt;&lt;a href=&quot;#日志的基本概念&quot; class=&quot;headerlink&quot; title=&quot;日志的基本概念&quot;&gt;&lt;/a&gt;日志的基本概念&lt;/h1&gt;&lt;p&gt;日志就是按照时间顺序追加的、完全有序的记录序列、其实就是一种特殊的文件格式、文件是一个字节数组、而这里日志是一个记录数据、只是相对于文件来说、这里每条记录都是按照时间的相对顺序排列的、可以说日志是最简单的一种存储模型、&lt;br&gt;由于日志本身固有的特性、记录从左向右开始顺序插入、也就意味着左边的记录相较于右边的记录“更老”、也就是说我们可以不用依赖于系统时钟、但是针对业务场景来说、又比较依赖正确的时间、总之日志对于分析系统来说相当重要、&lt;/p&gt;
+&lt;h1 id=&quot;常见的日志框架&quot;&gt;&lt;a href=&quot;#常见的日志框架&quot; class=&quot;headerlink&quot; title=&quot;常见的日志框架&quot;&gt;&lt;/a&gt;常见的日志框架&lt;/h1&gt;&lt;p&gt;目前主流几款日志框架为log4j、logback、log4j2、jdk-logging等、当然绝大多数情况下大家都使用了sl4j框架作为日志门面、&lt;br&gt;不同日志框架API也相差不大、基本都是依赖Append记录、例如：log4j2和log4j都有自己和官方实现的Kafka Append、logback可能需要自己开发、&lt;br&gt;在Append的背后还有Encoder/Layout、简单的说就是日志输出的格式、不同框架的命名虽然不同、但是概念也是完全相同的、实现自己的Encoder/Layout格式化Event输出到文件、再通过收集工具处理、与直接改造Append输出到对应后端是日志收集的常见做法、&lt;/p&gt;
+&lt;p&gt;除了logback原生实现了sl4j门面、其他的框架大都提供了对应的桥接工具包、大体逻辑可以参考下图：&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="log" scheme="https://www.msyy233.com/categories/log/"/>
+    
+    
+      <category term="logstash" scheme="https://www.msyy233.com/tags/logstash/"/>
+    
+      <category term="elk" scheme="https://www.msyy233.com/tags/elk/"/>
+    
+      <category term="kibana" scheme="https://www.msyy233.com/tags/kibana/"/>
+    
+      <category term="filebeat" scheme="https://www.msyy233.com/tags/filebeat/"/>
+    
+      <category term="kafka" scheme="https://www.msyy233.com/tags/kafka/"/>
+    
+      <category term="elasticsearch" scheme="https://www.msyy233.com/tags/elasticsearch/"/>
+    
+      <category term="flume" scheme="https://www.msyy233.com/tags/flume/"/>
+    
+      <category term="fluentd" scheme="https://www.msyy233.com/tags/fluentd/"/>
+    
+      <category term="fluent-bit" scheme="https://www.msyy233.com/tags/fluent-bit/"/>
+    
+      <category term="efk" scheme="https://www.msyy233.com/tags/efk/"/>
+    
+      <category term="es" scheme="https://www.msyy233.com/tags/es/"/>
+    
+      <category term="日志平台" scheme="https://www.msyy233.com/tags/%E6%97%A5%E5%BF%97%E5%B9%B3%E5%8F%B0/"/>
+    
+      <category term="日志分析" scheme="https://www.msyy233.com/tags/%E6%97%A5%E5%BF%97%E5%88%86%E6%9E%90/"/>
+    
+      <category term="实时计算" scheme="https://www.msyy233.com/tags/%E5%AE%9E%E6%97%B6%E8%AE%A1%E7%AE%97/"/>
+    
+      <category term="storm" scheme="https://www.msyy233.com/tags/storm/"/>
+    
+      <category term="flink" scheme="https://www.msyy233.com/tags/flink/"/>
+    
+  </entry>
+  
+  <entry>
     <title>Java NIO系列（一）核心组件</title>
     <link href="https://www.msyy233.com/posts/49866.html"/>
     <id>https://www.msyy233.com/posts/49866.html</id>
-    <published>2019-11-26T01:24:05.778Z</published>
+    <published>2020-06-13T03:06:22.640Z</published>
     <updated>2019-08-04T16:01:38.319Z</updated>
     
     <summary type="html">
@@ -42,9 +95,9 @@
       <category term="io" scheme="https://www.msyy233.com/categories/io/"/>
     
     
-      <category term="io" scheme="https://www.msyy233.com/tags/io/"/>
-    
       <category term="nio" scheme="https://www.msyy233.com/tags/nio/"/>
+    
+      <category term="io" scheme="https://www.msyy233.com/tags/io/"/>
     
       <category term="java" scheme="https://www.msyy233.com/tags/java/"/>
     
@@ -117,6 +170,10 @@
       <category term="io" scheme="https://www.msyy233.com/categories/io/"/>
     
     
+      <category term="nio" scheme="https://www.msyy233.com/tags/nio/"/>
+    
+      <category term="io" scheme="https://www.msyy233.com/tags/io/"/>
+    
       <category term="直接IO" scheme="https://www.msyy233.com/tags/%E7%9B%B4%E6%8E%A5IO/"/>
     
       <category term="内存映射" scheme="https://www.msyy233.com/tags/%E5%86%85%E5%AD%98%E6%98%A0%E5%B0%84/"/>
@@ -124,10 +181,6 @@
       <category term="MMAP" scheme="https://www.msyy233.com/tags/MMAP/"/>
     
       <category term="缓存IO" scheme="https://www.msyy233.com/tags/%E7%BC%93%E5%AD%98IO/"/>
-    
-      <category term="io" scheme="https://www.msyy233.com/tags/io/"/>
-    
-      <category term="nio" scheme="https://www.msyy233.com/tags/nio/"/>
     
       <category term="Linux" scheme="https://www.msyy233.com/tags/Linux/"/>
     
@@ -284,11 +337,11 @@
       <category term="io" scheme="https://www.msyy233.com/categories/io/"/>
     
     
-      <category term="io" scheme="https://www.msyy233.com/tags/io/"/>
+      <category term="io模型" scheme="https://www.msyy233.com/tags/io%E6%A8%A1%E5%9E%8B/"/>
     
       <category term="nio" scheme="https://www.msyy233.com/tags/nio/"/>
     
-      <category term="io模型" scheme="https://www.msyy233.com/tags/io%E6%A8%A1%E5%9E%8B/"/>
+      <category term="io" scheme="https://www.msyy233.com/tags/io/"/>
     
       <category term="aio" scheme="https://www.msyy233.com/tags/aio/"/>
     
@@ -333,6 +386,31 @@
   </entry>
   
   <entry>
+    <title>Java不定长参数</title>
+    <link href="https://www.msyy233.com/posts/33024.html"/>
+    <id>https://www.msyy233.com/posts/33024.html</id>
+    <published>2018-05-12T06:32:37.000Z</published>
+    <updated>2018-05-14T06:32:37.000Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;em&gt;在Java5中提供了不定长参数（varargs:variable number of arguments）、也就是在方法定义中可以使用个数不确定的参数、对于同一方法可以使用不同个数的参数调用、下面介绍如何定义不定长参数、以及如何使用不定长参数、&lt;/em&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&quot;一、不定长参数的基本使用&quot;&gt;&lt;a href=&quot;#一、不定长参数的基本使用&quot; class=&quot;headerlink&quot; title=&quot;一、不定长参数的基本使用&quot;&gt;&lt;/a&gt;一、不定长参数的基本使用&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;定义实参个数可变的方法：只要在一个形参的类型与参数名之间加上三个连续的 “.”（即 “…”、英文里的句中省略号）、就可以让它和不确定个实参相匹配。&lt;/strong&gt;&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="java" scheme="https://www.msyy233.com/categories/java/"/>
+    
+    
+      <category term="java" scheme="https://www.msyy233.com/tags/java/"/>
+    
+      <category term="varargs" scheme="https://www.msyy233.com/tags/varargs/"/>
+    
+  </entry>
+  
+  <entry>
     <title>JavaEE通过路径或域名获取资源</title>
     <link href="https://www.msyy233.com/posts/29966.html"/>
     <id>https://www.msyy233.com/posts/29966.html</id>
@@ -361,31 +439,6 @@ String path = servletContext.getRealPath(&amp;quot;/&amp;quot;);&lt;/code&gt;&lt
       <category term="类路径获取" scheme="https://www.msyy233.com/tags/%E7%B1%BB%E8%B7%AF%E5%BE%84%E8%8E%B7%E5%8F%96/"/>
     
       <category term="Java资源路径" scheme="https://www.msyy233.com/tags/Java%E8%B5%84%E6%BA%90%E8%B7%AF%E5%BE%84/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Java不定长参数</title>
-    <link href="https://www.msyy233.com/posts/33024.html"/>
-    <id>https://www.msyy233.com/posts/33024.html</id>
-    <published>2018-05-12T06:32:37.000Z</published>
-    <updated>2018-05-14T06:32:37.000Z</updated>
-    
-    <summary type="html">
-    
-      &lt;p&gt;&lt;em&gt;在Java5中提供了不定长参数（varargs:variable number of arguments）、也就是在方法定义中可以使用个数不确定的参数、对于同一方法可以使用不同个数的参数调用、下面介绍如何定义不定长参数、以及如何使用不定长参数、&lt;/em&gt;&lt;/p&gt;
-&lt;hr&gt;
-&lt;h2 id=&quot;一、不定长参数的基本使用&quot;&gt;&lt;a href=&quot;#一、不定长参数的基本使用&quot; class=&quot;headerlink&quot; title=&quot;一、不定长参数的基本使用&quot;&gt;&lt;/a&gt;一、不定长参数的基本使用&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;定义实参个数可变的方法：只要在一个形参的类型与参数名之间加上三个连续的 “.”（即 “…”、英文里的句中省略号）、就可以让它和不确定个实参相匹配。&lt;/strong&gt;&lt;/p&gt;
-    
-    </summary>
-    
-    
-      <category term="java" scheme="https://www.msyy233.com/categories/java/"/>
-    
-    
-      <category term="java" scheme="https://www.msyy233.com/tags/java/"/>
-    
-      <category term="varargs" scheme="https://www.msyy233.com/tags/varargs/"/>
     
   </entry>
   
