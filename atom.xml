@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.msyy233.com/"/>
-  <updated>2020-07-13T15:22:52.846Z</updated>
+  <updated>2019-08-04T16:01:38.319Z</updated>
   <id>http://www.msyy233.com/</id>
   
   <author>
@@ -15,6 +15,46 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Java NIO系列（一）核心组件</title>
+    <link href="http://www.msyy233.com/posts/49866.html"/>
+    <id>http://www.msyy233.com/posts/49866.html</id>
+    <published>2020-06-13T03:06:22.640Z</published>
+    <updated>2019-08-04T16:01:38.319Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;看过&lt;a href=&quot;https://www.msyy233.com/posts/52540.html&quot;&gt;IO概念和5种IO模型&lt;/a&gt;、可以了解到IO的五种模型、NIO便是对应其中的&lt;strong&gt;&lt;em&gt;IO复用模型&lt;/em&gt;&lt;/strong&gt;、本篇对NIO的组件进行讲解、如果还不理解什么是NIO建议先看一看上一篇&lt;a href=&quot;https://www.msyy233.com/posts/52540.html&quot;&gt;IO概念和5种IO模型&lt;/a&gt;、&lt;/p&gt;
+&lt;p&gt;Java NIO是由以下几个核心部分组成：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Channels&lt;/li&gt;
+&lt;li&gt;Buffers&lt;/li&gt;
+&lt;li&gt;Selectors&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;p&gt;虽然Java NIO 中除此之外还有很多类和组件、但在我看来Channel、Buffer和Selector构成了核心的API、其它组件、如Pipe和FileLock、只不过是与三个核心组件共同使用的工具类、&lt;/p&gt;
+&lt;/blockquote&gt;
+    
+    </summary>
+    
+    
+      <category term="io" scheme="http://www.msyy233.com/categories/io/"/>
+    
+    
+      <category term="nio" scheme="http://www.msyy233.com/tags/nio/"/>
+    
+      <category term="io" scheme="http://www.msyy233.com/tags/io/"/>
+    
+      <category term="java" scheme="http://www.msyy233.com/tags/java/"/>
+    
+      <category term="channel" scheme="http://www.msyy233.com/tags/channel/"/>
+    
+      <category term="buffer" scheme="http://www.msyy233.com/tags/buffer/"/>
+    
+      <category term="selector" scheme="http://www.msyy233.com/tags/selector/"/>
+    
+  </entry>
   
   <entry>
     <title>关于分布式日志平台的思考</title>
@@ -66,46 +106,6 @@
       <category term="storm" scheme="http://www.msyy233.com/tags/storm/"/>
     
       <category term="flink" scheme="http://www.msyy233.com/tags/flink/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Java NIO系列（一）核心组件</title>
-    <link href="http://www.msyy233.com/posts/49866.html"/>
-    <id>http://www.msyy233.com/posts/49866.html</id>
-    <published>2020-06-13T03:06:22.640Z</published>
-    <updated>2019-08-04T16:01:38.319Z</updated>
-    
-    <summary type="html">
-    
-      &lt;p&gt;看过&lt;a href=&quot;https://www.msyy233.com/posts/52540.html&quot;&gt;IO概念和5种IO模型&lt;/a&gt;、可以了解到IO的五种模型、NIO便是对应其中的&lt;strong&gt;&lt;em&gt;IO复用模型&lt;/em&gt;&lt;/strong&gt;、本篇对NIO的组件进行讲解、如果还不理解什么是NIO建议先看一看上一篇&lt;a href=&quot;https://www.msyy233.com/posts/52540.html&quot;&gt;IO概念和5种IO模型&lt;/a&gt;、&lt;/p&gt;
-&lt;p&gt;Java NIO是由以下几个核心部分组成：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Channels&lt;/li&gt;
-&lt;li&gt;Buffers&lt;/li&gt;
-&lt;li&gt;Selectors&lt;/li&gt;
-&lt;/ul&gt;
-&lt;blockquote&gt;
-&lt;p&gt;虽然Java NIO 中除此之外还有很多类和组件、但在我看来Channel、Buffer和Selector构成了核心的API、其它组件、如Pipe和FileLock、只不过是与三个核心组件共同使用的工具类、&lt;/p&gt;
-&lt;/blockquote&gt;
-    
-    </summary>
-    
-    
-      <category term="io" scheme="http://www.msyy233.com/categories/io/"/>
-    
-    
-      <category term="nio" scheme="http://www.msyy233.com/tags/nio/"/>
-    
-      <category term="io" scheme="http://www.msyy233.com/tags/io/"/>
-    
-      <category term="channel" scheme="http://www.msyy233.com/tags/channel/"/>
-    
-      <category term="buffer" scheme="http://www.msyy233.com/tags/buffer/"/>
-    
-      <category term="selector" scheme="http://www.msyy233.com/tags/selector/"/>
-    
-      <category term="java" scheme="http://www.msyy233.com/tags/java/"/>
     
   </entry>
   
@@ -386,6 +386,31 @@
   </entry>
   
   <entry>
+    <title>Java不定长参数</title>
+    <link href="http://www.msyy233.com/posts/33024.html"/>
+    <id>http://www.msyy233.com/posts/33024.html</id>
+    <published>2018-05-12T06:32:37.000Z</published>
+    <updated>2018-05-14T06:32:37.000Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;em&gt;在Java5中提供了不定长参数（varargs:variable number of arguments）、也就是在方法定义中可以使用个数不确定的参数、对于同一方法可以使用不同个数的参数调用、下面介绍如何定义不定长参数、以及如何使用不定长参数、&lt;/em&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&quot;一、不定长参数的基本使用&quot;&gt;&lt;a href=&quot;#一、不定长参数的基本使用&quot; class=&quot;headerlink&quot; title=&quot;一、不定长参数的基本使用&quot;&gt;&lt;/a&gt;一、不定长参数的基本使用&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;定义实参个数可变的方法：只要在一个形参的类型与参数名之间加上三个连续的 “.”（即 “…”、英文里的句中省略号）、就可以让它和不确定个实参相匹配。&lt;/strong&gt;&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="java" scheme="http://www.msyy233.com/categories/java/"/>
+    
+    
+      <category term="java" scheme="http://www.msyy233.com/tags/java/"/>
+    
+      <category term="varargs" scheme="http://www.msyy233.com/tags/varargs/"/>
+    
+  </entry>
+  
+  <entry>
     <title>JavaEE通过路径或域名获取资源</title>
     <link href="http://www.msyy233.com/posts/29966.html"/>
     <id>http://www.msyy233.com/posts/29966.html</id>
@@ -414,31 +439,6 @@ String path = servletContext.getRealPath(&amp;quot;/&amp;quot;);&lt;/code&gt;&lt
       <category term="类路径获取" scheme="http://www.msyy233.com/tags/%E7%B1%BB%E8%B7%AF%E5%BE%84%E8%8E%B7%E5%8F%96/"/>
     
       <category term="Java资源路径" scheme="http://www.msyy233.com/tags/Java%E8%B5%84%E6%BA%90%E8%B7%AF%E5%BE%84/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Java不定长参数</title>
-    <link href="http://www.msyy233.com/posts/33024.html"/>
-    <id>http://www.msyy233.com/posts/33024.html</id>
-    <published>2018-05-12T06:32:37.000Z</published>
-    <updated>2018-05-14T06:32:37.000Z</updated>
-    
-    <summary type="html">
-    
-      &lt;p&gt;&lt;em&gt;在Java5中提供了不定长参数（varargs:variable number of arguments）、也就是在方法定义中可以使用个数不确定的参数、对于同一方法可以使用不同个数的参数调用、下面介绍如何定义不定长参数、以及如何使用不定长参数、&lt;/em&gt;&lt;/p&gt;
-&lt;hr&gt;
-&lt;h2 id=&quot;一、不定长参数的基本使用&quot;&gt;&lt;a href=&quot;#一、不定长参数的基本使用&quot; class=&quot;headerlink&quot; title=&quot;一、不定长参数的基本使用&quot;&gt;&lt;/a&gt;一、不定长参数的基本使用&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;定义实参个数可变的方法：只要在一个形参的类型与参数名之间加上三个连续的 “.”（即 “…”、英文里的句中省略号）、就可以让它和不确定个实参相匹配。&lt;/strong&gt;&lt;/p&gt;
-    
-    </summary>
-    
-    
-      <category term="java" scheme="http://www.msyy233.com/categories/java/"/>
-    
-    
-      <category term="java" scheme="http://www.msyy233.com/tags/java/"/>
-    
-      <category term="varargs" scheme="http://www.msyy233.com/tags/varargs/"/>
     
   </entry>
   
@@ -515,28 +515,6 @@ String path = servletContext.getRealPath(&amp;quot;/&amp;quot;);&lt;/code&gt;&lt
       <category term="maven" scheme="http://www.msyy233.com/tags/maven/"/>
     
       <category term="nexus" scheme="http://www.msyy233.com/tags/nexus/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>得失在人、2年IT生涯总结、我为何离开东软</title>
-    <link href="http://www.msyy233.com/posts/4889.html"/>
-    <id>http://www.msyy233.com/posts/4889.html</id>
-    <published>2015-05-11T08:03:37.000Z</published>
-    <updated>2015-05-17T08:03:37.000Z</updated>
-    
-    <summary type="html">
-    
-      &lt;p&gt;事情要从2013年说起、当时我正在读大三、我是专科生、那是我最后一年大学、和很多垃圾大学不成器的大学生一样、成天把时间浪费在打游戏、逃课、睡觉中、但是我觉得我和其他人略有区别的地方就在于可能我一直都是一个很有追求的人吧、唯独毅力不太够、所以容我推卸一下责任：“大环境影响人、罪魁祸首就是XXX”、哈哈哈、记得当年我们宿舍的几个小伙伴开玩笑还总是拿这句话打趣、现在想想也许这句话中也透露了大家的无奈、&lt;/p&gt;
-&lt;p&gt;就这么成天混日子、到了10月份的时候 、东软来我们学校宣传、东软怎么好、IT行业怎么好、再加上我从小对那种黑客啊、高级工程师非常向往（受到各方面影响）、就被忽悠的去培训了、也因为这个原因我一直都对东软抱着憧憬的、嘿嘿、大软件公司加上各种宣传、对于当时仅仅只是听说过编程的我来说、太光芒四射了、说道培训、由于很多人问我了、就专门花点墨水讲一讲培训、&lt;/p&gt;
-    
-    </summary>
-    
-    
-      <category term="feeling" scheme="http://www.msyy233.com/categories/feeling/"/>
-    
-    
-      <category term="成长感悟" scheme="http://www.msyy233.com/tags/%E6%88%90%E9%95%BF%E6%84%9F%E6%82%9F/"/>
     
   </entry>
   
