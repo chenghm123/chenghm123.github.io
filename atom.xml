@@ -42,9 +42,9 @@
       <category term="io" scheme="http://www.msyy233.com/categories/io/"/>
     
     
-      <category term="io" scheme="http://www.msyy233.com/tags/io/"/>
-    
       <category term="nio" scheme="http://www.msyy233.com/tags/nio/"/>
+    
+      <category term="io" scheme="http://www.msyy233.com/tags/io/"/>
     
       <category term="channel" scheme="http://www.msyy233.com/tags/channel/"/>
     
@@ -170,6 +170,10 @@
       <category term="io" scheme="http://www.msyy233.com/categories/io/"/>
     
     
+      <category term="nio" scheme="http://www.msyy233.com/tags/nio/"/>
+    
+      <category term="io" scheme="http://www.msyy233.com/tags/io/"/>
+    
       <category term="直接IO" scheme="http://www.msyy233.com/tags/%E7%9B%B4%E6%8E%A5IO/"/>
     
       <category term="内存映射" scheme="http://www.msyy233.com/tags/%E5%86%85%E5%AD%98%E6%98%A0%E5%B0%84/"/>
@@ -177,10 +181,6 @@
       <category term="MMAP" scheme="http://www.msyy233.com/tags/MMAP/"/>
     
       <category term="缓存IO" scheme="http://www.msyy233.com/tags/%E7%BC%93%E5%AD%98IO/"/>
-    
-      <category term="io" scheme="http://www.msyy233.com/tags/io/"/>
-    
-      <category term="nio" scheme="http://www.msyy233.com/tags/nio/"/>
     
       <category term="Linux" scheme="http://www.msyy233.com/tags/Linux/"/>
     
@@ -337,11 +337,11 @@
       <category term="io" scheme="http://www.msyy233.com/categories/io/"/>
     
     
-      <category term="io" scheme="http://www.msyy233.com/tags/io/"/>
+      <category term="io模型" scheme="http://www.msyy233.com/tags/io%E6%A8%A1%E5%9E%8B/"/>
     
       <category term="nio" scheme="http://www.msyy233.com/tags/nio/"/>
     
-      <category term="io模型" scheme="http://www.msyy233.com/tags/io%E6%A8%A1%E5%9E%8B/"/>
+      <category term="io" scheme="http://www.msyy233.com/tags/io/"/>
     
       <category term="aio" scheme="http://www.msyy233.com/tags/aio/"/>
     
