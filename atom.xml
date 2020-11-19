@@ -386,31 +386,6 @@
   </entry>
   
   <entry>
-    <title>Java不定长参数</title>
-    <link href="http://www.msyy233.com/posts/33024.html"/>
-    <id>http://www.msyy233.com/posts/33024.html</id>
-    <published>2018-05-12T06:32:37.000Z</published>
-    <updated>2018-05-14T06:32:37.000Z</updated>
-    
-    <summary type="html">
-    
-      &lt;p&gt;&lt;em&gt;在Java5中提供了不定长参数（varargs:variable number of arguments）、也就是在方法定义中可以使用个数不确定的参数、对于同一方法可以使用不同个数的参数调用、下面介绍如何定义不定长参数、以及如何使用不定长参数、&lt;/em&gt;&lt;/p&gt;
-&lt;hr&gt;
-&lt;h2 id=&quot;一、不定长参数的基本使用&quot;&gt;&lt;a href=&quot;#一、不定长参数的基本使用&quot; class=&quot;headerlink&quot; title=&quot;一、不定长参数的基本使用&quot;&gt;&lt;/a&gt;一、不定长参数的基本使用&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;定义实参个数可变的方法：只要在一个形参的类型与参数名之间加上三个连续的 “.”（即 “…”、英文里的句中省略号）、就可以让它和不确定个实参相匹配。&lt;/strong&gt;&lt;/p&gt;
-    
-    </summary>
-    
-    
-      <category term="java" scheme="http://www.msyy233.com/categories/java/"/>
-    
-    
-      <category term="java" scheme="http://www.msyy233.com/tags/java/"/>
-    
-      <category term="varargs" scheme="http://www.msyy233.com/tags/varargs/"/>
-    
-  </entry>
-  
-  <entry>
     <title>JavaEE通过路径或域名获取资源</title>
     <link href="http://www.msyy233.com/posts/29966.html"/>
     <id>http://www.msyy233.com/posts/29966.html</id>
@@ -439,6 +414,31 @@ String path = servletContext.getRealPath(&amp;quot;/&amp;quot;);&lt;/code&gt;&lt
       <category term="类路径获取" scheme="http://www.msyy233.com/tags/%E7%B1%BB%E8%B7%AF%E5%BE%84%E8%8E%B7%E5%8F%96/"/>
     
       <category term="Java资源路径" scheme="http://www.msyy233.com/tags/Java%E8%B5%84%E6%BA%90%E8%B7%AF%E5%BE%84/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Java不定长参数</title>
+    <link href="http://www.msyy233.com/posts/33024.html"/>
+    <id>http://www.msyy233.com/posts/33024.html</id>
+    <published>2018-05-12T06:32:37.000Z</published>
+    <updated>2018-05-14T06:32:37.000Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;em&gt;在Java5中提供了不定长参数（varargs:variable number of arguments）、也就是在方法定义中可以使用个数不确定的参数、对于同一方法可以使用不同个数的参数调用、下面介绍如何定义不定长参数、以及如何使用不定长参数、&lt;/em&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&quot;一、不定长参数的基本使用&quot;&gt;&lt;a href=&quot;#一、不定长参数的基本使用&quot; class=&quot;headerlink&quot; title=&quot;一、不定长参数的基本使用&quot;&gt;&lt;/a&gt;一、不定长参数的基本使用&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;定义实参个数可变的方法：只要在一个形参的类型与参数名之间加上三个连续的 “.”（即 “…”、英文里的句中省略号）、就可以让它和不确定个实参相匹配。&lt;/strong&gt;&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="java" scheme="http://www.msyy233.com/categories/java/"/>
+    
+    
+      <category term="java" scheme="http://www.msyy233.com/tags/java/"/>
+    
+      <category term="varargs" scheme="http://www.msyy233.com/tags/varargs/"/>
     
   </entry>
   
