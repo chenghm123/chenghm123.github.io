@@ -62,6 +62,46 @@
   </entry>
   
   <entry>
+    <title>Java NIO系列（一）核心组件</title>
+    <link href="http://www.msyy233.com/posts/49866.html"/>
+    <id>http://www.msyy233.com/posts/49866.html</id>
+    <published>2020-06-13T03:06:22.640Z</published>
+    <updated>2019-08-04T16:01:38.319Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;看过&lt;a href=&quot;https://www.msyy233.com/posts/52540.html&quot;&gt;IO概念和5种IO模型&lt;/a&gt;、可以了解到IO的五种模型、NIO便是对应其中的&lt;em&gt;&lt;strong&gt;IO复用模型&lt;/strong&gt;&lt;/em&gt;、本篇对NIO的组件进行讲解、如果还不理解什么是NIO建议先看一看上一篇&lt;a href=&quot;https://www.msyy233.com/posts/52540.html&quot;&gt;IO概念和5种IO模型&lt;/a&gt;、&lt;/p&gt;
+&lt;p&gt;Java NIO是由以下几个核心部分组成：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Channels&lt;/li&gt;
+&lt;li&gt;Buffers&lt;/li&gt;
+&lt;li&gt;Selectors&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;p&gt;虽然Java NIO 中除此之外还有很多类和组件、但在我看来Channel、Buffer和Selector构成了核心的API、其它组件、如Pipe和FileLock、只不过是与三个核心组件共同使用的工具类、&lt;/p&gt;
+&lt;/blockquote&gt;
+    
+    </summary>
+    
+    
+      <category term="io" scheme="http://www.msyy233.com/categories/io/"/>
+    
+    
+      <category term="java" scheme="http://www.msyy233.com/tags/java/"/>
+    
+      <category term="nio" scheme="http://www.msyy233.com/tags/nio/"/>
+    
+      <category term="io" scheme="http://www.msyy233.com/tags/io/"/>
+    
+      <category term="channel" scheme="http://www.msyy233.com/tags/channel/"/>
+    
+      <category term="buffer" scheme="http://www.msyy233.com/tags/buffer/"/>
+    
+      <category term="selector" scheme="http://www.msyy233.com/tags/selector/"/>
+    
+  </entry>
+  
+  <entry>
     <title>关于分布式日志平台的思考</title>
     <link href="http://www.msyy233.com/posts/14778.html"/>
     <id>http://www.msyy233.com/posts/14778.html</id>
@@ -111,46 +151,6 @@
       <category term="storm" scheme="http://www.msyy233.com/tags/storm/"/>
     
       <category term="flink" scheme="http://www.msyy233.com/tags/flink/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Java NIO系列（一）核心组件</title>
-    <link href="http://www.msyy233.com/posts/49866.html"/>
-    <id>http://www.msyy233.com/posts/49866.html</id>
-    <published>2020-06-13T03:06:22.640Z</published>
-    <updated>2019-08-04T16:01:38.319Z</updated>
-    
-    <summary type="html">
-    
-      &lt;p&gt;看过&lt;a href=&quot;https://www.msyy233.com/posts/52540.html&quot;&gt;IO概念和5种IO模型&lt;/a&gt;、可以了解到IO的五种模型、NIO便是对应其中的&lt;em&gt;&lt;strong&gt;IO复用模型&lt;/strong&gt;&lt;/em&gt;、本篇对NIO的组件进行讲解、如果还不理解什么是NIO建议先看一看上一篇&lt;a href=&quot;https://www.msyy233.com/posts/52540.html&quot;&gt;IO概念和5种IO模型&lt;/a&gt;、&lt;/p&gt;
-&lt;p&gt;Java NIO是由以下几个核心部分组成：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Channels&lt;/li&gt;
-&lt;li&gt;Buffers&lt;/li&gt;
-&lt;li&gt;Selectors&lt;/li&gt;
-&lt;/ul&gt;
-&lt;blockquote&gt;
-&lt;p&gt;虽然Java NIO 中除此之外还有很多类和组件、但在我看来Channel、Buffer和Selector构成了核心的API、其它组件、如Pipe和FileLock、只不过是与三个核心组件共同使用的工具类、&lt;/p&gt;
-&lt;/blockquote&gt;
-    
-    </summary>
-    
-    
-      <category term="io" scheme="http://www.msyy233.com/categories/io/"/>
-    
-    
-      <category term="nio" scheme="http://www.msyy233.com/tags/nio/"/>
-    
-      <category term="io" scheme="http://www.msyy233.com/tags/io/"/>
-    
-      <category term="channel" scheme="http://www.msyy233.com/tags/channel/"/>
-    
-      <category term="buffer" scheme="http://www.msyy233.com/tags/buffer/"/>
-    
-      <category term="selector" scheme="http://www.msyy233.com/tags/selector/"/>
-    
-      <category term="java" scheme="http://www.msyy233.com/tags/java/"/>
     
   </entry>
   
