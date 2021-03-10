@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 4.2.1">
+<meta name="generator" content="Hexo 5.4.0">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
@@ -85,7 +85,7 @@
 </noscript>
 
 <link rel="alternate" href="/atom.xml" title="码上有约" type="application/atom+xml">
-<link rel="stylesheet" href="/css/prism-duotone-light.css" type="text/css"></head>
+</head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
   <div class="container use-motion">
@@ -206,7 +206,7 @@
     <link itemprop="mainEntityOfPage" href="http://www.msyy233.com/posts/17047.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
+      <meta itemprop="image" content="/images/avatar.jpg">
       <meta itemprop="name" content="程大明">
       <meta itemprop="description" content="唯有坚持不懈">
     </span>
@@ -267,28 +267,13 @@
 <hr>
 <h2 id="一、BeanFactory"><a href="#一、BeanFactory" class="headerlink" title="一、BeanFactory"></a>一、BeanFactory</h2><p>BeanFactory定义了IOC容器的最基本形式、并提供了IOC容器应遵守的的最基本的接口、  也就是Spring IOC所遵守的最底层和最基本的编程规范、  在Spring代码中、BeanFactory只是个接口、并不是 IOC 容器的具体实现</p>
 <p>但是Spring容器给出了很多种实现、如DefaultListableBeanFactory、XmlBeanFactory、ApplicationContext等、都是附加了某种功能的实现、具体我们可以在Eclipse中打开类结构</p>
-<a id="more"></a>
+<span id="more"></span>
 
 <p><img src="http://assets.msyy233.com/20180623/12423018b.png!blog" alt="BeanFactory类结构图"></p>
 <p><img src="http://assets.msyy233.com/20180623/124259128.png!blog" alt="BeanFactory类体系图"></p>
-<pre class=" language-java"><code class="language-java"><span class="token keyword">package</span> org<span class="token punctuation">.</span>springframework<span class="token punctuation">.</span>beans<span class="token punctuation">.</span>factory<span class="token punctuation">;</span>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> org.springframework.beans.factory;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.BeansException;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">BeanFactory</span> </span>&#123;</span><br><span class="line">    String FACTORY_BEAN_PREFIX = <span class="string">&quot;&amp;&quot;</span>;</span><br><span class="line">    <span class="function">Object <span class="title">getBean</span><span class="params">(String name)</span> <span class="keyword">throws</span> BeansException</span>;</span><br><span class="line">    &lt;T&gt; <span class="function">T <span class="title">getBean</span><span class="params">(String name, Class&lt;T&gt; requiredType)</span> <span class="keyword">throws</span> BeansException</span>;</span><br><span class="line">    &lt;T&gt; <span class="function">T <span class="title">getBean</span><span class="params">(Class&lt;T&gt; requiredType)</span> <span class="keyword">throws</span> BeansException</span>;</span><br><span class="line">    <span class="function">Object <span class="title">getBean</span><span class="params">(String name, Object... args)</span> <span class="keyword">throws</span> BeansException</span>;</span><br><span class="line">    &lt;T&gt; <span class="function">T <span class="title">getBean</span><span class="params">(Class&lt;T&gt; requiredType, Object... args)</span> <span class="keyword">throws</span> BeansException</span>;</span><br><span class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">containsBean</span><span class="params">(String name)</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">isSingleton</span><span class="params">(String name)</span> <span class="keyword">throws</span> NoSuchBeanDefinitionException</span>;</span><br><span class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">isPrototype</span><span class="params">(String name)</span> <span class="keyword">throws</span> NoSuchBeanDefinitionException</span>;</span><br><span class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">isTypeMatch</span><span class="params">(String name, Class&lt;?&gt; targetType)</span> <span class="keyword">throws</span> NoSuchBeanDefinitionException</span>;</span><br><span class="line">    Class&lt;?&gt; getType(String name) <span class="keyword">throws</span> NoSuchBeanDefinitionException;</span><br><span class="line">    String[] getAliases(String name);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<span class="token keyword">import</span> org<span class="token punctuation">.</span>springframework<span class="token punctuation">.</span>beans<span class="token punctuation">.</span>BeansException<span class="token punctuation">;</span>
 
-<span class="token keyword">public</span> <span class="token keyword">interface</span> <span class="token class-name">BeanFactory</span> <span class="token punctuation">{</span>
-    String FACTORY_BEAN_PREFIX <span class="token operator">=</span> <span class="token string">"&amp;"</span><span class="token punctuation">;</span>
-    Object <span class="token function">getBean</span><span class="token punctuation">(</span>String name<span class="token punctuation">)</span> <span class="token keyword">throws</span> BeansException<span class="token punctuation">;</span>
-    <span class="token operator">&lt;</span>T<span class="token operator">></span> T <span class="token function">getBean</span><span class="token punctuation">(</span>String name<span class="token punctuation">,</span> Class<span class="token operator">&lt;</span>T<span class="token operator">></span> requiredType<span class="token punctuation">)</span> <span class="token keyword">throws</span> BeansException<span class="token punctuation">;</span>
-    <span class="token operator">&lt;</span>T<span class="token operator">></span> T <span class="token function">getBean</span><span class="token punctuation">(</span>Class<span class="token operator">&lt;</span>T<span class="token operator">></span> requiredType<span class="token punctuation">)</span> <span class="token keyword">throws</span> BeansException<span class="token punctuation">;</span>
-    Object <span class="token function">getBean</span><span class="token punctuation">(</span>String name<span class="token punctuation">,</span> Object<span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span> args<span class="token punctuation">)</span> <span class="token keyword">throws</span> BeansException<span class="token punctuation">;</span>
-    <span class="token operator">&lt;</span>T<span class="token operator">></span> T <span class="token function">getBean</span><span class="token punctuation">(</span>Class<span class="token operator">&lt;</span>T<span class="token operator">></span> requiredType<span class="token punctuation">,</span> Object<span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span> args<span class="token punctuation">)</span> <span class="token keyword">throws</span> BeansException<span class="token punctuation">;</span>
-    <span class="token keyword">boolean</span> <span class="token function">containsBean</span><span class="token punctuation">(</span>String name<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword">boolean</span> <span class="token function">isSingleton</span><span class="token punctuation">(</span>String name<span class="token punctuation">)</span> <span class="token keyword">throws</span> NoSuchBeanDefinitionException<span class="token punctuation">;</span>
-    <span class="token keyword">boolean</span> <span class="token function">isPrototype</span><span class="token punctuation">(</span>String name<span class="token punctuation">)</span> <span class="token keyword">throws</span> NoSuchBeanDefinitionException<span class="token punctuation">;</span>
-    <span class="token keyword">boolean</span> <span class="token function">isTypeMatch</span><span class="token punctuation">(</span>String name<span class="token punctuation">,</span> Class<span class="token operator">&lt;</span><span class="token operator">?</span><span class="token operator">></span> targetType<span class="token punctuation">)</span> <span class="token keyword">throws</span> NoSuchBeanDefinitionException<span class="token punctuation">;</span>
-    Class<span class="token operator">&lt;</span><span class="token operator">?</span><span class="token operator">></span> <span class="token function">getType</span><span class="token punctuation">(</span>String name<span class="token punctuation">)</span> <span class="token keyword">throws</span> NoSuchBeanDefinitionException<span class="token punctuation">;</span>
-    String<span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token function">getAliases</span><span class="token punctuation">(</span>String name<span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span></code></pre>
 <p><strong>在该接口中定义了一下6种方法</strong></p>
 <ul>
 <li>boolean containsBean(String)：如果BeanFactory包含给定名称的bean定义(或bean实例)、则返回true、</li>
@@ -299,19 +284,8 @@
 <li>String[] getAliases(String)：返回给定bean名称的所有别名</li>
 </ul>
 <p><strong>我们初学Spring的时候ClassPathXmlApplicationContext创建获取Bean的对象、实际这就是个BeanFactory实现、看个例子应该能够更好理解</strong></p>
-<pre class=" language-java"><code class="language-java"><span class="token comment" spellcheck="true">// BeanFactory实现之一XmlBeanFactory</span>
-Resource resource <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">FileSystemResource</span><span class="token punctuation">(</span><span class="token string">"applicationContext.xml"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-BeanFactory factory1 <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">XmlBeanFactory</span><span class="token punctuation">(</span>resource<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// BeanFactory实现之一XmlBeanFactory</span></span><br><span class="line">Resource resource = <span class="keyword">new</span> FileSystemResource(<span class="string">&quot;applicationContext.xml&quot;</span>);</span><br><span class="line">BeanFactory factory1 = <span class="keyword">new</span> XmlBeanFactory(resource);</span><br><span class="line"></span><br><span class="line"><span class="comment">// AppliactionContext也是BeanFactoryshixian实现、当然包括子类ClassPathXmlApplicationContext</span></span><br><span class="line">ApplicationContext context = <span class="keyword">new</span> ClassPathXmlApplicationContext(</span><br><span class="line">    <span class="keyword">new</span> String[] &#123;<span class="string">&quot;applicationContext.xml&quot;</span>, <span class="string">&quot;applicationContext-part.xml&quot;</span>&#125;</span><br><span class="line">);</span><br><span class="line">BeanFactory factory2 = (BeanFactory) context;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 无论哪种实现都能获取Spring管理的Bean</span></span><br><span class="line">Object o1 = factory1.getBean(<span class="string">&quot;beanName&quot;</span>);</span><br><span class="line">Object o2 = factory2.getBean(<span class="string">&quot;beanName&quot;</span>);</span><br></pre></td></tr></table></figure>
 
-<span class="token comment" spellcheck="true">// AppliactionContext也是BeanFactoryshixian实现、当然包括子类ClassPathXmlApplicationContext</span>
-ApplicationContext context <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ClassPathXmlApplicationContext</span><span class="token punctuation">(</span>
-    <span class="token keyword">new</span> <span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token punctuation">{</span><span class="token string">"applicationContext.xml"</span><span class="token punctuation">,</span> <span class="token string">"applicationContext-part.xml"</span><span class="token punctuation">}</span>
-<span class="token punctuation">)</span><span class="token punctuation">;</span>
-BeanFactory factory2 <span class="token operator">=</span> <span class="token punctuation">(</span>BeanFactory<span class="token punctuation">)</span> context<span class="token punctuation">;</span>
-
-<span class="token comment" spellcheck="true">// 无论哪种实现都能获取Spring管理的Bean</span>
-Object o1 <span class="token operator">=</span> factory1<span class="token punctuation">.</span><span class="token function">getBean</span><span class="token punctuation">(</span><span class="token string">"beanName"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-Object o2 <span class="token operator">=</span> factory2<span class="token punctuation">.</span><span class="token function">getBean</span><span class="token punctuation">(</span><span class="token string">"beanName"</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
 <p><strong>BeanFactory总结：</strong></p>
 <ul>
 <li>BeanFactory它的职责包括：实例化、定位、配置应用程序中的对象及建立这些对象间的依赖</li>
@@ -323,18 +297,13 @@ Object o2 <span class="token operator">=</span> factory2<span class="token punct
 <p>Spring为此提供了一个<code>org.springframework.bean.factory.FactoryBean</code>的工厂类接口、用户可以通过实现该接口定制实例化Bean的逻辑、FactoryBean接口对于Spring框架来说占用重要的地位、Spring自身就提供了70多个FactoryBean的实现、它们隐藏了实例化一些复杂Bean的细节、给上层应用带来了便利、从Spring 3.0开始、FactoryBean开始支持泛型、即接口声明改为<code>FactoryBean&lt;T&gt;</code>的形式、同样使用Eclipse打开类结构</p>
 <p><img src="http://assets.msyy233.com/20180623/1243281a2.png!blog" alt="FactoryBean类结构图"></p>
 <p><img src="http://assets.msyy233.com/20180623/124505511.png!blog" alt="FactoryBean类体系图"></p>
-<pre class=" language-java"><code class="language-java"><span class="token keyword">package</span> org<span class="token punctuation">.</span>springframework<span class="token punctuation">.</span>beans<span class="token punctuation">.</span>factory<span class="token punctuation">;</span>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> org.springframework.beans.factory;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">FactoryBean</span>&lt;<span class="title">T</span>&gt; </span>&#123;</span><br><span class="line">    <span class="function">T <span class="title">getObject</span><span class="params">()</span> <span class="keyword">throws</span> Exception</span>;</span><br><span class="line">    Class&lt;?&gt; getObjectType();</span><br><span class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">isSingleton</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<span class="token keyword">public</span> <span class="token keyword">interface</span> <span class="token class-name">FactoryBean</span><span class="token operator">&lt;</span>T<span class="token operator">></span> <span class="token punctuation">{</span>
-    T <span class="token function">getObject</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">throws</span> Exception<span class="token punctuation">;</span>
-    Class<span class="token operator">&lt;</span><span class="token operator">?</span><span class="token operator">></span> <span class="token function">getObjectType</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword">boolean</span> <span class="token function">isSingleton</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span></code></pre>
 <p>在该接口中还定义了以下3个方法：</p>
 <ul>
 <li>T getObject()：返回由FactoryBean创建的Bean实例、如果isSingleton()返回 true、则该实例会放到Spring容器中单实例缓存池中</li>
 <li>Class getObjectType()：返回FactoryBean 创建的 Bean 类型、当配置文件中<code>&lt;bean&gt;</code>的class属性配置的实现类是FactoryBean时、通过getBean()方法返回的不是FactoryBean本身、而是FactoryBean的getObject()方法所返回的对象、相当于FactoryBean#getObject()代理了getBean()方法</li>
-<li>boolean isSingleton()：返回由FactoryBean创建的Bean实例的作用域是singleton还是prototype</li>
+<li> boolean isSingleton()：返回由FactoryBean创建的Bean实例的作用域是singleton还是prototype</li>
 </ul>
 <p><strong>FactoryBean总结：</strong></p>
 <ul>
@@ -435,14 +404,14 @@ Object o2 <span class="token operator">=</span> factory2<span class="token punct
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、BeanFactory"><span class="nav-number">1.</span> <span class="nav-text">一、BeanFactory</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、FactoryBean"><span class="nav-number">2.</span> <span class="nav-text">二、FactoryBean</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、区别"><span class="nav-number">3.</span> <span class="nav-text">三、区别</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81BeanFactory"><span class="nav-text">一、BeanFactory</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81FactoryBean"><span class="nav-text">二、FactoryBean</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E5%8C%BA%E5%88%AB"><span class="nav-text">三、区别</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <img class="site-author-image" itemprop="image" alt="程大明"
-      src="/uploads/avatar.jpg">
+      src="/images/avatar.jpg">
   <p class="site-author-name" itemprop="name">程大明</p>
   <div class="site-description" itemprop="description">唯有坚持不懈</div>
 </div>
@@ -451,7 +420,7 @@ Object o2 <span class="token operator">=</span> factory2<span class="token punct
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">15</span>
+          <span class="site-state-item-count">16</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -464,7 +433,7 @@ Object o2 <span class="token operator">=</span> factory2<span class="token punct
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">61</span>
+        <span class="site-state-item-count">63</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -505,7 +474,7 @@ Object o2 <span class="token operator">=</span> factory2<span class="token punct
 <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2020</span>
+  <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 4.2.1">
+<meta name="generator" content="Hexo 5.4.0">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
@@ -93,7 +93,7 @@
 </noscript>
 
 <link rel="alternate" href="/atom.xml" title="码上有约" type="application/atom+xml">
-<link rel="stylesheet" href="/css/prism-duotone-light.css" type="text/css"></head>
+</head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
   <div class="container use-motion">
@@ -214,7 +214,7 @@
     <link itemprop="mainEntityOfPage" href="http://www.msyy233.com/posts/51696.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
+      <meta itemprop="image" content="/images/avatar.jpg">
       <meta itemprop="name" content="程大明">
       <meta itemprop="description" content="唯有坚持不懈">
     </span>
@@ -273,7 +273,7 @@
       
         <p>文件系统IO分为Direct IO和Buffer IO、其中BufferIO也叫Normal IO、除此之外还有一个MMAP内存映射技术、<strong>由于涉及很多Linux内核知识、所以这里只讲述关键的知识点、用于学习Java NIO的时候不会太过疑惑</strong>、其余详细的系统底层知识有机会额外花时间讲述、</p>
 <h1 id="一、缓存IO"><a href="#一、缓存IO" class="headerlink" title="一、缓存IO"></a>一、缓存IO</h1><p>多数文件系统的默认IO操作都是缓存IO、在Linux的缓存IO机制中、操作系统会将IO的数据缓存在文件系统的页缓存（page cache）中、也就是说、数据会先被拷贝到操作系统内核的缓冲区中、然后才会从操作系统内核的缓冲区拷贝到应用程序的地址空间、这里可以看看<a href="https://www.msyy233.com/posts/52540.html">IO的概念和5种IO模型</a>中的IO交互章节、下面是两张概念图、第二张更简洁便于理解、</p>
-<a id="more"></a>
+<span id="more"></span>
 <p><img src="http://assets.msyy233.com/20180902/15562879f.png!blog" alt="缓存IO1"></p>
 <p><img src="http://assets.msyy233.com/20180904/224713f87.png!blog" alt="缓存IO2"></p>
 <p>缓存IO优点：</p>
@@ -299,23 +299,23 @@
 <ol>
 <li>如果访问的数据不在应用程序缓存中、那么每次访问数据都会直接从磁盘加载、这种直接加载会非常缓慢</li>
 </ol>
-<h1 id="三、内存映射"><a href="#三、内存映射" class="headerlink" title="三、内存映射"></a>三、内存映射</h1><p>如果说直接IO和缓存IO是相对的、而内存映射是另外一个概念、这里先给出<a href="http://man7.org/linux/man-pages/man2/mmap.2.html" target="_blank" rel="noopener">nmap官方文档</a>、反正我是看不懂、不过这章我会详细配图讲解、因为IO系列博客主要是为了学习Java NIO、而Java NIO中的直接IO使用的其实是内存映射技术、这里很多内容来自书籍《深入分析Java Web技术内幕》以及参考资料、  </p>
+<h1 id="三、内存映射"><a href="#三、内存映射" class="headerlink" title="三、内存映射"></a>三、内存映射</h1><p>如果说直接IO和缓存IO是相对的、而内存映射是另外一个概念、这里先给出<a target="_blank" rel="noopener" href="http://man7.org/linux/man-pages/man2/mmap.2.html">nmap官方文档</a>、反正我是看不懂、不过这章我会详细配图讲解、因为IO系列博客主要是为了学习Java NIO、而Java NIO中的直接IO使用的其实是内存映射技术、这里很多内容来自书籍《深入分析Java Web技术内幕》以及参考资料、  </p>
 <p><img src="http://assets.msyy233.com/20180902/155933022.png!blog" alt="内存映射1"></p>
 <p><img src="http://assets.msyy233.com/20180904/22502433f.png!blog" alt="内存映射2"></p>
 <blockquote>
 <p>内存映射方式是指操作系统将内存中的某一块区域与磁盘中的文件关联起来、当要访问内存中一段数据时、转换为访问文件的某一段数据、这种方式的目的同样是减少数据从内核空间缓存到用户空间缓存的数据复制操作、因为这两个空间的数据是共享的、</p>
 </blockquote>
-<p><strong><em>Java NIO Buffer中的非直接缓冲区指的就是缓存IO、而直接缓冲区并不是Linux概念上面的直接IO、而是内存映射、请看下面的对比图、</em></strong></p>
+<p><em><strong>Java NIO Buffer中的非直接缓冲区指的就是缓存IO、而直接缓冲区并不是Linux概念上面的直接IO、而是内存映射、请看下面的对比图、</strong></em></p>
 <p><img src="http://assets.msyy233.com/20180904/2300473bb.png!blog" alt="非直接缓冲区"><br><img src="http://assets.msyy233.com/20180904/230120c43.png!blog" alt="直接缓冲区">  </p>
 <p>Java NIO中建立直接缓冲区、其实是在JVM内存外开辟内存、在每次调用基础操作系统的一个本机IO之前或者之后、虚拟机都会避免将缓冲区的内容复制到中间缓冲区（或者从中间缓冲区复制内容）、缓冲区的内容驻留在物理内存内、会少一次复制过程、如果需要循环使用缓冲区、用直接缓冲区可以很大地提高性能、虽然直接缓冲区使JVM可以进行高效的IO操作、但它使用的内存是操作系统分配的、绕过了JVM堆栈、<strong>nmap的建立和销毁比堆栈上的缓冲区要更大的开销、</strong>  </p>
-<p>这里既然说下重点、博主的知识并没有这么深度、但是看过一些文章、以下内容来自其中<a href="https://mp.weixin.qq.com/s/aQtaDdnGxoGLvmXf7iuhLQ" target="_blank" rel="noopener">一篇</a></p>
+<p>这里既然说下重点、博主的知识并没有这么深度、但是看过一些文章、以下内容来自其中<a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/aQtaDdnGxoGLvmXf7iuhLQ">一篇</a></p>
 <ol>
 <li>nmap在Java中一次只能映射1.5~2G的文件内存、如果是更大的文件、要么需要对文件做物理拆分、切分成多文件、要么需要对文件映射做逻辑拆分、大文件分段映射、RocketMQ也使用了nmap、但是它通过限制了单文件大小来避免这个问题。</li>
 <li>nmap之所以快、是因为借助了内存来加速、mappedByteBuffer的put行为实际是对内存进行的操作、实际的刷盘行为依赖于操作系统的定时刷盘或者手动调用mappedByteBuffer.force()接口来刷盘、否则将会导致机器卡死（实测后的结论）、如果内存优先、那么使用nmap存在较难的控制问题、这也是为什么RocketMQ默认配置就是8G内存、另外RocketMQ实现中也存在定时force线程</li>
 </ol>
 <p><strong>nmap在内存较为富足并且数据量小的场景下存在优势（大多数文章的结论认为nmap适合大文件的读写、可能不是很严谨）</strong></p>
 <h1 id="四、总结"><a href="#四、总结" class="headerlink" title="四、总结"></a>四、总结</h1><p>没啥好总结的、因为这篇就是网上总结的、</p>
-<p><strong>参考资料：</strong><br><a href="https://www.ibm.com/developerworks/cn/linux/l-cn-directio/" target="_blank" rel="noopener">Linux中直接I/O机制的介绍</a><br><a href="https://www.cnblogs.com/wuchanming/p/4360277.html" target="_blank" rel="noopener">Linux用户空间与内核空间（理解高端内存）</a><br><a href="https://www.cnblogs.com/stevenczp/p/7496089.html" target="_blank" rel="noopener">缓冲IO/直接IO/内存映射</a>  </p>
+<p><strong>参考资料：</strong><br><a target="_blank" rel="noopener" href="https://www.ibm.com/developerworks/cn/linux/l-cn-directio/">Linux中直接I/O机制的介绍</a><br><a target="_blank" rel="noopener" href="https://www.cnblogs.com/wuchanming/p/4360277.html">Linux用户空间与内核空间（理解高端内存）</a><br><a target="_blank" rel="noopener" href="https://www.cnblogs.com/stevenczp/p/7496089.html">缓冲IO/直接IO/内存映射</a>  </p>
 
     </div>
 
@@ -410,14 +410,14 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#一、缓存IO"><span class="nav-number">1.</span> <span class="nav-text">一、缓存IO</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#二、直接IO"><span class="nav-number">2.</span> <span class="nav-text">二、直接IO</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#三、内存映射"><span class="nav-number">3.</span> <span class="nav-text">三、内存映射</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#四、总结"><span class="nav-number">4.</span> <span class="nav-text">四、总结</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E7%BC%93%E5%AD%98IO"><span class="nav-text">一、缓存IO</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E7%9B%B4%E6%8E%A5IO"><span class="nav-text">二、直接IO</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E5%86%85%E5%AD%98%E6%98%A0%E5%B0%84"><span class="nav-text">三、内存映射</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E6%80%BB%E7%BB%93"><span class="nav-text">四、总结</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <img class="site-author-image" itemprop="image" alt="程大明"
-      src="/uploads/avatar.jpg">
+      src="/images/avatar.jpg">
   <p class="site-author-name" itemprop="name">程大明</p>
   <div class="site-description" itemprop="description">唯有坚持不懈</div>
 </div>
@@ -426,7 +426,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">15</span>
+          <span class="site-state-item-count">16</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -439,7 +439,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">61</span>
+        <span class="site-state-item-count">63</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -480,7 +480,7 @@
 <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2020</span>
+  <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

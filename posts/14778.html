@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 4.2.1">
+<meta name="generator" content="Hexo 5.4.0">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
@@ -112,7 +112,7 @@
 </noscript>
 
 <link rel="alternate" href="/atom.xml" title="码上有约" type="application/atom+xml">
-<link rel="stylesheet" href="/css/prism-duotone-light.css" type="text/css"></head>
+</head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
   <div class="container use-motion">
@@ -233,7 +233,7 @@
     <link itemprop="mainEntityOfPage" href="http://www.msyy233.com/posts/14778.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
+      <meta itemprop="image" content="/images/avatar.jpg">
       <meta itemprop="name" content="程大明">
       <meta itemprop="description" content="唯有坚持不懈">
     </span>
@@ -293,7 +293,7 @@
         <h1 id="日志的基本概念"><a href="#日志的基本概念" class="headerlink" title="日志的基本概念"></a>日志的基本概念</h1><p>日志就是按照时间顺序追加的、完全有序的记录序列、其实就是一种特殊的文件格式、文件是一个字节数组、而这里日志是一个记录数据、只是相对于文件来说、这里每条记录都是按照时间的相对顺序排列的、可以说日志是最简单的一种存储模型、</p>
 <h1 id="常见的日志框架"><a href="#常见的日志框架" class="headerlink" title="常见的日志框架"></a>常见的日志框架</h1><p>目前主流几款日志框架为log4j、logback、log4j2、jdk-logging等、当然绝大多数情况下大家都使用了sl4j框架作为日志门面、<br>不同日志框架API也相差不大、基本都是依赖Append记录、例如：log4j2和log4j都有自己和官方实现的Kafka Append、logback可能需要自己开发、<br>在Append的背后还有Encoder/Layout、简单的说就是日志输出的格式、不同框架的命名虽然不同、但是概念也是完全相同的、实现自己的Encoder/Layout格式化Event输出到文件、再通过收集工具处理、与直接改造Append输出到对应后端是日志收集的常见做法、</p>
 <p>除了logback原生实现了sl4j门面、其他的框架大都提供了对应的桥接工具包、大体逻辑可以参考下图：</p>
-<a id="more"></a>
+<span id="more"></span>
 <p><img src="http://assets.msyy233.com/20191126/153813590.png!blog" alt="日志桥接模式"></p>
 <h1 id="日志平台技术栈"><a href="#日志平台技术栈" class="headerlink" title="日志平台技术栈"></a>日志平台技术栈</h1><h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>日志主要包括系统日志、应用程序日志和安全日志、系统运维和开发人员可以通过日志了解服务器软硬件信息、检查配置过程中的错误及错误发生的原因、经常分析日志可以了解服务器的负荷、性能安全性、从而及时采取措施纠正错误、<br>通常、日志被分散在储存不同的设备上、如果你管理数十上百台服务器、你还在使用依次登录每台机器的传统方法查阅日志、这样是不是感觉很繁琐和效率低下、当务之急我们使用集中化的日志管理、将所有服务器上的日志收集汇总、<br>集中化管理日志后、日志的统计和检索又成为一件比较麻烦的事情、一般我们使用grep、awk和wc等Linux命令能实现检索和统计、但是对于要求更高的查询、排序和统计等要求和庞大的机器数量依然使用这样的方法难免有点力不从心、<br>大数据时代、随着数据量不断增长、存储与计算集群的规模也逐渐扩大、几百上千台的云计算环境已不鲜见、现在的集群所需要解决的问题不仅仅是高性能、高可靠性、高可扩展性、还需要面对易维护性以及数据平台内部的数据共享性等诸多挑战、优秀的系统运维平台既能实现数据平台各组件的集中式管理、方便系统运维人员日常监测、提升运维效率，又能反馈系统运行状态给系统开发人员、<strong>实现并解决上述功能和痛点的系统就是日志平台</strong>、</p>
 <h2 id="阶段"><a href="#阶段" class="headerlink" title="阶段"></a>阶段</h2><ol>
@@ -436,8 +436,8 @@
 </tr>
 <tr>
 <td>容错方式</td>
-<td><a href="http://storm.apache.org/releases/1.1.0/Guaranteeing-message-processing.html" target="_blank" rel="noopener">ACK机制</a> ：对每个消息进行全链路跟踪，失败或超时进行重发。</td>
-<td><a href="https://ci.apache.org/projects/flink/flink-docs-master/internals/stream_checkpointing.html#checkpointing" target="_blank" rel="noopener">检查点机制</a> ：通过分布式一致性快照机制，对数据流和算子状态进行保存。在发生错误时，使系统能够进行回滚。</td>
+<td><a target="_blank" rel="noopener" href="http://storm.apache.org/releases/1.1.0/Guaranteeing-message-processing.html">ACK机制</a> ：对每个消息进行全链路跟踪，失败或超时进行重发。</td>
+<td><a target="_blank" rel="noopener" href="https://ci.apache.org/projects/flink/flink-docs-master/internals/stream_checkpointing.html#checkpointing">检查点机制</a> ：通过分布式一致性快照机制，对数据流和算子状态进行保存。在发生错误时，使系统能够进行回滚。</td>
 </tr>
 <tr>
 <td>应用现状</td>
@@ -446,8 +446,8 @@
 </tr>
 </tbody></table>
 <h3 id="性能对比"><a href="#性能对比" class="headerlink" title="性能对比"></a>性能对比</h3><p>这里主要通过以下两个指标来衡量各场景性能、  </p>
-<p>吞吐量（Throughput）：<strong><em>单位时间内由计算框架成功地传送数据的数量，本次测试吞吐量的单位为：条/秒。反映了系统的负载能力，在相应的资源条件下，单位时间内系统能处理多少数据。</em></strong> 吞吐量常用于资源规划，同时也用于协助分析系统性能瓶颈，从而进行相应的资源调整以保证系统能达到用户所要求的处理能力。假设商家每小时能做二十份午餐（吞吐量 20 份/小时），一个外卖小哥每小时只能送两份（吞吐量 2 份/小时），这个系统的瓶颈就在小哥配送这个环节，可以给该商家安排十个外卖小哥配送。</p>
-<p>延迟（Latency）：<strong><em>数据从进入系统到流出系统所用的时间，本次测试延迟的单位为：毫秒。反映了系统处理的实时性。金融交易分析等大量实时计算业务对延迟有较高要求，延迟越低，数据实时性越强。</em></strong> 假设商家做一份午餐需要 5 分钟，小哥配送需要 25 分钟，这个流程中用户感受到了 30 分钟的延迟。如果更换配送方案后延迟变成了 60 分钟，等送到了饭菜都凉了，这个新的方案就是无法接受的。</p>
+<p>吞吐量（Throughput）：<em><strong>单位时间内由计算框架成功地传送数据的数量，本次测试吞吐量的单位为：条/秒。反映了系统的负载能力，在相应的资源条件下，单位时间内系统能处理多少数据。</strong></em> 吞吐量常用于资源规划，同时也用于协助分析系统性能瓶颈，从而进行相应的资源调整以保证系统能达到用户所要求的处理能力。假设商家每小时能做二十份午餐（吞吐量 20 份/小时），一个外卖小哥每小时只能送两份（吞吐量 2 份/小时），这个系统的瓶颈就在小哥配送这个环节，可以给该商家安排十个外卖小哥配送。</p>
+<p>延迟（Latency）：<em><strong>数据从进入系统到流出系统所用的时间，本次测试延迟的单位为：毫秒。反映了系统处理的实时性。金融交易分析等大量实时计算业务对延迟有较高要求，延迟越低，数据实时性越强。</strong></em> 假设商家做一份午餐需要 5 分钟，小哥配送需要 25 分钟，这个流程中用户感受到了 30 分钟的延迟。如果更换配送方案后延迟变成了 60 分钟，等送到了饭菜都凉了，这个新的方案就是无法接受的。</p>
 <p>对比测试的参数配置：</p>
 <ul>
 <li>Storm 和 Flink 默认均为 At Least Once 语义。</li>
@@ -563,7 +563,7 @@
 <h2 id="Vue"><a href="#Vue" class="headerlink" title="Vue"></a>Vue</h2><p>我在是否使用Kibana考虑了很久、毕竟整个技术选型大部分是Elastic家族的产品、尤其是比较重要的存储和收集、无论如何他们对同为Elastic家族的Kibana支持是最好的、但是Kibana在个性化的一些查询中可能会显得力不从心、这里可以参考上个章节的分布式日志平台想关功能、不仅仅如此、Kibana在对多租户的支持方向也非常不友好、而对Kibana进行二次开发的学习成本太高、因此展示这边可能使用自研更合适、而我之所以选用Vue是因为我们德邦快递公司前端技术架构使用了它、</p>
 <h1 id="最终的实施步骤"><a href="#最终的实施步骤" class="headerlink" title="最终的实施步骤"></a>最终的实施步骤</h1><p>实施步骤省略。这里引出一个问题，经过艰苦努力，终于完成了基本的日志查询问题，可是如此海量的日志所需要的硬件资源也是个高昂的费用，实现上述基础功能可以直接找供应商，也许落地成本更低。如何才能让数据发挥应有的价值？是不是只有应用系统才有日志？也许可以思考一下“数字化运营平台”。</p>
 <hr>
-<p><strong>参考资料：</strong><br><a href="https://tech.meituan.com/2017/11/17/flink-benchmark.html" target="_blank" rel="noopener">流计算框架 Flink 与 Storm 的性能对比</a><br><a href="https://zhuanlan.zhihu.com/p/79579389" target="_blank" rel="noopener">Kafka史上最详细原理总结</a></p>
+<p><strong>参考资料：</strong><br><a target="_blank" rel="noopener" href="https://tech.meituan.com/2017/11/17/flink-benchmark.html">流计算框架 Flink 与 Storm 的性能对比</a><br><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/79579389">Kafka史上最详细原理总结</a></p>
 
     </div>
 
@@ -597,12 +597,12 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/posts/25037.html" rel="prev" title="常见APM技术选型">
-      <i class="fa fa-chevron-left"></i> 常见APM技术选型
+    <a href="/posts/49866.html" rel="prev" title="Java NIO系列（一）核心组件">
+      <i class="fa fa-chevron-left"></i> Java NIO系列（一）核心组件
     </a></div>
       <div class="post-nav-item">
-    <a href="/posts/49866.html" rel="next" title="Java NIO系列（一）核心组件">
-      Java NIO系列（一）核心组件 <i class="fa fa-chevron-right"></i>
+    <a href="/posts/60194.html" rel="next" title="如何做好职业生涯规划">
+      如何做好职业生涯规划 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -667,14 +667,14 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#日志的基本概念"><span class="nav-number">1.</span> <span class="nav-text">日志的基本概念</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#常见的日志框架"><span class="nav-number">2.</span> <span class="nav-text">常见的日志框架</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#日志平台技术栈"><span class="nav-number">3.</span> <span class="nav-text">日志平台技术栈</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#背景"><span class="nav-number">3.1.</span> <span class="nav-text">背景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#阶段"><span class="nav-number">3.2.</span> <span class="nav-text">阶段</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#收集"><span class="nav-number">3.3.</span> <span class="nav-text">收集</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Filebeat"><span class="nav-number">3.3.1.</span> <span class="nav-text">Filebeat</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#基本功能"><span class="nav-number">3.3.1.1.</span> <span class="nav-text">基本功能</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#代码结构"><span class="nav-number">3.3.1.2.</span> <span class="nav-text">代码结构</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#内部逻辑"><span class="nav-number">3.3.1.3.</span> <span class="nav-text">内部逻辑</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#性能问题"><span class="nav-number">3.3.1.4.</span> <span class="nav-text">性能问题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#灵活扩展"><span class="nav-number">3.3.1.5.</span> <span class="nav-text">灵活扩展</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#集中配置"><span class="nav-number">3.3.1.6.</span> <span class="nav-text">集中配置</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Fluent-bit"><span class="nav-number">3.3.2.</span> <span class="nav-text">Fluent-bit</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Flume"><span class="nav-number">3.3.3.</span> <span class="nav-text">Flume</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Logstash"><span class="nav-number">3.3.4.</span> <span class="nav-text">Logstash</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Fluentd"><span class="nav-number">3.3.5.</span> <span class="nav-text">Fluentd</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#管道"><span class="nav-number">3.4.</span> <span class="nav-text">管道</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#基本概念"><span class="nav-number">3.4.1.</span> <span class="nav-text">基本概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Partiton-Replication原则"><span class="nav-number">3.4.2.</span> <span class="nav-text">Partiton Replication原则</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#高可用"><span class="nav-number">3.4.3.</span> <span class="nav-text">高可用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Partition中segment文件存储结构"><span class="nav-number">3.4.4.</span> <span class="nav-text">Partition中segment文件存储结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Kafka性能瓶颈"><span class="nav-number">3.4.5.</span> <span class="nav-text">Kafka性能瓶颈</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#分析"><span class="nav-number">3.5.</span> <span class="nav-text">分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#功能对比"><span class="nav-number">3.5.1.</span> <span class="nav-text">功能对比</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#性能对比"><span class="nav-number">3.5.2.</span> <span class="nav-text">性能对比</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#集群参数"><span class="nav-number">3.5.2.1.</span> <span class="nav-text">集群参数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#框架参数"><span class="nav-number">3.5.2.2.</span> <span class="nav-text">框架参数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#测试内容"><span class="nav-number">3.5.2.3.</span> <span class="nav-text">测试内容</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#场景一：“输入-输出”简单处理"><span class="nav-number">3.5.2.3.1.</span> <span class="nav-text">场景一：“输入-输出”简单处理</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#场景二：用户作业耗时较长"><span class="nav-number">3.5.2.3.2.</span> <span class="nav-text">场景二：用户作业耗时较长</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#场景三：窗口统计场景"><span class="nav-number">3.5.2.3.3.</span> <span class="nav-text">场景三：窗口统计场景</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#精确计算场景"><span class="nav-number">3.5.2.3.4.</span> <span class="nav-text">精确计算场景</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结"><span class="nav-number">3.5.3.</span> <span class="nav-text">总结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#存储"><span class="nav-number">3.6.</span> <span class="nav-text">存储</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#分布式日志平台"><span class="nav-number">4.</span> <span class="nav-text">分布式日志平台</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#查询"><span class="nav-number">4.1.</span> <span class="nav-text">查询</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#处理"><span class="nav-number">4.2.</span> <span class="nav-text">处理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#告警"><span class="nav-number">4.3.</span> <span class="nav-text">告警</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#落地的技术考量"><span class="nav-number">5.</span> <span class="nav-text">落地的技术考量</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Filebeat-1"><span class="nav-number">5.1.</span> <span class="nav-text">Filebeat</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Kafka"><span class="nav-number">5.2.</span> <span class="nav-text">Kafka</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Flink"><span class="nav-number">5.3.</span> <span class="nav-text">Flink</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Elasticsearch"><span class="nav-number">5.4.</span> <span class="nav-text">Elasticsearch</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Vue"><span class="nav-number">5.5.</span> <span class="nav-text">Vue</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#最终的实施步骤"><span class="nav-number">6.</span> <span class="nav-text">最终的实施步骤</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%97%A5%E5%BF%97%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="nav-text">日志的基本概念</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B8%B8%E8%A7%81%E7%9A%84%E6%97%A5%E5%BF%97%E6%A1%86%E6%9E%B6"><span class="nav-text">常见的日志框架</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%97%A5%E5%BF%97%E5%B9%B3%E5%8F%B0%E6%8A%80%E6%9C%AF%E6%A0%88"><span class="nav-text">日志平台技术栈</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%83%8C%E6%99%AF"><span class="nav-text">背景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%98%B6%E6%AE%B5"><span class="nav-text">阶段</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%94%B6%E9%9B%86"><span class="nav-text">收集</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Filebeat"><span class="nav-text">Filebeat</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E5%8A%9F%E8%83%BD"><span class="nav-text">基本功能</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E7%BB%93%E6%9E%84"><span class="nav-text">代码结构</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%86%85%E9%83%A8%E9%80%BB%E8%BE%91"><span class="nav-text">内部逻辑</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%80%A7%E8%83%BD%E9%97%AE%E9%A2%98"><span class="nav-text">性能问题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%81%B5%E6%B4%BB%E6%89%A9%E5%B1%95"><span class="nav-text">灵活扩展</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%9B%86%E4%B8%AD%E9%85%8D%E7%BD%AE"><span class="nav-text">集中配置</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Fluent-bit"><span class="nav-text">Fluent-bit</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Flume"><span class="nav-text">Flume</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Logstash"><span class="nav-text">Logstash</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Fluentd"><span class="nav-text">Fluentd</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%A1%E9%81%93"><span class="nav-text">管道</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="nav-text">基本概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Partiton-Replication%E5%8E%9F%E5%88%99"><span class="nav-text">Partiton Replication原则</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%AB%98%E5%8F%AF%E7%94%A8"><span class="nav-text">高可用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Partition%E4%B8%ADsegment%E6%96%87%E4%BB%B6%E5%AD%98%E5%82%A8%E7%BB%93%E6%9E%84"><span class="nav-text">Partition中segment文件存储结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Kafka%E6%80%A7%E8%83%BD%E7%93%B6%E9%A2%88"><span class="nav-text">Kafka性能瓶颈</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%86%E6%9E%90"><span class="nav-text">分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8A%9F%E8%83%BD%E5%AF%B9%E6%AF%94"><span class="nav-text">功能对比</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%A7%E8%83%BD%E5%AF%B9%E6%AF%94"><span class="nav-text">性能对比</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%9B%86%E7%BE%A4%E5%8F%82%E6%95%B0"><span class="nav-text">集群参数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%A1%86%E6%9E%B6%E5%8F%82%E6%95%B0"><span class="nav-text">框架参数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%B5%8B%E8%AF%95%E5%86%85%E5%AE%B9"><span class="nav-text">测试内容</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%9C%BA%E6%99%AF%E4%B8%80%EF%BC%9A%E2%80%9C%E8%BE%93%E5%85%A5-%E8%BE%93%E5%87%BA%E2%80%9D%E7%AE%80%E5%8D%95%E5%A4%84%E7%90%86"><span class="nav-text">场景一：“输入-输出”简单处理</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%9C%BA%E6%99%AF%E4%BA%8C%EF%BC%9A%E7%94%A8%E6%88%B7%E4%BD%9C%E4%B8%9A%E8%80%97%E6%97%B6%E8%BE%83%E9%95%BF"><span class="nav-text">场景二：用户作业耗时较长</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%9C%BA%E6%99%AF%E4%B8%89%EF%BC%9A%E7%AA%97%E5%8F%A3%E7%BB%9F%E8%AE%A1%E5%9C%BA%E6%99%AF"><span class="nav-text">场景三：窗口统计场景</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%B2%BE%E7%A1%AE%E8%AE%A1%E7%AE%97%E5%9C%BA%E6%99%AF"><span class="nav-text">精确计算场景</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-text">总结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%98%E5%82%A8"><span class="nav-text">存储</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%88%86%E5%B8%83%E5%BC%8F%E6%97%A5%E5%BF%97%E5%B9%B3%E5%8F%B0"><span class="nav-text">分布式日志平台</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9F%A5%E8%AF%A2"><span class="nav-text">查询</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%84%E7%90%86"><span class="nav-text">处理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%91%8A%E8%AD%A6"><span class="nav-text">告警</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%90%BD%E5%9C%B0%E7%9A%84%E6%8A%80%E6%9C%AF%E8%80%83%E9%87%8F"><span class="nav-text">落地的技术考量</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Filebeat-1"><span class="nav-text">Filebeat</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Kafka"><span class="nav-text">Kafka</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Flink"><span class="nav-text">Flink</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Elasticsearch"><span class="nav-text">Elasticsearch</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Vue"><span class="nav-text">Vue</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9C%80%E7%BB%88%E7%9A%84%E5%AE%9E%E6%96%BD%E6%AD%A5%E9%AA%A4"><span class="nav-text">最终的实施步骤</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <img class="site-author-image" itemprop="image" alt="程大明"
-      src="/uploads/avatar.jpg">
+      src="/images/avatar.jpg">
   <p class="site-author-name" itemprop="name">程大明</p>
   <div class="site-description" itemprop="description">唯有坚持不懈</div>
 </div>
@@ -683,7 +683,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">15</span>
+          <span class="site-state-item-count">16</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -696,7 +696,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">61</span>
+        <span class="site-state-item-count">63</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -737,7 +737,7 @@
 <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2020</span>
+  <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

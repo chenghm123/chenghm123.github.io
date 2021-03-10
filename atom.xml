@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.msyy233.com/"/>
-  <updated>2019-08-04T16:01:38.319Z</updated>
+  <updated>2021-03-10T09:08:45.240Z</updated>
   <id>http://www.msyy233.com/</id>
   
   <author>
@@ -17,42 +17,47 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>Java NIO系列（一）核心组件</title>
-    <link href="http://www.msyy233.com/posts/49866.html"/>
-    <id>http://www.msyy233.com/posts/49866.html</id>
-    <published>2020-06-13T03:06:22.640Z</published>
-    <updated>2019-08-04T16:01:38.319Z</updated>
+    <title>如何做好职业生涯规划</title>
+    <link href="http://www.msyy233.com/posts/60194.html"/>
+    <id>http://www.msyy233.com/posts/60194.html</id>
+    <published>2021-03-10T08:20:18.000Z</published>
+    <updated>2021-03-10T09:08:45.240Z</updated>
     
     <summary type="html">
     
-      &lt;p&gt;看过&lt;a href=&quot;https://www.msyy233.com/posts/52540.html&quot;&gt;IO概念和5种IO模型&lt;/a&gt;、可以了解到IO的五种模型、NIO便是对应其中的&lt;strong&gt;&lt;em&gt;IO复用模型&lt;/em&gt;&lt;/strong&gt;、本篇对NIO的组件进行讲解、如果还不理解什么是NIO建议先看一看上一篇&lt;a href=&quot;https://www.msyy233.com/posts/52540.html&quot;&gt;IO概念和5种IO模型&lt;/a&gt;、&lt;/p&gt;
-&lt;p&gt;Java NIO是由以下几个核心部分组成：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Channels&lt;/li&gt;
-&lt;li&gt;Buffers&lt;/li&gt;
-&lt;li&gt;Selectors&lt;/li&gt;
+      &lt;p&gt;&lt;span style=&quot;color:red;font-size:xx-large;&quot;&gt;&lt;strong&gt;让你的人生充满喜悦！&lt;/strong&gt;&lt;/span&gt;&lt;/p&gt;
+&lt;h2 id=&quot;一、职业生涯规划的意义&quot;&gt;&lt;a href=&quot;#一、职业生涯规划的意义&quot; class=&quot;headerlink&quot; title=&quot;一、职业生涯规划的意义&quot;&gt;&lt;/a&gt;一、职业生涯规划的意义&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;以既有的成就为基础，确立人生的方向，提供奋斗的策略。 &lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;突破生活的格线，塑造清新充实的自我。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;准确评价个人特点和强项。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;评估个人目标和现状的差距。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;准确定位职业方向。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;重新认识自身的价值并使其增值。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;发现新的职业机遇。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;增强职业竞争力。 &lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;将个人、事业与家庭联系起来。&lt;/p&gt;
+&lt;/li&gt;
 &lt;/ul&gt;
-&lt;blockquote&gt;
-&lt;p&gt;虽然Java NIO 中除此之外还有很多类和组件、但在我看来Channel、Buffer和Selector构成了核心的API、其它组件、如Pipe和FileLock、只不过是与三个核心组件共同使用的工具类、&lt;/p&gt;
-&lt;/blockquote&gt;
     
     </summary>
     
     
-      <category term="io" scheme="http://www.msyy233.com/categories/io/"/>
+      <category term="feeling" scheme="http://www.msyy233.com/categories/feeling/"/>
     
     
-      <category term="nio" scheme="http://www.msyy233.com/tags/nio/"/>
+      <category term="成长感悟" scheme="http://www.msyy233.com/tags/%E6%88%90%E9%95%BF%E6%84%9F%E6%82%9F/"/>
     
-      <category term="io" scheme="http://www.msyy233.com/tags/io/"/>
+      <category term="个人成长" scheme="http://www.msyy233.com/tags/%E4%B8%AA%E4%BA%BA%E6%88%90%E9%95%BF/"/>
     
-      <category term="channel" scheme="http://www.msyy233.com/tags/channel/"/>
-    
-      <category term="buffer" scheme="http://www.msyy233.com/tags/buffer/"/>
-    
-      <category term="selector" scheme="http://www.msyy233.com/tags/selector/"/>
-    
-      <category term="java" scheme="http://www.msyy233.com/tags/java/"/>
+      <category term="职业规划" scheme="http://www.msyy233.com/tags/%E8%81%8C%E4%B8%9A%E8%A7%84%E5%88%92/"/>
     
   </entry>
   
@@ -110,11 +115,51 @@
   </entry>
   
   <entry>
+    <title>Java NIO系列（一）核心组件</title>
+    <link href="http://www.msyy233.com/posts/49866.html"/>
+    <id>http://www.msyy233.com/posts/49866.html</id>
+    <published>2020-06-13T03:06:22.640Z</published>
+    <updated>2019-08-04T16:01:38.319Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;看过&lt;a href=&quot;https://www.msyy233.com/posts/52540.html&quot;&gt;IO概念和5种IO模型&lt;/a&gt;、可以了解到IO的五种模型、NIO便是对应其中的&lt;em&gt;&lt;strong&gt;IO复用模型&lt;/strong&gt;&lt;/em&gt;、本篇对NIO的组件进行讲解、如果还不理解什么是NIO建议先看一看上一篇&lt;a href=&quot;https://www.msyy233.com/posts/52540.html&quot;&gt;IO概念和5种IO模型&lt;/a&gt;、&lt;/p&gt;
+&lt;p&gt;Java NIO是由以下几个核心部分组成：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Channels&lt;/li&gt;
+&lt;li&gt;Buffers&lt;/li&gt;
+&lt;li&gt;Selectors&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;p&gt;虽然Java NIO 中除此之外还有很多类和组件、但在我看来Channel、Buffer和Selector构成了核心的API、其它组件、如Pipe和FileLock、只不过是与三个核心组件共同使用的工具类、&lt;/p&gt;
+&lt;/blockquote&gt;
+    
+    </summary>
+    
+    
+      <category term="io" scheme="http://www.msyy233.com/categories/io/"/>
+    
+    
+      <category term="nio" scheme="http://www.msyy233.com/tags/nio/"/>
+    
+      <category term="io" scheme="http://www.msyy233.com/tags/io/"/>
+    
+      <category term="channel" scheme="http://www.msyy233.com/tags/channel/"/>
+    
+      <category term="buffer" scheme="http://www.msyy233.com/tags/buffer/"/>
+    
+      <category term="selector" scheme="http://www.msyy233.com/tags/selector/"/>
+    
+      <category term="java" scheme="http://www.msyy233.com/tags/java/"/>
+    
+  </entry>
+  
+  <entry>
     <title>常见APM技术选型</title>
     <link href="http://www.msyy233.com/posts/25037.html"/>
     <id>http://www.msyy233.com/posts/25037.html</id>
     <published>2019-08-03T23:53:37.000Z</published>
-    <updated>2019-08-05T22:47:25.608Z</updated>
+    <updated>2020-12-14T09:11:01.412Z</updated>
     
     <summary type="html">
     
@@ -195,7 +240,7 @@
     
     <summary type="html">
     
-      &lt;p&gt;当Adobe、Microsoft、Sun等一系列巨头开始表现出对开源的青睐时、开源的时代早已到来、现今存在的开源协议很多、而经过Open Source Initiative组织通过批准的开源协议目前有&lt;a href=&quot;http://www.opensource.org/licenses/alphabetical&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;83种&lt;/a&gt;、我们在常见的开源协议如BSD、GPL、LGPL、MIT等都是OSI批准的协议、如果要开源自己的代码、最好也是选择这些被批准的开源协议、这里我们来看四种最常用的开源协议及它们的适用范围、供那些准备开源或者使用开源产品的开发人员/厂家参考  &lt;/p&gt;
+      &lt;p&gt;当Adobe、Microsoft、Sun等一系列巨头开始表现出对开源的青睐时、开源的时代早已到来、现今存在的开源协议很多、而经过Open Source Initiative组织通过批准的开源协议目前有&lt;a href=&quot;http://www.opensource.org/licenses/alphabetical&quot;&gt;83种&lt;/a&gt;、我们在常见的开源协议如BSD、GPL、LGPL、MIT等都是OSI批准的协议、如果要开源自己的代码、最好也是选择这些被批准的开源协议、这里我们来看四种最常用的开源协议及它们的适用范围、供那些准备开源或者使用开源产品的开发人员/厂家参考  &lt;/p&gt;
 &lt;h2 id=&quot;BSD开源协议-original-BSD-license-FreeBSD-license-Original-BSD-license&quot;&gt;&lt;a href=&quot;#BSD开源协议-original-BSD-license-FreeBSD-license-Original-BSD-license&quot; class=&quot;headerlink&quot; title=&quot;BSD开源协议(original BSD license/FreeBSD license/Original BSD license)&quot;&gt;&lt;/a&gt;BSD开源协议(original BSD license/FreeBSD license/Original BSD license)&lt;/h2&gt;&lt;p&gt;BSD开源协议是一个给于使用者很大自由的协议、基本上使用者可以为所欲为、可以自由的使用、修改源代码、也可以将修改后的代码作为开源或者专有软件再发布、但为所欲为的前提当你发布使用了BSD协议的代码或则以BSD协议代码为基础做二次开发自己的产品时、需要满足三个条件：&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;&lt;p&gt;如果再发布的产品中包含源代码、则在源代码中必须带有原来代码中的BSD协议、如果再发布的只是二进制类库/软件、则需要在类库/软件的文档和版权声明中包含原来代码中的BSD协议、&lt;/p&gt;
@@ -324,7 +369,7 @@
     <summary type="html">
     
       &lt;h1 id=&quot;一、什么是IO？&quot;&gt;&lt;a href=&quot;#一、什么是IO？&quot; class=&quot;headerlink&quot; title=&quot;一、什么是IO？&quot;&gt;&lt;/a&gt;一、什么是IO？&lt;/h1&gt;&lt;p&gt;我们都知道unix世界里、一切皆文件、而文件是什么呢？文件就是一串二进制流而已、不管socket、还是FIFO、管道、终端、对我们来说、一切都是文件、一切都是流、在信息交换的过程中、我们都是对这些流进行数据的收发操作、简称为I/O操作(input and output)、往流中读出数据、系统调用read、写入数据、系统调用write、不过话说回来了、计算机里有这么多的流、我怎么知道要操作哪个流呢？做到这个的就是文件描述符、即通常所说的fd、一个fd就是一个整数、所以对这个整数的操作、就是对这个文件（流）的操作、我们创建一个socket、通过系统调用会返回一个文件描述符、那么剩下对socket的操作就会转化为对这个描述符的操作、不能不说这又是一种分层和抽象的思想、  &lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;&lt;em&gt;PS：本文中的IO概念只针对缓冲IO、具体可以阅读&lt;a href=&quot;https://www.msyy233.com/posts/51696.html&quot;&gt;缓存IO、直接IO与内存映射&lt;/a&gt;&lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;&lt;strong&gt;PS：本文中的IO概念只针对缓冲IO、具体可以阅读&lt;a href=&quot;https://www.msyy233.com/posts/51696.html&quot;&gt;缓存IO、直接IO与内存映射&lt;/a&gt;&lt;/strong&gt;&lt;/em&gt;&lt;/p&gt;
 &lt;h1 id=&quot;二、IO交互&quot;&gt;&lt;a href=&quot;#二、IO交互&quot; class=&quot;headerlink&quot; title=&quot;二、IO交互&quot;&gt;&lt;/a&gt;二、IO交互&lt;/h1&gt;&lt;p&gt;通常用户进程中的一个完整IO分为两阶段：&lt;br&gt;&lt;img src=&quot;http://assets.msyy233.com/20180607/112239bb4.png!blog&quot; alt=&quot;IO交互图_1&quot;&gt;  &lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;用户空间 &amp;lt;—–&amp;gt; 内核空间、&lt;/li&gt;
@@ -386,38 +431,6 @@
   </entry>
   
   <entry>
-    <title>JavaEE通过路径或域名获取资源</title>
-    <link href="http://www.msyy233.com/posts/29966.html"/>
-    <id>http://www.msyy233.com/posts/29966.html</id>
-    <published>2018-05-12T06:32:37.000Z</published>
-    <updated>2018-05-14T06:32:37.000Z</updated>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;一、通过路径&quot;&gt;&lt;a href=&quot;#一、通过路径&quot; class=&quot;headerlink&quot; title=&quot;一、通过路径&quot;&gt;&lt;/a&gt;一、通过路径&lt;/h2&gt;&lt;h3 id=&quot;1、使用ServletContext&quot;&gt;&lt;a href=&quot;#1、使用ServletContext&quot; class=&quot;headerlink&quot; title=&quot;1、使用ServletContext&quot;&gt;&lt;/a&gt;1、使用ServletContext&lt;/h3&gt;&lt;pre&gt;&lt;code class=&quot;java&quot;&gt;/*
- * 这里将获取的path是web项目的全路径
- * 例如：E:/workspace/webapp/
- * webapp是我web项目的根目录
- */ 
-String path = servletContext.getRealPath(&amp;quot;/&amp;quot;);&lt;/code&gt;&lt;/pre&gt;
-    
-    </summary>
-    
-    
-      <category term="java" scheme="http://www.msyy233.com/categories/java/"/>
-    
-    
-      <category term="javaee路径" scheme="http://www.msyy233.com/tags/javaee%E8%B7%AF%E5%BE%84/"/>
-    
-      <category term="web项目根域名" scheme="http://www.msyy233.com/tags/web%E9%A1%B9%E7%9B%AE%E6%A0%B9%E5%9F%9F%E5%90%8D/"/>
-    
-      <category term="类路径获取" scheme="http://www.msyy233.com/tags/%E7%B1%BB%E8%B7%AF%E5%BE%84%E8%8E%B7%E5%8F%96/"/>
-    
-      <category term="Java资源路径" scheme="http://www.msyy233.com/tags/Java%E8%B5%84%E6%BA%90%E8%B7%AF%E5%BE%84/"/>
-    
-  </entry>
-  
-  <entry>
     <title>Java不定长参数</title>
     <link href="http://www.msyy233.com/posts/33024.html"/>
     <id>http://www.msyy233.com/posts/33024.html</id>
@@ -443,6 +456,33 @@ String path = servletContext.getRealPath(&amp;quot;/&amp;quot;);&lt;/code&gt;&lt
   </entry>
   
   <entry>
+    <title>JavaEE通过路径或域名获取资源</title>
+    <link href="http://www.msyy233.com/posts/29966.html"/>
+    <id>http://www.msyy233.com/posts/29966.html</id>
+    <published>2018-05-12T06:32:37.000Z</published>
+    <updated>2018-05-14T06:32:37.000Z</updated>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;一、通过路径&quot;&gt;&lt;a href=&quot;#一、通过路径&quot; class=&quot;headerlink&quot; title=&quot;一、通过路径&quot;&gt;&lt;/a&gt;一、通过路径&lt;/h2&gt;&lt;h3 id=&quot;1、使用ServletContext&quot;&gt;&lt;a href=&quot;#1、使用ServletContext&quot; class=&quot;headerlink&quot; title=&quot;1、使用ServletContext&quot;&gt;&lt;/a&gt;1、使用ServletContext&lt;/h3&gt;&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;/*&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt; * 这里将获取的path是web项目的全路径&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt; * 例如：E:/workspace/webapp/&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt; * webapp是我web项目的根目录&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt; */&lt;/span&gt; &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;String path = servletContext.getRealPath(&lt;span class=&quot;string&quot;&gt;&amp;quot;/&amp;quot;&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+    
+    </summary>
+    
+    
+      <category term="java" scheme="http://www.msyy233.com/categories/java/"/>
+    
+    
+      <category term="javaee路径" scheme="http://www.msyy233.com/tags/javaee%E8%B7%AF%E5%BE%84/"/>
+    
+      <category term="web项目根域名" scheme="http://www.msyy233.com/tags/web%E9%A1%B9%E7%9B%AE%E6%A0%B9%E5%9F%9F%E5%90%8D/"/>
+    
+      <category term="类路径获取" scheme="http://www.msyy233.com/tags/%E7%B1%BB%E8%B7%AF%E5%BE%84%E8%8E%B7%E5%8F%96/"/>
+    
+      <category term="Java资源路径" scheme="http://www.msyy233.com/tags/Java%E8%B5%84%E6%BA%90%E8%B7%AF%E5%BE%84/"/>
+    
+  </entry>
+  
+  <entry>
     <title>Windows和Linux下JDK安装配置</title>
     <link href="http://www.msyy233.com/posts/1678.html"/>
     <id>http://www.msyy233.com/posts/1678.html</id>
@@ -451,7 +491,7 @@ String path = servletContext.getRealPath(&amp;quot;/&amp;quot;);&lt;/code&gt;&lt
     
     <summary type="html">
     
-      &lt;h2 id=&quot;一、下载&quot;&gt;&lt;a href=&quot;#一、下载&quot; class=&quot;headerlink&quot; title=&quot;一、下载&quot;&gt;&lt;/a&gt;一、下载&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;官网下载地址：&lt;/strong&gt;&lt;a href=&quot;http://www.oracle.com/technetwork/java/javase/archive-139210.html&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Oracle Java Archive&lt;/a&gt;&lt;/p&gt;
+      &lt;h2 id=&quot;一、下载&quot;&gt;&lt;a href=&quot;#一、下载&quot; class=&quot;headerlink&quot; title=&quot;一、下载&quot;&gt;&lt;/a&gt;一、下载&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;官网下载地址：&lt;/strong&gt;&lt;a href=&quot;http://www.oracle.com/technetwork/java/javase/archive-139210.html&quot;&gt;Oracle Java Archive&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;&lt;em&gt;根据需要下载相应JDK版本、系统版本和CPU位数&lt;/em&gt;&lt;/p&gt;
 &lt;h2 id=&quot;二、安装&quot;&gt;&lt;a href=&quot;#二、安装&quot; class=&quot;headerlink&quot; title=&quot;二、安装&quot;&gt;&lt;/a&gt;二、安装&lt;/h2&gt;&lt;h3 id=&quot;1、Windows下JDK安装&quot;&gt;&lt;a href=&quot;#1、Windows下JDK安装&quot; class=&quot;headerlink&quot; title=&quot;1、Windows下JDK安装&quot;&gt;&lt;/a&gt;1、Windows下JDK安装&lt;/h3&gt;
     
@@ -470,12 +510,12 @@ String path = servletContext.getRealPath(&amp;quot;/&amp;quot;);&lt;/code&gt;&lt
     <link href="http://www.msyy233.com/posts/28521.html"/>
     <id>http://www.msyy233.com/posts/28521.html</id>
     <published>2017-12-14T06:32:37.000Z</published>
-    <updated>2017-12-17T06:32:37.000Z</updated>
+    <updated>2021-03-10T09:42:33.202Z</updated>
     
     <summary type="html">
     
-      &lt;p&gt;本文资料来源：&lt;br&gt;&lt;a href=&quot;http://docs.oracle.com/cd/E11882_01/install.112/e24326/toc.htm&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Oracle® Database Quick Installation Guide（linux_x64）&lt;/a&gt;&lt;br&gt;&lt;a href=&quot;http://docs.oracle.com/cd/E11882_01/install.112/e24324/toc.htm&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Oracle® Database Quick Installation Guide（linux_x86）&lt;/a&gt;&lt;/p&gt;
-&lt;h2 id=&quot;一、下载&quot;&gt;&lt;a href=&quot;#一、下载&quot; class=&quot;headerlink&quot; title=&quot;一、下载&quot;&gt;&lt;/a&gt;一、下载&lt;/h2&gt;&lt;p&gt;下载地址：&lt;a href=&quot;http://www.oracle.com/technetwork/database/enterprise-edition/downloads/index.html&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Oracle Database Software Downloads&lt;/a&gt;&lt;br&gt;&lt;img src=&quot;http://assets.msyy233.com/20180726/095340854.png!blog&quot; alt=&quot;Oracle许可证&quot;&gt;    &lt;/p&gt;
+      &lt;p&gt;本文资料来源：&lt;br&gt;&lt;a href=&quot;http://docs.oracle.com/cd/E11882_01/install.112/e24326/toc.htm&quot;&gt;Oracle® Database Quick Installation Guide（linux_x64）&lt;/a&gt;&lt;br&gt;&lt;a href=&quot;http://docs.oracle.com/cd/E11882_01/install.112/e24324/toc.htm&quot;&gt;Oracle® Database Quick Installation Guide（linux_x86）&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&quot;一、下载&quot;&gt;&lt;a href=&quot;#一、下载&quot; class=&quot;headerlink&quot; title=&quot;一、下载&quot;&gt;&lt;/a&gt;一、下载&lt;/h2&gt;&lt;p&gt;下载地址：&lt;a href=&quot;http://www.oracle.com/technetwork/database/enterprise-edition/downloads/index.html&quot;&gt;Oracle Database Software Downloads&lt;/a&gt;&lt;br&gt;&lt;img src=&quot;http://assets.msyy233.com/20180726/095340854.png!blog&quot; alt=&quot;Oracle许可证&quot;&gt;    &lt;/p&gt;
     
     </summary>
     
@@ -498,8 +538,8 @@ String path = servletContext.getRealPath(&amp;quot;/&amp;quot;);&lt;/code&gt;&lt
     
     <summary type="html">
     
-      &lt;p&gt;本文资料来源：&lt;a href=&quot;http://books.sonatype.com/nexus-book/reference/index.html&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Nexus Documentation - Nexus Repository Manager 2.14&lt;/a&gt;&lt;/p&gt;
-&lt;h2 id=&quot;一、Nexus的下载和部署&quot;&gt;&lt;a href=&quot;#一、Nexus的下载和部署&quot; class=&quot;headerlink&quot; title=&quot;一、Nexus的下载和部署&quot;&gt;&lt;/a&gt;一、Nexus的下载和部署&lt;/h2&gt;&lt;h3 id=&quot;1、Nexus下载&quot;&gt;&lt;a href=&quot;#1、Nexus下载&quot; class=&quot;headerlink&quot; title=&quot;1、Nexus下载&quot;&gt;&lt;/a&gt;1、Nexus下载&lt;/h3&gt;&lt;p&gt;&lt;strong&gt;官方下载地址：&lt;/strong&gt;&lt;a href=&quot;https://www.sonatype.com/download-oss-sonatype&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Download Nexus Repository OSS&lt;/a&gt;&lt;/p&gt;
+      &lt;p&gt;本文资料来源：&lt;a href=&quot;http://books.sonatype.com/nexus-book/reference/index.html&quot;&gt;Nexus Documentation - Nexus Repository Manager 2.14&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&quot;一、Nexus的下载和部署&quot;&gt;&lt;a href=&quot;#一、Nexus的下载和部署&quot; class=&quot;headerlink&quot; title=&quot;一、Nexus的下载和部署&quot;&gt;&lt;/a&gt;一、Nexus的下载和部署&lt;/h2&gt;&lt;h3 id=&quot;1、Nexus下载&quot;&gt;&lt;a href=&quot;#1、Nexus下载&quot; class=&quot;headerlink&quot; title=&quot;1、Nexus下载&quot;&gt;&lt;/a&gt;1、Nexus下载&lt;/h3&gt;&lt;p&gt;&lt;strong&gt;官方下载地址：&lt;/strong&gt;&lt;a href=&quot;https://www.sonatype.com/download-oss-sonatype&quot;&gt;Download Nexus Repository OSS&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;&lt;em&gt;注意选择Nexus2.xx版本，本教程是基于Nexus2.xx。&lt;/em&gt;&lt;br&gt;&lt;strong&gt;如需要Nexus3.xx教程请移步：&lt;/strong&gt;&lt;a href=&quot;#&quot;&gt;Maven Nexus OSS 3.xx 教程（有时间写）&lt;/a&gt;&lt;/p&gt;
 &lt;h3 id=&quot;2、Nexus部署和配置&quot;&gt;&lt;a href=&quot;#2、Nexus部署和配置&quot; class=&quot;headerlink&quot; title=&quot;2、Nexus部署和配置&quot;&gt;&lt;/a&gt;2、Nexus部署和配置&lt;/h3&gt;&lt;h4 id=&quot;配置JDK&quot;&gt;&lt;a href=&quot;#配置JDK&quot; class=&quot;headerlink&quot; title=&quot;配置JDK&quot;&gt;&lt;/a&gt;配置JDK&lt;/h4&gt;&lt;p&gt;&lt;strong&gt;参考：&lt;/strong&gt;&lt;a href=&quot;http://www.msyy233.com/posts/1678.html&quot;&gt;JDK配置教程&lt;/a&gt;  &lt;/p&gt;
 &lt;blockquote&gt;

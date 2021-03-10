@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 4.2.1">
+<meta name="generator" content="Hexo 5.4.0">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
@@ -91,7 +91,7 @@
 </noscript>
 
 <link rel="alternate" href="/atom.xml" title="码上有约" type="application/atom+xml">
-<link rel="stylesheet" href="/css/prism-duotone-light.css" type="text/css"></head>
+</head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
   <div class="container use-motion">
@@ -212,7 +212,7 @@
     <link itemprop="mainEntityOfPage" href="http://www.msyy233.com/posts/49866.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
+      <meta itemprop="image" content="/images/avatar.jpg">
       <meta itemprop="name" content="程大明">
       <meta itemprop="description" content="唯有坚持不懈">
     </span>
@@ -269,7 +269,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>看过<a href="https://www.msyy233.com/posts/52540.html">IO概念和5种IO模型</a>、可以了解到IO的五种模型、NIO便是对应其中的<strong><em>IO复用模型</em></strong>、本篇对NIO的组件进行讲解、如果还不理解什么是NIO建议先看一看上一篇<a href="https://www.msyy233.com/posts/52540.html">IO概念和5种IO模型</a>、</p>
+        <p>看过<a href="https://www.msyy233.com/posts/52540.html">IO概念和5种IO模型</a>、可以了解到IO的五种模型、NIO便是对应其中的<em><strong>IO复用模型</strong></em>、本篇对NIO的组件进行讲解、如果还不理解什么是NIO建议先看一看上一篇<a href="https://www.msyy233.com/posts/52540.html">IO概念和5种IO模型</a>、</p>
 <p>Java NIO是由以下几个核心部分组成：</p>
 <ul>
 <li>Channels</li>
@@ -279,7 +279,7 @@
 <blockquote>
 <p>虽然Java NIO 中除此之外还有很多类和组件、但在我看来Channel、Buffer和Selector构成了核心的API、其它组件、如Pipe和FileLock、只不过是与三个核心组件共同使用的工具类、</p>
 </blockquote>
-<a id="more"></a>
+<span id="more"></span>
 <hr>
 <h1 id="一、缓冲区（Buffer）"><a href="#一、缓冲区（Buffer）" class="headerlink" title="一、缓冲区（Buffer）"></a>一、缓冲区（Buffer）</h1><h2 id="（一）基本概念"><a href="#（一）基本概念" class="headerlink" title="（一）基本概念"></a>（一）基本概念</h2><p>缓冲区（Buffer）是一个用于特定基本数据类型的容器、由java.nio包定义的、所有缓冲区都是Buffer抽象类的子类、Java NIO中的Buffer主要用于与NIO通道进行交互、数据是从通道（Channel）读入缓冲区、从缓冲区写入通道中、</p>
 <blockquote>
@@ -296,82 +296,19 @@
 <p>上述Buffer类他们都采用相似的方法进行管理数据、只是各自管理的数据类型不同而已、<strong>简单的理解就是不同类型的特殊数组、</strong>   </p>
 </blockquote>
 <p>以上几种Buffer中都提供了一个allocate静态方法用于创建自身对象、传入一个int类型的capacity参数、其实就是数组的大小：</p>
-<pre class=" language-java"><code class="language-java">IntBuffer intBuffer <span class="token operator">=</span> IntBuffer<span class="token punctuation">.</span><span class="token function">allocate</span><span class="token punctuation">(</span><span class="token number">1024</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-FloatBuffer floatBuffer <span class="token operator">=</span> FloatBuffer<span class="token punctuation">.</span><span class="token function">allocate</span><span class="token punctuation">(</span><span class="token number">1024</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-CharBuffer charBuffer <span class="token operator">=</span> CharBuffer<span class="token punctuation">.</span><span class="token function">allocate</span><span class="token punctuation">(</span><span class="token number">1024</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-DoubleBuffer doubleBuffer <span class="token operator">=</span> DoubleBuffer<span class="token punctuation">.</span><span class="token function">allocate</span><span class="token punctuation">(</span><span class="token number">1024</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-ShortBuffer shortBuffer <span class="token operator">=</span> ShortBuffer<span class="token punctuation">.</span><span class="token function">allocate</span><span class="token punctuation">(</span><span class="token number">1024</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-LongBuffer longBuffer <span class="token operator">=</span> LongBuffer<span class="token punctuation">.</span><span class="token function">allocate</span><span class="token punctuation">(</span><span class="token number">1024</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token comment" spellcheck="true">// allocateDirect应用了内存映射技术</span>
-ByteBuffer directByteBuffer <span class="token operator">=</span> ByteBuffer<span class="token punctuation">.</span><span class="token function">allocateDirect</span><span class="token punctuation">(</span><span class="token number">1024</span><span class="token punctuation">)</span>
-ByteBuffer byteBuffer <span class="token operator">=</span> ByteBuffer<span class="token punctuation">.</span><span class="token function">allocate</span><span class="token punctuation">(</span><span class="token number">1024</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">IntBuffer intBuffer = IntBuffer.allocate(<span class="number">1024</span>);</span><br><span class="line">FloatBuffer floatBuffer = FloatBuffer.allocate(<span class="number">1024</span>);</span><br><span class="line">CharBuffer charBuffer = CharBuffer.allocate(<span class="number">1024</span>);</span><br><span class="line">DoubleBuffer doubleBuffer = DoubleBuffer.allocate(<span class="number">1024</span>);</span><br><span class="line">ShortBuffer shortBuffer = ShortBuffer.allocate(<span class="number">1024</span>);</span><br><span class="line">LongBuffer longBuffer = LongBuffer.allocate(<span class="number">1024</span>);</span><br><span class="line"><span class="comment">// allocateDirect应用了内存映射技术</span></span><br><span class="line">ByteBuffer directByteBuffer = ByteBuffer.allocateDirect(<span class="number">1024</span>)</span><br><span class="line">ByteBuffer byteBuffer = ByteBuffer.allocate(<span class="number">1024</span>);</span><br></pre></td></tr></table></figure>
 <p>可以看到除了allocate方法、ByteBuffer还提供了一个allocateDirect方法、和其他的构造方法不一样、allocate创建的HeapXXX的Buffer底层实现都是数组、而allocateDirect是基于内存映射技术的缓冲区、两种缓冲区分别是直接缓冲区和非直接缓冲区、这两个缓冲区涉及系统底层概念、不了解的可以看这篇<a href="https://www.msyy233.com/posts/51696.html">缓存IO、直接IO与内存映射区</a>来解惑、</p>
 <h2 id="（二）工作原理"><a href="#（二）工作原理" class="headerlink" title="（二）工作原理"></a>（二）工作原理</h2><p><strong>为了理解Buffer的工作原理、需要熟悉它最重要的三个属性（capacity、position、limit）、它们一起合作完成对缓冲区内部状态的变化跟踪、</strong></p>
 <p><img src="http://assets.msyy233.com/20180830/150559eaf.png!blog" alt="Buffer结构"> </p>
 <ul>
-<li><p>capacity：<br>指定了可以存储在缓冲区中的最大数据容量、实际上、它指定了底层数组的大小、或者至少是指定了准许我们使用的底层数组的容量、一旦Buffer满了、需要将其清空（通过读数据或者清除数据）才能继续写数据往里写数据、</p>
-</li>
-<li><p>position：<br>指定了下一个将要被写入或者读取的元素索引、它的值由get()/put()方法自动更新、在新创建一个Buffer对象时、position被初始化为0、当数据写到Buffer后、position会向前移动到下一个可插入数据的Buffer单元、position最大可为capacity – 1</p>
-</li>
-<li><p>limit：<br>指定还有多少数据需要取出（在从缓冲区写入通道时）、或者还有多少空间可以放入数据（在从通道读入缓冲区时）、比如在写模式下、Buffer的limit表示你最多能往Buffer里写多少数据、当为写模式时、limit等于Buffer的capacity、而读模式、limit表示实际写入多少数据的点、 </p>
-</li>
+<li>capacity：<br>指定了可以存储在缓冲区中的最大数据容量、实际上、它指定了底层数组的大小、或者至少是指定了准许我们使用的底层数组的容量、一旦Buffer满了、需要将其清空（通过读数据或者清除数据）才能继续写数据往里写数据、</li>
+<li>position：<br>指定了下一个将要被写入或者读取的元素索引、它的值由get()/put()方法自动更新、在新创建一个Buffer对象时、position被初始化为0、当数据写到Buffer后、position会向前移动到下一个可插入数据的Buffer单元、position最大可为capacity – 1</li>
+<li>limit：<br>指定还有多少数据需要取出（在从缓冲区写入通道时）、或者还有多少空间可以放入数据（在从通道读入缓冲区时）、比如在写模式下、Buffer的limit表示你最多能往Buffer里写多少数据、当为写模式时、limit等于Buffer的capacity、而读模式、limit表示实际写入多少数据的点、 </li>
 </ul>
 <p>position和limit的含义取决于Buffer处在读模式还是写模式、不管Buffer处在什么模式、capacity的含义总是一样的、 </p>
 <p><strong>下面是Buffer操作的简单Demo：</strong></p>
-<pre class=" language-java"><code class="language-java"><span class="token keyword">import</span> java<span class="token punctuation">.</span>nio<span class="token punctuation">.</span>ByteBuffer<span class="token punctuation">;</span>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.nio.ByteBuffer;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="keyword">static</span> java.nio.charset.StandardCharsets.UTF_8;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">BufferDemo</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 定义写入数据</span></span><br><span class="line">        String str = <span class="string">&quot;Hello Buffer !&quot;</span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment">/*</span></span><br><span class="line"><span class="comment">         * 创建1024的ByteBuffer</span></span><br><span class="line"><span class="comment">         *</span></span><br><span class="line"><span class="comment">         * 此时为写模式：</span></span><br><span class="line"><span class="comment">         * capacity = limit = 1024</span></span><br><span class="line"><span class="comment">         * position = 0</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        ByteBuffer buffer = ByteBuffer.allocate(<span class="number">1024</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">/* 写入数据 */</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">byte</span> strByte : str.getBytes(UTF_8)) &#123;</span><br><span class="line">            <span class="comment">/* 每写一次position + 1 */</span></span><br><span class="line">            buffer.put(strByte);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">/*</span></span><br><span class="line"><span class="comment">         *  切换到读模式</span></span><br><span class="line"><span class="comment">         *  capacity = 1024;</span></span><br><span class="line"><span class="comment">         *  limit = position; // 之前写入的数据大小</span></span><br><span class="line"><span class="comment">         *  position = 0;</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        buffer.flip();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">byte</span>[] readBytes = <span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">1024</span>];</span><br><span class="line"></span><br><span class="line">        <span class="comment">/* 读取数据到bytes数组 */</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = buffer.position(); i &lt; buffer.limit(); i++) &#123;</span><br><span class="line">            <span class="comment">/* 每读一次position + 1 */</span></span><br><span class="line">            readBytes[i] = buffer.get();</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="comment">/*</span></span><br><span class="line"><span class="comment">         * 清空Buffer</span></span><br><span class="line"><span class="comment">         * 此时为写模式：</span></span><br><span class="line"><span class="comment">         * capacity = limit = 1024</span></span><br><span class="line"><span class="comment">         * position = 0</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        buffer.clear();</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 输出读取的数据</span></span><br><span class="line">        System.out.println(<span class="keyword">new</span> String(readBytes, UTF_8));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<span class="token keyword">import</span> <span class="token keyword">static</span> java<span class="token punctuation">.</span>nio<span class="token punctuation">.</span>charset<span class="token punctuation">.</span>StandardCharsets<span class="token punctuation">.</span>UTF_8<span class="token punctuation">;</span>
-
-<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">BufferDemo</span> <span class="token punctuation">{</span>
-
-    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span>String<span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token comment" spellcheck="true">// 定义写入数据</span>
-        String str <span class="token operator">=</span> <span class="token string">"Hello Buffer !"</span><span class="token punctuation">;</span>
-
-        <span class="token comment" spellcheck="true">/*
-         * 创建1024的ByteBuffer
-         *
-         * 此时为写模式：
-         * capacity = limit = 1024
-         * position = 0
-         */</span>
-        ByteBuffer buffer <span class="token operator">=</span> ByteBuffer<span class="token punctuation">.</span><span class="token function">allocate</span><span class="token punctuation">(</span><span class="token number">1024</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-        <span class="token comment" spellcheck="true">/* 写入数据 */</span>
-        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">byte</span> strByte <span class="token operator">:</span> str<span class="token punctuation">.</span><span class="token function">getBytes</span><span class="token punctuation">(</span>UTF_8<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-            <span class="token comment" spellcheck="true">/* 每写一次position + 1 */</span>
-            buffer<span class="token punctuation">.</span><span class="token function">put</span><span class="token punctuation">(</span>strByte<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span>
-
-        <span class="token comment" spellcheck="true">/*
-         *  切换到读模式
-         *  capacity = 1024;
-         *  limit = position; // 之前写入的数据大小
-         *  position = 0;
-         */</span>
-        buffer<span class="token punctuation">.</span><span class="token function">flip</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-        <span class="token keyword">byte</span><span class="token punctuation">[</span><span class="token punctuation">]</span> readBytes <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">byte</span><span class="token punctuation">[</span><span class="token number">1024</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
-
-        <span class="token comment" spellcheck="true">/* 读取数据到bytes数组 */</span>
-        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> buffer<span class="token punctuation">.</span><span class="token function">position</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> buffer<span class="token punctuation">.</span><span class="token function">limit</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-            <span class="token comment" spellcheck="true">/* 每读一次position + 1 */</span>
-            readBytes<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> buffer<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span>
-
-        <span class="token comment" spellcheck="true">/*
-         * 清空Buffer
-         * 此时为写模式：
-         * capacity = limit = 1024
-         * position = 0
-         */</span>
-        buffer<span class="token punctuation">.</span><span class="token function">clear</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-        <span class="token comment" spellcheck="true">// 输出读取的数据</span>
-        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">String</span><span class="token punctuation">(</span>readBytes<span class="token punctuation">,</span> UTF_8<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-
-<span class="token punctuation">}</span></code></pre>
 <p>配合图来讲解、图片还有内容部分来自互联网、可以看参考资料、  </p>
 <ol>
 <li><p>创建Buffer、<code>ByteBuffer buffer = ByteBuffer.allocate(1024)</code>就是创建一个的Buffer、假设创建的大小为10、那么position=0、capacity=10、limit=capacity<br><img src="http://assets.msyy233.com/20180831/104326811.png!blog" alt="创建Buffer"></p>
@@ -426,7 +363,7 @@ ByteBuffer byteBuffer <span class="token operator">=</span> ByteBuffer<span clas
 <h1 id="三、Selector"><a href="#三、Selector" class="headerlink" title="三、Selector"></a>三、Selector</h1><p>其中Selector就是复用器、用于管理多个通道（Channels）、Channel有点象流、基本上、所有的IO在NIO中都从一个Channel开始、数据可以从Channel读到Buffer中、也可以从Buffer 写到Channel中、这里有个图示：</p>
 <p><strong>不想写了、改天补</strong></p>
 <hr>
-<p><strong>参考资料：</strong><br><a href="https://www.cnblogs.com/pony1223/p/8179804.html" target="_blank" rel="noopener">通道（Channel）与缓冲区（Buffer）</a><br><a href="http://tutorials.jenkov.com/java-nio/index.html" target="_blank" rel="noopener">Java NIO系列教程</a>  </p>
+<p><strong>参考资料：</strong><br><a target="_blank" rel="noopener" href="https://www.cnblogs.com/pony1223/p/8179804.html">通道（Channel）与缓冲区（Buffer）</a><br><a target="_blank" rel="noopener" href="http://tutorials.jenkov.com/java-nio/index.html">Java NIO系列教程</a>  </p>
 
     </div>
 
@@ -450,10 +387,13 @@ ByteBuffer byteBuffer <span class="token operator">=</span> ByteBuffer<span clas
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/posts/14778.html" rel="prev" title="关于分布式日志平台的思考">
-      <i class="fa fa-chevron-left"></i> 关于分布式日志平台的思考
+    <a href="/posts/25037.html" rel="prev" title="常见APM技术选型">
+      <i class="fa fa-chevron-left"></i> 常见APM技术选型
     </a></div>
-      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/posts/14778.html" rel="next" title="关于分布式日志平台的思考">
+      关于分布式日志平台的思考 <i class="fa fa-chevron-right"></i>
+    </a></div>
     </div>
       </footer>
     
@@ -517,14 +457,14 @@ ByteBuffer byteBuffer <span class="token operator">=</span> ByteBuffer<span clas
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#一、缓冲区（Buffer）"><span class="nav-number">1.</span> <span class="nav-text">一、缓冲区（Buffer）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#（一）基本概念"><span class="nav-number">1.1.</span> <span class="nav-text">（一）基本概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#（二）工作原理"><span class="nav-number">1.2.</span> <span class="nav-text">（二）工作原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">1.3.</span> <span class="nav-text">总结</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#二、Channel"><span class="nav-number">2.</span> <span class="nav-text">二、Channel</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#三、Selector"><span class="nav-number">3.</span> <span class="nav-text">三、Selector</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E7%BC%93%E5%86%B2%E5%8C%BA%EF%BC%88Buffer%EF%BC%89"><span class="nav-text">一、缓冲区（Buffer）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%EF%BC%88%E4%B8%80%EF%BC%89%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="nav-text">（一）基本概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%EF%BC%88%E4%BA%8C%EF%BC%89%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86"><span class="nav-text">（二）工作原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-text">总结</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%8C%E3%80%81Channel"><span class="nav-text">二、Channel</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%89%E3%80%81Selector"><span class="nav-text">三、Selector</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <img class="site-author-image" itemprop="image" alt="程大明"
-      src="/uploads/avatar.jpg">
+      src="/images/avatar.jpg">
   <p class="site-author-name" itemprop="name">程大明</p>
   <div class="site-description" itemprop="description">唯有坚持不懈</div>
 </div>
@@ -533,7 +473,7 @@ ByteBuffer byteBuffer <span class="token operator">=</span> ByteBuffer<span clas
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">15</span>
+          <span class="site-state-item-count">16</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -546,7 +486,7 @@ ByteBuffer byteBuffer <span class="token operator">=</span> ByteBuffer<span clas
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">61</span>
+        <span class="site-state-item-count">63</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -587,7 +527,7 @@ ByteBuffer byteBuffer <span class="token operator">=</span> ByteBuffer<span clas
 <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2020</span>
+  <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

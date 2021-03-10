@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 4.2.1">
+<meta name="generator" content="Hexo 5.4.0">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
@@ -44,7 +44,7 @@
 <meta property="og:image" content="http://assets.msyy233.com/20190804/165242674.png!blog">
 <meta property="og:image" content="http://assets.msyy233.com/20190804/1927536d2.png!blog">
 <meta property="article:published_time" content="2019-08-03T23:53:37.000Z">
-<meta property="article:modified_time" content="2019-08-05T22:47:25.608Z">
+<meta property="article:modified_time" content="2020-12-14T09:11:01.412Z">
 <meta property="article:author" content="程大明">
 <meta property="article:tag" content="pinpoint">
 <meta property="article:tag" content="zipkin">
@@ -99,7 +99,7 @@
 </noscript>
 
 <link rel="alternate" href="/atom.xml" title="码上有约" type="application/atom+xml">
-<link rel="stylesheet" href="/css/prism-duotone-light.css" type="text/css"></head>
+</head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
   <div class="container use-motion">
@@ -220,7 +220,7 @@
     <link itemprop="mainEntityOfPage" href="http://www.msyy233.com/posts/25037.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
+      <meta itemprop="image" content="/images/avatar.jpg">
       <meta itemprop="name" content="程大明">
       <meta itemprop="description" content="唯有坚持不懈">
     </span>
@@ -247,7 +247,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-08-06 06:47:25" itemprop="dateModified" datetime="2019-08-06T06:47:25+08:00">2019-08-06</time>
+                <time title="修改时间：2020-12-14 17:11:01" itemprop="dateModified" datetime="2020-12-14T17:11:01+08:00">2020-12-14</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -292,7 +292,7 @@
 <blockquote>
 <p>Pradar是数列公司的一个产品、并非开源项目、Pradar和Pinpoint一样也是基于字节码注入的调用链分析、Agent部分的代码也十分相似、</p>
 </blockquote>
-<a id="more"></a>
+<span id="more"></span>
 
 <h2 id="（一）技术实现"><a href="#（一）技术实现" class="headerlink" title="（一）技术实现"></a>（一）技术实现</h2><table>
 <thead>
@@ -613,7 +613,7 @@
 <td>Jar</td>
 </tr>
 </tbody></table>
-<p>二者的展示环境：<strong><a href="http://125.209.240.10:10123/" target="_blank" rel="noopener">Pinpoint Live Demo</a></strong> &nbsp;&nbsp;&nbsp; <strong><a href="http://122.112.182.72:8080/" target="_blank" rel="noopener">SkyWalking Live Demo</a></strong></p>
+<p>二者的展示环境：**<a target="_blank" rel="noopener" href="http://125.209.240.10:10123/">Pinpoint Live Demo</a>** &nbsp;&nbsp;&nbsp; <strong><a target="_blank" rel="noopener" href="http://122.112.182.72:8080/">SkyWalking Live Demo</a></strong></p>
 <h2 id="（一）多语言"><a href="#（一）多语言" class="headerlink" title="（一）多语言"></a>（一）多语言</h2><p>Pinpoint只支持Java和PHP、而SkyWalking支持5种语言：Java, C#, PHP, Node.js, Go、如果公司的服务涉及到多个开发语言、那么SkyWalking会是你更好的选择、并且如果要实现自己的探针、SkyWalking的二次开发成本也比Pinpoint更低、所以，支持语言方面，SkyWalking更胜一筹。</p>
 <h2 id="（二）协议"><a href="#（二）协议" class="headerlink" title="（二）协议"></a>（二）协议</h2><p>SkyWalking支持gRPC和HTTP、不过建议使用gRPC、SkyWalking6.x版本已经不提供HTTP方式（但是还会保留接收5.x的数据）、以后会考虑删除、而Pinpoint使用的是thrift协议、协议本身没有谁好谁坏、</p>
 <h2 id="（三）存储"><a href="#（三）存储" class="headerlink" title="（三）存储"></a>（三）<span style="color:red">存储</span></h2><p>存储是SkyWalking和Pinpoint最大的差异所在、因为底层存储决定了上层功能、Pinpoint只支持HBase、且扩展代价较大、</p>
@@ -641,12 +641,12 @@
 <h2 id="（十）过滤追踪"><a href="#（十）过滤追踪" class="headerlink" title="（十）过滤追踪"></a>（十）过滤追踪</h2><p>Pinpoint和SkyWalking都可以实现、而且配置的表达式都是基于ant风格、Pinpoint在Web UI上配置 filter wizard 即可自定义过滤追踪、SkyWalking通过加载apm-trace-ignore-plugin插件就能自定义过滤跟踪、两种配置方式各有优势、所以、这方面两者旗鼓相当、没有明显的差距</p>
 <h2 id="（十一）性能损耗"><a href="#（十一）性能损耗" class="headerlink" title="（十一）性能损耗"></a>（十一）性能损耗</h2><p>由于Pinpoint采集信息太过详细、所以、它对性能的损耗很大、而SkyWalking默认策略比较保守、对性能损耗较小、所以、在性能损耗方面、SkyWalking更胜一筹、有网友做过压力测试，对比如下：<br><img src="http://assets.msyy233.com/20190804/1927536d2.png!blog" alt="PerfomanceTest"></p>
 <h2 id="（十二）发布包"><a href="#（十二）发布包" class="headerlink" title="（十二）发布包"></a>（十二）发布包</h2><p>SkyWalking与时俱进、全系标配jar包、部署只需要执行start.sh脚本即可、而Pinpoint的collector和web还是war包、部署时依赖web容器、所以、在发布包方面、SkyWalking更胜一筹、</p>
-<h2 id="（十三）支持组件"><a href="#（十三）支持组件" class="headerlink" title="（十三）支持组件"></a>（十三）支持组件</h2><p><a href="http://naver.github.io/pinpoint/1.8.4/main.html" target="_blank" rel="noopener">Pinpoint支持组件</a> &nbsp;&nbsp; <a href="https://github.com/apache/skywalking/blob/master/docs/en/setup/service-agent/java-agent/Supported-list.md" target="_blank" rel="noopener">SkyWalking支持组件</a>、这个毫无疑问也是Pinpoint更胜一筹、</p>
+<h2 id="（十三）支持组件"><a href="#（十三）支持组件" class="headerlink" title="（十三）支持组件"></a>（十三）支持组件</h2><p><a target="_blank" rel="noopener" href="http://naver.github.io/pinpoint/1.8.4/main.html">Pinpoint支持组件</a> &nbsp;&nbsp; <a target="_blank" rel="noopener" href="https://github.com/apache/skywalking/blob/master/docs/en/setup/service-agent/java-agent/Supported-list.md">SkyWalking支持组件</a>、这个毫无疑问也是Pinpoint更胜一筹、</p>
 <h1 id="三、总结"><a href="#三、总结" class="headerlink" title="三、总结"></a>三、总结</h1><p>经过前面对SkyWalking和Pinpoint全方位对比后我们发现、对于两款非常优秀的APM软件、有一种既生瑜何生亮的感觉、</p>
 <p>Pinpoint的优势在于：追踪数据粒度非常细、功能强大的用户界面、以及使用HBase作为存储带来的海量存储能力、<br>SkyWalking的优势在于：非常活跃的中文社区、支持多种语言的探针、使用es作为底层存储带来的强大的检索能力、并且SkyWalking的扩展性以及定制化要更优于Pinpoint、</p>
 <p>如果有海量的日志存储需求、推荐Pinpoint、如果更看重二次开发的便捷性、推荐SkyWalking、参考上面的对比、结合需求、哪些不能妥协、哪些可以舍弃、从而更好的选择一款最适合自己的APM软件</p>
 <hr>
-<p><strong>参考资料：</strong><br><a href="https://www.jianshu.com/p/7c719a75df8c" target="_blank" rel="noopener">Dapper分布式跟踪系统</a><br><a href="https://www.jianshu.com/p/0fbbf99a236e?from=singlemessage&isappinstalled=0" target="_blank" rel="noopener">调用链选型之Zipkin，Pinpoint，SkyWalking，CAT</a><br><a href="https://www.jianshu.com/p/626cae6c0522" target="_blank" rel="noopener">APM巅峰对决：skywalking P.K. Pinpoint</a><br><a href="https://github.com/dianping/cat/wiki/overall" target="_blank" rel="noopener">CAT 整体设计</a><br><a href="https://naver.github.io/pinpoint/overview.html" target="_blank" rel="noopener">Pinpoint Overview</a><br><a href="https://github.com/apache/skywalking" target="_blank" rel="noopener">Github SkyWalking</a><br><a href="https://zipkin.io/pages/architecture.html" target="_blank" rel="noopener">Zipkin Architecture Overview</a></p>
+<p><strong>参考资料：</strong><br><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/7c719a75df8c">Dapper分布式跟踪系统</a><br><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/0fbbf99a236e?from=singlemessage&isappinstalled=0">调用链选型之Zipkin，Pinpoint，SkyWalking，CAT</a><br><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/626cae6c0522">APM巅峰对决：skywalking P.K. Pinpoint</a><br><a target="_blank" rel="noopener" href="https://github.com/dianping/cat/wiki/overall">CAT 整体设计</a><br><a target="_blank" rel="noopener" href="https://naver.github.io/pinpoint/overview.html">Pinpoint Overview</a><br><a target="_blank" rel="noopener" href="https://github.com/apache/skywalking">Github SkyWalking</a><br><a target="_blank" rel="noopener" href="https://zipkin.io/pages/architecture.html">Zipkin Architecture Overview</a></p>
 
     </div>
 
@@ -673,8 +673,8 @@
       <i class="fa fa-chevron-left"></i> 缓存IO、直接IO与内存映射
     </a></div>
       <div class="post-nav-item">
-    <a href="/posts/14778.html" rel="next" title="关于分布式日志平台的思考">
-      关于分布式日志平台的思考 <i class="fa fa-chevron-right"></i>
+    <a href="/posts/49866.html" rel="next" title="Java NIO系列（一）核心组件">
+      Java NIO系列（一）核心组件 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -739,14 +739,14 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#一、技术调研"><span class="nav-number">1.</span> <span class="nav-text">一、技术调研</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#（一）技术实现"><span class="nav-number">1.1.</span> <span class="nav-text">（一）技术实现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#（二）数据分析"><span class="nav-number">1.2.</span> <span class="nav-text">（二）数据分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#（三）整体架构"><span class="nav-number">1.3.</span> <span class="nav-text">（三）整体架构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、Zipkin"><span class="nav-number">1.3.1.</span> <span class="nav-text">1、Zipkin</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、Pinpoint"><span class="nav-number">1.3.2.</span> <span class="nav-text">2、Pinpoint</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3、SkyWalking"><span class="nav-number">1.3.3.</span> <span class="nav-text">3、SkyWalking</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4、CAT"><span class="nav-number">1.3.4.</span> <span class="nav-text">4、CAT</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5、Pradar"><span class="nav-number">1.3.5.</span> <span class="nav-text">5、Pradar</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#（三）社区活跃"><span class="nav-number">1.4.</span> <span class="nav-text">（三）社区活跃</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、当前对比"><span class="nav-number">1.4.1.</span> <span class="nav-text">1、当前对比</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、增长对比"><span class="nav-number">1.4.2.</span> <span class="nav-text">2、增长对比</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1）历史Star"><span class="nav-number">1.4.2.1.</span> <span class="nav-text">1）历史Star</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2）月增长率"><span class="nav-number">1.4.2.2.</span> <span class="nav-text">2）月增长率</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#二、巅峰对决"><span class="nav-number">2.</span> <span class="nav-text">二、巅峰对决</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#（一）多语言"><span class="nav-number">2.1.</span> <span class="nav-text">（一）多语言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#（二）协议"><span class="nav-number">2.2.</span> <span class="nav-text">（二）协议</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#（三）存储"><span class="nav-number">2.3.</span> <span class="nav-text">（三）存储</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#（四）UI界面"><span class="nav-number">2.4.</span> <span class="nav-text">（四）UI界面</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#（五）扩展性"><span class="nav-number">2.5.</span> <span class="nav-text">（五）扩展性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#（六）告警"><span class="nav-number">2.6.</span> <span class="nav-text">（六）告警</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#（七）JVM监控"><span class="nav-number">2.7.</span> <span class="nav-text">（七）JVM监控</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#（八）服务监控"><span class="nav-number">2.8.</span> <span class="nav-text">（八）服务监控</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#（九）跟踪粒度"><span class="nav-number">2.9.</span> <span class="nav-text">（九）跟踪粒度</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#（十）过滤追踪"><span class="nav-number">2.10.</span> <span class="nav-text">（十）过滤追踪</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#（十一）性能损耗"><span class="nav-number">2.11.</span> <span class="nav-text">（十一）性能损耗</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#（十二）发布包"><span class="nav-number">2.12.</span> <span class="nav-text">（十二）发布包</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#（十三）支持组件"><span class="nav-number">2.13.</span> <span class="nav-text">（十三）支持组件</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#三、总结"><span class="nav-number">3.</span> <span class="nav-text">三、总结</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E6%8A%80%E6%9C%AF%E8%B0%83%E7%A0%94"><span class="nav-text">一、技术调研</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%EF%BC%88%E4%B8%80%EF%BC%89%E6%8A%80%E6%9C%AF%E5%AE%9E%E7%8E%B0"><span class="nav-text">（一）技术实现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%EF%BC%88%E4%BA%8C%EF%BC%89%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90"><span class="nav-text">（二）数据分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%EF%BC%88%E4%B8%89%EF%BC%89%E6%95%B4%E4%BD%93%E6%9E%B6%E6%9E%84"><span class="nav-text">（三）整体架构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1%E3%80%81Zipkin"><span class="nav-text">1、Zipkin</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2%E3%80%81Pinpoint"><span class="nav-text">2、Pinpoint</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3%E3%80%81SkyWalking"><span class="nav-text">3、SkyWalking</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4%E3%80%81CAT"><span class="nav-text">4、CAT</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5%E3%80%81Pradar"><span class="nav-text">5、Pradar</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%EF%BC%88%E4%B8%89%EF%BC%89%E7%A4%BE%E5%8C%BA%E6%B4%BB%E8%B7%83"><span class="nav-text">（三）社区活跃</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1%E3%80%81%E5%BD%93%E5%89%8D%E5%AF%B9%E6%AF%94"><span class="nav-text">1、当前对比</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2%E3%80%81%E5%A2%9E%E9%95%BF%E5%AF%B9%E6%AF%94"><span class="nav-text">2、增长对比</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1%EF%BC%89%E5%8E%86%E5%8F%B2Star"><span class="nav-text">1）历史Star</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2%EF%BC%89%E6%9C%88%E5%A2%9E%E9%95%BF%E7%8E%87"><span class="nav-text">2）月增长率</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E5%B7%85%E5%B3%B0%E5%AF%B9%E5%86%B3"><span class="nav-text">二、巅峰对决</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%EF%BC%88%E4%B8%80%EF%BC%89%E5%A4%9A%E8%AF%AD%E8%A8%80"><span class="nav-text">（一）多语言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%EF%BC%88%E4%BA%8C%EF%BC%89%E5%8D%8F%E8%AE%AE"><span class="nav-text">（二）协议</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%EF%BC%88%E4%B8%89%EF%BC%89%E5%AD%98%E5%82%A8"><span class="nav-text">（三）存储</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%EF%BC%88%E5%9B%9B%EF%BC%89UI%E7%95%8C%E9%9D%A2"><span class="nav-text">（四）UI界面</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%EF%BC%88%E4%BA%94%EF%BC%89%E6%89%A9%E5%B1%95%E6%80%A7"><span class="nav-text">（五）扩展性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%EF%BC%88%E5%85%AD%EF%BC%89%E5%91%8A%E8%AD%A6"><span class="nav-text">（六）告警</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%EF%BC%88%E4%B8%83%EF%BC%89JVM%E7%9B%91%E6%8E%A7"><span class="nav-text">（七）JVM监控</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%EF%BC%88%E5%85%AB%EF%BC%89%E6%9C%8D%E5%8A%A1%E7%9B%91%E6%8E%A7"><span class="nav-text">（八）服务监控</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%EF%BC%88%E4%B9%9D%EF%BC%89%E8%B7%9F%E8%B8%AA%E7%B2%92%E5%BA%A6"><span class="nav-text">（九）跟踪粒度</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%EF%BC%88%E5%8D%81%EF%BC%89%E8%BF%87%E6%BB%A4%E8%BF%BD%E8%B8%AA"><span class="nav-text">（十）过滤追踪</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%EF%BC%88%E5%8D%81%E4%B8%80%EF%BC%89%E6%80%A7%E8%83%BD%E6%8D%9F%E8%80%97"><span class="nav-text">（十一）性能损耗</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%EF%BC%88%E5%8D%81%E4%BA%8C%EF%BC%89%E5%8F%91%E5%B8%83%E5%8C%85"><span class="nav-text">（十二）发布包</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%EF%BC%88%E5%8D%81%E4%B8%89%EF%BC%89%E6%94%AF%E6%8C%81%E7%BB%84%E4%BB%B6"><span class="nav-text">（十三）支持组件</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E6%80%BB%E7%BB%93"><span class="nav-text">三、总结</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <img class="site-author-image" itemprop="image" alt="程大明"
-      src="/uploads/avatar.jpg">
+      src="/images/avatar.jpg">
   <p class="site-author-name" itemprop="name">程大明</p>
   <div class="site-description" itemprop="description">唯有坚持不懈</div>
 </div>
@@ -755,7 +755,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">15</span>
+          <span class="site-state-item-count">16</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -768,7 +768,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">61</span>
+        <span class="site-state-item-count">63</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -809,7 +809,7 @@
 <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2020</span>
+  <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

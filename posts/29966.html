@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 4.2.1">
+<meta name="generator" content="Hexo 5.4.0">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
@@ -20,12 +20,12 @@
     var CONFIG = {"hostname":"www.msyy233.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
   </script>
 
-  <meta name="description" content="一、通过路径1、使用ServletContext&#x2F;*  * 这里将获取的path是web项目的全路径  * 例如：E:&#x2F;workspace&#x2F;webapp&#x2F;  * webapp是我web项目的根目录  *&#x2F;  String path &#x3D; servletContext.getRealPath(&quot;&#x2F;&quot;);">
+  <meta name="description" content="一、通过路径1、使用ServletContext123456&#x2F;* * 这里将获取的path是web项目的全路径 * 例如：E:&#x2F;workspace&#x2F;webapp&#x2F; * webapp是我web项目的根目录 *&#x2F; String path &#x3D; servletContext.getRealPath(&quot;&#x2F;&quot;);">
 <meta property="og:type" content="article">
 <meta property="og:title" content="JavaEE通过路径或域名获取资源">
 <meta property="og:url" content="http://www.msyy233.com/posts/29966.html">
 <meta property="og:site_name" content="码上有约">
-<meta property="og:description" content="一、通过路径1、使用ServletContext&#x2F;*  * 这里将获取的path是web项目的全路径  * 例如：E:&#x2F;workspace&#x2F;webapp&#x2F;  * webapp是我web项目的根目录  *&#x2F;  String path &#x3D; servletContext.getRealPath(&quot;&#x2F;&quot;);">
+<meta property="og:description" content="一、通过路径1、使用ServletContext123456&#x2F;* * 这里将获取的path是web项目的全路径 * 例如：E:&#x2F;workspace&#x2F;webapp&#x2F; * webapp是我web项目的根目录 *&#x2F; String path &#x3D; servletContext.getRealPath(&quot;&#x2F;&quot;);">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2018-05-12T06:32:37.000Z">
 <meta property="article:modified_time" content="2018-05-14T06:32:37.000Z">
@@ -81,7 +81,7 @@
 </noscript>
 
 <link rel="alternate" href="/atom.xml" title="码上有约" type="application/atom+xml">
-<link rel="stylesheet" href="/css/prism-duotone-light.css" type="text/css"></head>
+</head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
   <div class="container use-motion">
@@ -202,7 +202,7 @@
     <link itemprop="mainEntityOfPage" href="http://www.msyy233.com/posts/29966.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
+      <meta itemprop="image" content="/images/avatar.jpg">
       <meta itemprop="name" content="程大明">
       <meta itemprop="description" content="唯有坚持不懈">
     </span>
@@ -259,34 +259,10 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h2 id="一、通过路径"><a href="#一、通过路径" class="headerlink" title="一、通过路径"></a>一、通过路径</h2><h3 id="1、使用ServletContext"><a href="#1、使用ServletContext" class="headerlink" title="1、使用ServletContext"></a>1、使用ServletContext</h3><pre class=" language-java"><code class="language-java"><span class="token comment" spellcheck="true">/*
- * 这里将获取的path是web项目的全路径
- * 例如：E:/workspace/webapp/
- * webapp是我web项目的根目录
- */</span> 
-String path <span class="token operator">=</span> servletContext<span class="token punctuation">.</span><span class="token function">getRealPath</span><span class="token punctuation">(</span><span class="token string">"/"</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
- <a id="more"></a>
+        <h2 id="一、通过路径"><a href="#一、通过路径" class="headerlink" title="一、通过路径"></a>一、通过路径</h2><h3 id="1、使用ServletContext"><a href="#1、使用ServletContext" class="headerlink" title="1、使用ServletContext"></a>1、使用ServletContext</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * 这里将获取的path是web项目的全路径</span></span><br><span class="line"><span class="comment"> * 例如：E:/workspace/webapp/</span></span><br><span class="line"><span class="comment"> * webapp是我web项目的根目录</span></span><br><span class="line"><span class="comment"> */</span> </span><br><span class="line">String path = servletContext.getRealPath(<span class="string">&quot;/&quot;</span>);</span><br></pre></td></tr></table></figure>
+ <span id="more"></span>
+<h3 id="2、使用ClassLoader"><a href="#2、使用ClassLoader" class="headerlink" title="2、使用ClassLoader"></a>2、使用ClassLoader</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 获取Class对象</span></span><br><span class="line">String clazz = getClass();</span><br><span class="line"><span class="comment">// 获取ClassLoader 对象</span></span><br><span class="line">ClassLoader classLoader = clazz.getClassLoader();</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * 通过Class获取资源路径（相对路径当前Class目录）</span></span><br><span class="line"><span class="comment"> * 例如：%TOMCAT_HOME%/webapps/appName/WEB-INF/classes/com/accelerator/</span></span><br><span class="line"><span class="comment"> * 当前Class的包就是com.accelerator</span></span><br><span class="line"><span class="comment"> */</span> </span><br><span class="line">URL url1 = clazz .getResource(<span class="string">&quot;&quot;</span>);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * 通过ClassLoader获取资源路径（相对路径Class根目录）</span></span><br><span class="line"><span class="comment"> * 例如：%TOMCAT_HOME%/webapps/appName/WEB-INF/classes/</span></span><br><span class="line"><span class="comment"> * 当前Class的classpath根目录</span></span><br><span class="line"><span class="comment"> */</span> </span><br><span class="line">URL url2 = classLoader.getResource(<span class="string">&quot;&quot;</span>);</span><br></pre></td></tr></table></figure>
 
-<h3 id="2、使用ClassLoader"><a href="#2、使用ClassLoader" class="headerlink" title="2、使用ClassLoader"></a>2、使用ClassLoader</h3><pre class=" language-java"><code class="language-java"><span class="token comment" spellcheck="true">// 获取Class对象</span>
-String clazz <span class="token operator">=</span> <span class="token function">getClass</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token comment" spellcheck="true">// 获取ClassLoader 对象</span>
-ClassLoader classLoader <span class="token operator">=</span> clazz<span class="token punctuation">.</span><span class="token function">getClassLoader</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-
-<span class="token comment" spellcheck="true">/*
- * 通过Class获取资源路径（相对路径当前Class目录）
- * 例如：%TOMCAT_HOME%/webapps/appName/WEB-INF/classes/com/accelerator/
- * 当前Class的包就是com.accelerator
- */</span> 
-URL url1 <span class="token operator">=</span> clazz <span class="token punctuation">.</span><span class="token function">getResource</span><span class="token punctuation">(</span><span class="token string">""</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-
-<span class="token comment" spellcheck="true">/*
- * 通过ClassLoader获取资源路径（相对路径Class根目录）
- * 例如：%TOMCAT_HOME%/webapps/appName/WEB-INF/classes/
- * 当前Class的classpath根目录
- */</span> 
-URL url2 <span class="token operator">=</span> classLoader<span class="token punctuation">.</span><span class="token function">getResource</span><span class="token punctuation">(</span><span class="token string">""</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
 <blockquote>
 <p><strong>此方法有个BUG（当文件路径有中文和空格时解析不正确）、提供以下解决方法：</strong></p>
 <ul>
@@ -297,15 +273,7 @@ URL url2 <span class="token operator">=</span> classLoader<span class="token pun
 </blockquote>
 <p><em>这个方法也可以不在Server环境里确定路径、两种getResource的方式最终实现都是通过classLoader、</em><br><strong>想深入了解的可以参考：</strong><a href="#">classLoader.getResource(String)和class.getResource(String)的区别</a></p>
 <hr>
-<h2 id="二、通过域名"><a href="#二、通过域名" class="headerlink" title="二、通过域名"></a>二、通过域名</h2><h3 id="1、使用HttpServletRequest"><a href="#1、使用HttpServletRequest" class="headerlink" title="1、使用HttpServletRequest"></a>1、使用HttpServletRequest</h3><pre class=" language-java"><code class="language-java">String path <span class="token operator">=</span> request<span class="token punctuation">.</span><span class="token function">getContextPath</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token comment" spellcheck="true">/*
- * 这里获取的basePath为网站的根目录路径
- * 例如：http://www.accelerator.com:8080/test
- * test是我的项目context、
- * 此路径一般用来引用CSS、js、img等资源、
- */</span>
-String basePath <span class="token operator">=</span> request<span class="token punctuation">.</span><span class="token function">getScheme</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token string">"://"</span> <span class="token operator">+</span> request<span class="token punctuation">.</span><span class="token function">getServerName</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token string">":"</span>
-        <span class="token operator">+</span> request<span class="token punctuation">.</span><span class="token function">getServerPort</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">+</span> path <span class="token operator">+</span> <span class="token string">"/"</span><span class="token punctuation">;</span></code></pre>
+<h2 id="二、通过域名"><a href="#二、通过域名" class="headerlink" title="二、通过域名"></a>二、通过域名</h2><h3 id="1、使用HttpServletRequest"><a href="#1、使用HttpServletRequest" class="headerlink" title="1、使用HttpServletRequest"></a>1、使用HttpServletRequest</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">String path = request.getContextPath();</span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * 这里获取的basePath为网站的根目录路径</span></span><br><span class="line"><span class="comment"> * 例如：http://www.accelerator.com:8080/test</span></span><br><span class="line"><span class="comment"> * test是我的项目context、</span></span><br><span class="line"><span class="comment"> * 此路径一般用来引用CSS、js、img等资源、</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">String basePath = request.getScheme() + <span class="string">&quot;://&quot;</span> + request.getServerName() + <span class="string">&quot;:&quot;</span></span><br><span class="line">        + request.getServerPort() + path + <span class="string">&quot;/&quot;</span>;</span><br></pre></td></tr></table></figure>
 
     </div>
 
@@ -327,12 +295,12 @@ String basePath <span class="token operator">=</span> request<span class="token 
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/posts/33024.html" rel="prev" title="Java不定长参数">
-      <i class="fa fa-chevron-left"></i> Java不定长参数
+    <a href="/posts/1678.html" rel="prev" title="Windows和Linux下JDK安装配置">
+      <i class="fa fa-chevron-left"></i> Windows和Linux下JDK安装配置
     </a></div>
       <div class="post-nav-item">
-    <a href="/posts/36417.html" rel="next" title="这些话很能表达我最近一次换工作的感受">
-      这些话很能表达我最近一次换工作的感受 <i class="fa fa-chevron-right"></i>
+    <a href="/posts/33024.html" rel="next" title="Java不定长参数">
+      Java不定长参数 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -397,14 +365,14 @@ String basePath <span class="token operator">=</span> request<span class="token 
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、通过路径"><span class="nav-number">1.</span> <span class="nav-text">一、通过路径</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、使用ServletContext"><span class="nav-number">1.1.</span> <span class="nav-text">1、使用ServletContext</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、使用ClassLoader"><span class="nav-number">1.2.</span> <span class="nav-text">2、使用ClassLoader</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、通过域名"><span class="nav-number">2.</span> <span class="nav-text">二、通过域名</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、使用HttpServletRequest"><span class="nav-number">2.1.</span> <span class="nav-text">1、使用HttpServletRequest</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E9%80%9A%E8%BF%87%E8%B7%AF%E5%BE%84"><span class="nav-text">一、通过路径</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1%E3%80%81%E4%BD%BF%E7%94%A8ServletContext"><span class="nav-text">1、使用ServletContext</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2%E3%80%81%E4%BD%BF%E7%94%A8ClassLoader"><span class="nav-text">2、使用ClassLoader</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E9%80%9A%E8%BF%87%E5%9F%9F%E5%90%8D"><span class="nav-text">二、通过域名</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1%E3%80%81%E4%BD%BF%E7%94%A8HttpServletRequest"><span class="nav-text">1、使用HttpServletRequest</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <img class="site-author-image" itemprop="image" alt="程大明"
-      src="/uploads/avatar.jpg">
+      src="/images/avatar.jpg">
   <p class="site-author-name" itemprop="name">程大明</p>
   <div class="site-description" itemprop="description">唯有坚持不懈</div>
 </div>
@@ -413,7 +381,7 @@ String basePath <span class="token operator">=</span> request<span class="token 
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">15</span>
+          <span class="site-state-item-count">16</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -426,7 +394,7 @@ String basePath <span class="token operator">=</span> request<span class="token 
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">61</span>
+        <span class="site-state-item-count">63</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -467,7 +435,7 @@ String basePath <span class="token operator">=</span> request<span class="token 
 <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2020</span>
+  <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

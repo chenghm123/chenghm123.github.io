@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 4.2.1">
+<meta name="generator" content="Hexo 5.4.0">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
@@ -82,7 +82,7 @@
 </noscript>
 
 <link rel="alternate" href="/atom.xml" title="码上有约" type="application/atom+xml">
-<link rel="stylesheet" href="/css/prism-duotone-light.css" type="text/css"></head>
+</head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
   <div class="container use-motion">
@@ -203,7 +203,7 @@
     <link itemprop="mainEntityOfPage" href="http://www.msyy233.com/posts/61738.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
+      <meta itemprop="image" content="/images/avatar.jpg">
       <meta itemprop="name" content="程大明">
       <meta itemprop="description" content="唯有坚持不懈">
     </span>
@@ -267,17 +267,16 @@
 <li>~：运算的定义是把内存中的0和1全部取反、使用not运算时要格外小心、你需要注意整数类型有没有符号、如果not的对象是无符号整数（不能表示负数）、那么得到的值就是它与该类型上界的差、因为无符号类型的数是用00到$FFFF依次表示的、<br> 例：~‭00101 = 11010</li>
 <li>^：相同位不同则为1、相同则为0、<br> 例：00101 ^ 11100 = 11001</li>
 </ul>
-<a id="more"></a>
+<span id="more"></span>
 
-<p><strong><em>位运算与位移动运行符的一个场景</em></strong></p>
+<p><em><strong>位运算与位移动运行符的一个场景</strong></em></p>
 <p>HashMap的功能是通过键(key)能够快速的找到“值”，下面我们分析下HashMap存数据的基本流程。</p>
 <ol>
 <li><p>当调用put(key、value)时、首先获取key的hashcode、</p>
-<pre class=" language-java"><code class="language-java"><span class="token keyword">int</span> hash <span class="token operator">=</span> key<span class="token punctuation">.</span><span class="token function">hashCode</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
-</li>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> hash = key.hashCode();</span><br></pre></td></tr></table></figure></li>
 <li><p>再把hash通过一下运算得到一个int h、</p>
-<pre class=" language-java"><code class="language-java">hash <span class="token operator">^=</span> <span class="token punctuation">(</span>hash <span class="token operator">>>></span> <span class="token number">20</span><span class="token punctuation">)</span> <span class="token operator">^</span> <span class="token punctuation">(</span>hash <span class="token operator">>>></span> <span class="token number">12</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token keyword">int</span> h <span class="token operator">=</span> hash <span class="token operator">^</span> <span class="token punctuation">(</span>hash <span class="token operator">>>></span> <span class="token number">7</span><span class="token punctuation">)</span> <span class="token operator">^</span> <span class="token punctuation">(</span>hash <span class="token operator">>>></span> <span class="token number">4</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">hash ^= (hash &gt;&gt;&gt; <span class="number">20</span>) ^ (hash &gt;&gt;&gt; <span class="number">12</span>);</span><br><span class="line"><span class="keyword">int</span> h = hash ^ (hash &gt;&gt;&gt; <span class="number">7</span>) ^ (hash &gt;&gt;&gt; <span class="number">4</span>);</span><br></pre></td></tr></table></figure>
+
 <blockquote>
 <p><strong>为什么要经过这样的运算呢？这就是HashMap的高明之处、</strong></p>
 <ul>
@@ -292,7 +291,7 @@
 <li><p>我们用table[index]表示已经找到的元素需要存储的位置、先判断该位置上有没有元素(这个元素是HashMap内部定义的一个类Entity、基本结构它包含三个类、key、value和指向下一个Entity的next)、没有的话就创建一个Entity对象、在 table[index]位置上插入、这样插入结束、如果有的话、通过链表的遍历方式去逐个遍历、看看有没有已经存在的key、有的话用新的value替换老的value、如果没有、则在table[index]插入该Entity、把原来在table[index]位置上的Entity赋值给新的Entity的next、这样插入结束、</p>
 </li>
 </ol>
-<p><strong>附参：</strong><a href="http://www.iteye.com/topic/838030" target="_blank" rel="noopener">HashMap是列表与链表的结合体</a> </p>
+<p><strong>附参：</strong><a target="_blank" rel="noopener" href="http://www.iteye.com/topic/838030">HashMap是列表与链表的结合体</a> </p>
 <hr>
 <h2 id="二、移位运算"><a href="#二、移位运算" class="headerlink" title="二、移位运算"></a>二、移位运算</h2><p><strong>通用的移位运算符两种：左移（&lt;&lt;）、带符号右移（&gt;&gt;）。PS：有些语言还有无符号右移（&gt;&gt;&gt;）。如：Java、C++</strong></p>
 <h4 id="1、左移位运算"><a href="#1、左移位运算" class="headerlink" title="1、左移位运算"></a>1、左移位运算</h4><p><strong>左移运算符&lt;&lt;使指定值的所有位都左移规定的次数</strong></p>
@@ -301,8 +300,7 @@
 <li>num指定要移位值value移动的位数、</li>
 <li>左移的规则只记住一点：丢弃最高位、0补最低位、</li>
 <li>如果移动的位数超过了该类型的最大位数、那么编译器会对移动的位数取模、</li>
-<li>如对int型移动33位、实际上只移动了33%32=1位、<pre class=" language-java"><code class="language-java">value <span class="token operator">&lt;&lt;</span> num<span class="token punctuation">;</span>     <span class="token comment" spellcheck="true">// value左移num</span></code></pre>
-</li>
+<li>如对int型移动33位、实际上只移动了33%32=1位、<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">value &lt;&lt; num;     <span class="comment">// value左移num</span></span><br></pre></td></tr></table></figure></li>
 </ul>
 </li>
 </ol>
@@ -320,38 +318,23 @@
 </ol>
 <ol start="4">
 <li><p>计算过程  </p>
-<pre class=" language-java"><code class="language-java"> <span class="token number">3</span> <span class="token operator">&lt;&lt;</span> <span class="token number">2</span><span class="token punctuation">;</span>     <span class="token comment" spellcheck="true">// 3为int型</span></code></pre>
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">3</span> &lt;&lt; <span class="number">2</span>;     <span class="comment">// 3为int型</span></span><br></pre></td></tr></table></figure>
 <ol>
-<li><p>3转换为二进制：0000 0000 0000 0000 0000 0000 0000 0011</p>
-</li>
-<li><p>把高位（左侧）的两个数字移出、因为时左移操作、所以在低位补0</p>
-</li>
-<li><p>最终结果是0000 0000 0000 0000 0000 0000 0000 1100</p>
-</li>
-<li><p>转换为十进制是12</p>
-<p>```java      </p>
-</li>
+<li>3转换为二进制：0000 0000 0000 0000 0000 0000 0000 0011</li>
+<li>把高位（左侧）的两个数字移出、因为时左移操作、所以在低位补0</li>
+<li>最终结果是0000 0000 0000 0000 0000 0000 0000 1100</li>
+<li>转换为十进制是12</li>
 </ol>
-<p> -3 &lt;&lt; 2;     // -3为int型</p>
-<pre><code> 1. -3转换为二进制：‭1111 1111 1111 1111 1111 1111 1111 1101‬
- 2. 把高位（左侧）的两个数字移出、因为时左移操作、所以在低位补0
- 3. 最终结果是1111 1111 1111 1111 1111 1111 1111 0100
- 4. 转换为十进制是-12
-
- 转换为十进制是12、移动的位数超过了该类型的最大位数、同理、&gt;&gt;表示右移、右移一位表示除2、  
- 如果移进高阶位(31或63位)、那么该值将变为负值、下面的程序说明了这一点、
-
- ```java
- public class MultByTwo {  
-     public static void main(String args[]) {  
-         int i;  
-         int num = 0xFFFFFFE;   
-         for(i=0; i&lt;4; i++) {  
-             num = num &lt;&lt; 1;   
-             System.out.println(num);  
-         }  
-     }  
- }</code></pre><p> 该程序的输出如下所示：<br> 536870908<br> 1073741816<br> 2147483632<br> -32  </p>
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-<span class="number">3</span> &lt;&lt; <span class="number">2</span>;     <span class="comment">// -3为int型</span></span><br></pre></td></tr></table></figure>
+<ol>
+<li>-3转换为二进制：‭1111 1111 1111 1111 1111 1111 1111 1101‬</li>
+<li>把高位（左侧）的两个数字移出、因为时左移操作、所以在低位补0</li>
+<li>最终结果是1111 1111 1111 1111 1111 1111 1111 0100</li>
+<li>转换为十进制是-12</li>
+</ol>
+<p> 转换为十进制是12、移动的位数超过了该类型的最大位数、同理、&gt;&gt;表示右移、右移一位表示除2、<br> 如果移进高阶位(31或63位)、那么该值将变为负值、下面的程序说明了这一点、</p>
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MultByTwo</span> </span>&#123;  </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String args[])</span> </span>&#123;  </span><br><span class="line">        <span class="keyword">int</span> i;  </span><br><span class="line">        <span class="keyword">int</span> num = <span class="number">0xFFFFFFE</span>;   </span><br><span class="line">        <span class="keyword">for</span>(i=<span class="number">0</span>; i&lt;<span class="number">4</span>; i++) &#123;  </span><br><span class="line">            num = num &lt;&lt; <span class="number">1</span>;   </span><br><span class="line">            System.out.println(num);  </span><br><span class="line">        &#125;  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p> 该程序的输出如下所示：<br> 536870908<br> 1073741816<br> 2147483632<br> -32  </p>
 <p> 注：n位二进制、最高位为符号位、因此表示的数值范围-2^(n-1) —— 2^(n-1)-1、所以模为2^(n-1)、 </p>
 </li>
 </ol>
@@ -359,8 +342,7 @@
 <ol>
 <li>通用格式  <ul>
 <li>num 指定要移位值value移动的位数、</li>
-<li>右移的规则只记住一点：符号位不变、左边补上符号位、<pre class=" language-java"><code class="language-java">value <span class="token operator">>></span> num<span class="token punctuation">;</span>     <span class="token comment" spellcheck="true">// value右移num</span></code></pre>
-</li>
+<li>右移的规则只记住一点：符号位不变、左边补上符号位、<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">value &gt;&gt; num;     <span class="comment">// value右移num</span></span><br></pre></td></tr></table></figure></li>
 </ul>
 </li>
 </ol>
@@ -379,30 +361,26 @@
 </ol>
 <ol start="4">
 <li><p>计算过程  </p>
-<pre class=" language-java"><code class="language-java"> <span class="token number">11</span> <span class="token operator">>></span> <span class="token number">2</span><span class="token punctuation">;</span>     <span class="token comment" spellcheck="true">// 11为int型</span></code></pre>
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">11</span> &gt;&gt; <span class="number">2</span>;     <span class="comment">// 11为int型</span></span><br></pre></td></tr></table></figure>
 <ol>
-<li><p>11转换为二进制：0000 0000 0000 0000 0000 0000 0000 1011</p>
-</li>
-<li><p>把低位（右侧）两个数字移出、因为该数字是正数、所以在高位补0</p>
-</li>
-<li><p>最终结果是0000 0000 0000 0000 0000 0000 0000 0010</p>
-</li>
-<li><p>转换为十进制是2</p>
-<p>```java</p>
-</li>
+<li>11转换为二进制：0000 0000 0000 0000 0000 0000 0000 1011</li>
+<li>把低位（右侧）两个数字移出、因为该数字是正数、所以在高位补0</li>
+<li>最终结果是0000 0000 0000 0000 0000 0000 0000 0010</li>
+<li>转换为十进制是2</li>
 </ol>
-<p> -11 &gt;&gt; 2;     // -11为int型</p>
-<pre><code> 1. -11转换为二进制：1111 1111 1111 1111 1111 1111 1111 0101‬
- 2. 把低位（右侧）的两个数字移出、因为该数字是负数、所以在高位补1
- 3. 最终结果是1111 1111 1111 1111 1111 1111 1111 1101
- 4. 转换为十进制是-3
-</code></pre></li>
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-<span class="number">11</span> &gt;&gt; <span class="number">2</span>;     <span class="comment">// -11为int型</span></span><br></pre></td></tr></table></figure>
+<ol>
+<li>-11转换为二进制：1111 1111 1111 1111 1111 1111 1111 0101‬</li>
+<li>把低位（右侧）的两个数字移出、因为该数字是负数、所以在高位补1</li>
+<li>最终结果是1111 1111 1111 1111 1111 1111 1111 1101</li>
+<li>转换为十进制是-3</li>
+</ol>
+</li>
 </ol>
 <h4 id="3、无符号右移"><a href="#3、无符号右移" class="headerlink" title="3、无符号右移"></a>3、无符号右移</h4><p>关于无符号右移就不详细说明了、大致解释一下、毕竟移位运算都差不多、无符号右移运算符：&gt;&gt;&gt; </p>
 <ol>
 <li><p>通用格式</p>
-<pre class=" language-java"><code class="language-java"> value <span class="token operator">>>></span> num<span class="token punctuation">;</span>    <span class="token comment" spellcheck="true">// num指定要移位值value移动的位数</span></code></pre>
-</li>
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">value &gt;&gt;&gt; num;    <span class="comment">// num指定要移位值value移动的位数</span></span><br></pre></td></tr></table></figure></li>
 </ol>
 <p>无符号右移的规则：忽略了符号位扩展、0补最高位、<br>无符号右移运算符&gt;&gt;&gt;只是对32位和64位的值有意义、  </p>
 
@@ -497,14 +475,14 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、位运算"><span class="nav-number">1.</span> <span class="nav-text">一、位运算</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、移位运算"><span class="nav-number">2.</span> <span class="nav-text">二、移位运算</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1、左移位运算"><span class="nav-number">2.0.1.</span> <span class="nav-text">1、左移位运算</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2、右移位运算"><span class="nav-number">2.0.2.</span> <span class="nav-text">2、右移位运算</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3、无符号右移"><span class="nav-number">2.0.3.</span> <span class="nav-text">3、无符号右移</span></a></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E4%BD%8D%E8%BF%90%E7%AE%97"><span class="nav-text">一、位运算</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E7%A7%BB%E4%BD%8D%E8%BF%90%E7%AE%97"><span class="nav-text">二、移位运算</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1%E3%80%81%E5%B7%A6%E7%A7%BB%E4%BD%8D%E8%BF%90%E7%AE%97"><span class="nav-text">1、左移位运算</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2%E3%80%81%E5%8F%B3%E7%A7%BB%E4%BD%8D%E8%BF%90%E7%AE%97"><span class="nav-text">2、右移位运算</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3%E3%80%81%E6%97%A0%E7%AC%A6%E5%8F%B7%E5%8F%B3%E7%A7%BB"><span class="nav-text">3、无符号右移</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <img class="site-author-image" itemprop="image" alt="程大明"
-      src="/uploads/avatar.jpg">
+      src="/images/avatar.jpg">
   <p class="site-author-name" itemprop="name">程大明</p>
   <div class="site-description" itemprop="description">唯有坚持不懈</div>
 </div>
@@ -513,7 +491,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">15</span>
+          <span class="site-state-item-count">16</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -526,7 +504,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">61</span>
+        <span class="site-state-item-count">63</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -567,7 +545,7 @@
 <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2020</span>
+  <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

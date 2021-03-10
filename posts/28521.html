@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 4.2.1">
+<meta name="generator" content="Hexo 5.4.0">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
@@ -29,9 +29,9 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://assets.msyy233.com/20180726/095340854.png!blog">
 <meta property="og:image" content="http://assets.msyy233.com/20180726/095616767.png!blog">
-<meta property="og:image" content="http://assets.msyy233.com/20180726/134111560.png!blog">
+<meta property="og:image" content="http://assets.msyy233.com/20210310/1718302ad.png!blog!blog">
 <meta property="article:published_time" content="2017-12-14T06:32:37.000Z">
-<meta property="article:modified_time" content="2017-12-17T06:32:37.000Z">
+<meta property="article:modified_time" content="2021-03-10T09:42:33.202Z">
 <meta property="article:author" content="程大明">
 <meta property="article:tag" content="oracle">
 <meta property="article:tag" content="静默安装">
@@ -83,7 +83,7 @@
 </noscript>
 
 <link rel="alternate" href="/atom.xml" title="码上有约" type="application/atom+xml">
-<link rel="stylesheet" href="/css/prism-duotone-light.css" type="text/css"></head>
+</head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
   <div class="container use-motion">
@@ -204,7 +204,7 @@
     <link itemprop="mainEntityOfPage" href="http://www.msyy233.com/posts/28521.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
+      <meta itemprop="image" content="/images/avatar.jpg">
       <meta itemprop="name" content="程大明">
       <meta itemprop="description" content="唯有坚持不懈">
     </span>
@@ -231,7 +231,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2017-12-17 14:32:37" itemprop="dateModified" datetime="2017-12-17T14:32:37+08:00">2017-12-17</time>
+                <time title="修改时间：2021-03-10 17:42:33" itemprop="dateModified" datetime="2021-03-10T17:42:33+08:00">2021-03-10</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -261,9 +261,9 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>本文资料来源：<br><a href="http://docs.oracle.com/cd/E11882_01/install.112/e24326/toc.htm" target="_blank" rel="noopener">Oracle® Database Quick Installation Guide（linux_x64）</a><br><a href="http://docs.oracle.com/cd/E11882_01/install.112/e24324/toc.htm" target="_blank" rel="noopener">Oracle® Database Quick Installation Guide（linux_x86）</a></p>
-<h2 id="一、下载"><a href="#一、下载" class="headerlink" title="一、下载"></a>一、下载</h2><p>下载地址：<a href="http://www.oracle.com/technetwork/database/enterprise-edition/downloads/index.html" target="_blank" rel="noopener">Oracle Database Software Downloads</a><br><img src="http://assets.msyy233.com/20180726/095340854.png!blog" alt="Oracle许可证">    </p>
-<a id="more"></a>
+        <p>本文资料来源：<br><a target="_blank" rel="noopener" href="http://docs.oracle.com/cd/E11882_01/install.112/e24326/toc.htm">Oracle® Database Quick Installation Guide（linux_x64）</a><br><a target="_blank" rel="noopener" href="http://docs.oracle.com/cd/E11882_01/install.112/e24324/toc.htm">Oracle® Database Quick Installation Guide（linux_x86）</a></p>
+<h2 id="一、下载"><a href="#一、下载" class="headerlink" title="一、下载"></a>一、下载</h2><p>下载地址：<a target="_blank" rel="noopener" href="http://www.oracle.com/technetwork/database/enterprise-edition/downloads/index.html">Oracle Database Software Downloads</a><br><img src="http://assets.msyy233.com/20180726/095340854.png!blog" alt="Oracle许可证">    </p>
+<span id="more"></span>
 <p><img src="http://assets.msyy233.com/20180726/095616767.png!blog" alt="Oracle11gR2"><br>第一张图勾选圈出的选项同意许可证协议、第二张图选择正确的版本下载（注意是11gR2的Linux版本）、</p>
 <h2 id="二、准备"><a href="#二、准备" class="headerlink" title="二、准备"></a>二、准备</h2><h3 id="（一）内存空间"><a href="#（一）内存空间" class="headerlink" title="（一）内存空间"></a>（一）内存空间</h3><p>安装Oracle11gR2实例必须满足：<br><strong>最小：</strong> 1 GB内存<br><strong>建议：</strong> 2GB内存或更多  </p>
 <p>查询内存命令：<code>grep MemTotal /proc/meminfo</code> 也可以用<code>free</code>或<code>top</code>  </p>
@@ -309,105 +309,46 @@
 </tr>
 </tbody></table>
 <h2 id="三、安装"><a href="#三、安装" class="headerlink" title="三、安装"></a>三、安装</h2><ol>
-<li><p>依赖包安装 —— <span style="color:red"><strong>root用户操作</strong></span>（以下安装包为个人整理）  </p>
+<li><p>依赖包安装 —— <span style="color:red"><strong>root用户操作</strong></span>（以下安装包为个人整理） </p>
 <ul>
-<li><p>Centos6.x 32位所需安装包：</p>
-<pre class=" language-bash"><code class="language-bash"><span class="token comment" spellcheck="true"># 32位系统只会安装i686包</span>
-yum -y <span class="token function">install</span> binutils compat-libcap1 compat-libstdc++-33 gcc gcc-c++ \
-glibc glibc-devel ksh libgcc libstdc++ libstdc++-devel libaio \
-libaio-devel <span class="token function">make</span> sysstat unixODBC unixODBC-devel elfutils-libelf-devel</code></pre>
-</li>
-<li><p>Centos6.x 64位所需安装包：  </p>
-<pre class=" language-bash"><code class="language-bash"><span class="token comment" spellcheck="true"># 64位系统需要x86_64包</span>
-yum -y <span class="token function">install</span> gcc.x86_64 make.x86_64 binutils.x86_64 glibc.x86_64 \
-compat-libstdc++-33.x86_64 elfutils-libelf.x86_64 \
-elfutils-libelf-devel.x86_64 glibc-common.x86_64 glibc-devel.x86_64 \
-glibc-headers.x86_64 gcc-c++.x86_64 libaio-devel.x86_64 libgcc.x86_64 \
-libstdc++.x86_64 libstdc++-devel.x86_64 sysstat.x86_64 unixODBC.x86_64 \
-unixODBC-devel.x86_64 expat.x86_64 ksh.x86_64</code></pre>
-<pre class=" language-bash"><code class="language-bash"><span class="token comment" spellcheck="true"># 64位系统需要i686包</span>
-yum -y <span class="token function">install</span> libaio.i686 glibc.i686 compat-libstdc++-33.i686 \
-elfutils-libelf.i686 elfutils-libelf-devel.i686 libaio-devel.i686 \
-libgcc.i686 libstdc++.i686 unixODBC.i686 unixODBC-devel.i686</code></pre>
-</li>
+<li>Centos6.x 32位所需安装包：<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 32位系统只会安装i686包</span></span><br><span class="line">yum -y install binutils compat-libcap1 compat-libstdc++-33 gcc gcc-c++ \</span><br><span class="line">glibc glibc-devel ksh libgcc libstdc++ libstdc++-devel libaio \</span><br><span class="line">libaio-devel make sysstat unixODBC unixODBC-devel elfutils-libelf-devel</span><br></pre></td></tr></table></figure></li>
+<li>Centos6.x 64位所需安装包<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 64位系统需要x86_64包</span></span><br><span class="line">yum -y install gcc.x86_64 make.x86_64 binutils.x86_64 glibc.x86_64 \</span><br><span class="line">compat-libstdc++-33.x86_64 elfutils-libelf.x86_64 \</span><br><span class="line">elfutils-libelf-devel.x86_64 glibc-common.x86_64 glibc-devel.x86_64 \</span><br><span class="line">glibc-headers.x86_64 gcc-c++.x86_64 libaio-devel.x86_64 libgcc.x86_64 \</span><br><span class="line">libstdc++.x86_64 libstdc++-devel.x86_64 sysstat.x86_64 unixODBC.x86_64 \</span><br><span class="line">unixODBC-devel.x86_64 expat.x86_64 ksh.x86_64</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 64位系统需要i686包</span></span><br><span class="line">yum -y install libaio.i686 glibc.i686 compat-libstdc++-33.i686 \</span><br><span class="line">elfutils-libelf.i686 elfutils-libelf-devel.i686 libaio-devel.i686 \</span><br><span class="line">libgcc.i686 libstdc++.i686 unixODBC.i686 unixODBC-devel.i686</span><br></pre></td></tr></table></figure></li>
 </ul>
 </li>
-</ol>
-<ol start="2">
 <li><p>Oracle用户创建 —— <span style="color:red"><strong>root用户操作</strong></span></p>
 <ul>
-<li><p>创建Oracle 安装用户组：<code>/usr/sbin/groupadd oinstall</code></p>
-</li>
-<li><p>创建Oracle DBA用户组：<code>/usr/sbin/groupadd dba</code></p>
-</li>
-<li><p>创建Oracle 用户：<code>/usr/sbin/useradd -g oinstall -G dba oracle</code></p>
-</li>
-<li><p>设置Oracle 用户密码：<code>passwd oracle</code>  </p>
-</li>
+<li>创建Oracle 安装用户组：<code>/usr/sbin/groupadd oinstall</code></li>
+<li>创建Oracle DBA用户组：<code>/usr/sbin/groupadd dba</code></li>
+<li>创建Oracle 用户：<code>/usr/sbin/useradd -g oinstall -G dba oracle</code></li>
+<li>设置Oracle 用户密码：<code>passwd oracle</code>  </li>
 </ul>
 </li>
-</ol>
-<ol start="3">
 <li><p>系统参数配置 —— <span style="color:red"><strong>root用户操作</strong></span></p>
 <ul>
-<li><p>打开<code>vi /etc/sysctl.conf</code>添加以下参数配置（官网给的最小配置）：</p>
-<pre><code> fs.aio-max-nr = 1048576
- fs.file-max = 6815744
- kernel.shmall = 2097152
- kernel.shmmax = 536870912
- kernel.shmmni = 4096
- kernel.sem = 250 32000 100 128
- net.ipv4.ip_local_port_range = 9000 65500
- net.core.rmem_default = 262144
- net.core.rmem_max = 4194304
- net.core.wmem_default = 262144
- net.core.wmem_max = 1048576</code></pre></li>
-<li><p>修改完成后执行<code>/sbin/sysctl -p</code>使配置立即生效</p>
-</li>
+<li>打开<code>vi /etc/sysctl.conf</code>添加以下参数配置（官网给的最小配置）：<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">fs.aio-max-nr</span> = <span class="number">1048576</span></span><br><span class="line"><span class="attr">fs.file-max</span> = <span class="number">6815744</span></span><br><span class="line"><span class="attr">kernel.shmall</span> = <span class="number">2097152</span></span><br><span class="line"><span class="attr">kernel.shmmax</span> = <span class="number">536870912</span></span><br><span class="line"><span class="attr">kernel.shmmni</span> = <span class="number">4096</span></span><br><span class="line"><span class="attr">kernel.sem</span> = <span class="number">250</span> <span class="number">32000</span> <span class="number">100</span> <span class="number">128</span></span><br><span class="line"><span class="attr">net.ipv4.ip_local_port_range</span> = <span class="number">9000</span> <span class="number">65500</span></span><br><span class="line"><span class="attr">net.core.rmem_default</span> = <span class="number">262144</span></span><br><span class="line"><span class="attr">net.core.rmem_max</span> = <span class="number">4194304</span></span><br><span class="line"><span class="attr">net.core.wmem_default</span> = <span class="number">262144</span></span><br><span class="line"><span class="attr">net.core.wmem_max</span> = <span class="number">1048576</span></span><br></pre></td></tr></table></figure></li>
+<li>修改完成后执行<code>/sbin/sysctl -p</code>使配置立即生效</li>
 </ul>
 </li>
-</ol>
-<ol start="4">
 <li><p>Oracle用户限制 —— <span style="color:red"><strong>root用户操作</strong></span></p>
 <ul>
-<li><p>打开<code>vi /etc/security/limits.conf</code>添加以下参数配置（官网给的最小配置）：</p>
-<pre><code>oracle          soft    nofile          1024
-oracle          hard    nofile          65536
-oracle          soft    nproc           2047
-oracle          hard    nproc           16384
-oracle          soft    stack           10240
-oracle          hard    stack           32768</code></pre></li>
-<li><p>修改完成后重新登录oracle用户查看是否生效（参考官网-如下图：）<br>  <img src="http://assets.msyy233.com/20180726/134111560.png!blog" alt="官网用户权限相关"></p>
-</li>
+<li>打开<code>vi /etc/security/limits.conf</code>添加以下参数配置（官网给的最小配置）：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">oracle          soft    nofile          1024</span><br><span class="line">oracle          hard    nofile          65536</span><br><span class="line">oracle          soft    nproc           2047</span><br><span class="line">oracle          hard    nproc           16384</span><br><span class="line">oracle          soft    stack           10240</span><br><span class="line">oracle          hard    stack           32768</span><br></pre></td></tr></table></figure></li>
+<li>修改完成后重新登录oracle用户查看是否生效（参考官网-如下图：）<br><img src="http://assets.msyy233.com/20210310/1718302ad.png!blog!blog" alt="官网用户权限相关"></li>
 </ul>
 </li>
-</ol>
-<ol start="5">
 <li><p>创建安装目录与权限 ——  <font color='red'><strong>root用户操作</strong></font></p>
 <ul>
-<li><p>创建安装目录：<code>mkdir -p /u01/app/</code></p>
-</li>
-<li><p>修改安装目录所属用户和组：<code>chown -R oracle:oinstall /u01/app/</code></p>
-</li>
-<li><p>修改安装目录权限：<code>chmod -R 775 /u01/app/</code></p>
-</li>
+<li>创建安装目录：<code>mkdir -p /u01/app/</code></li>
+<li>修改安装目录所属用户和组：<code>chown -R oracle:oinstall /u01/app/</code></li>
+<li>修改安装目录权限：<code>chmod -R 775 /u01/app/</code></li>
 </ul>
 </li>
-</ol>
-<ol start="6">
 <li><p>安装Oracle数据库软件 —— <font color='red'><strong>oracle用户操作</strong></font></p>
 <ul>
-<li><p>解压Oracle数据库软件压缩文件<code>unzip ~/linux.x64_11gR2_database_1of2.zip &amp;&amp; unzip ~/linux.x64_11gR2_database_1of2.zip</code></p>
-</li>
-<li><p>打开<code>vi ~/.bash_profile</code>添加以下安装所需环境变量：</p>
-<pre class=" language-bash"><code class="language-bash"> ORACLE_BASE<span class="token operator">=</span>/u01/app/oracle
- ORACLE_SID<span class="token operator">=</span>orcl
- <span class="token function">export</span> ORACLE_BASE ORACLE_SID</code></pre>
-</li>
-<li><p>编辑静默安装模板文件（软件相关配置）、模板文件在解压后的目录下<code>database/response/db_install.rsp</code>、<a href="http://blog.chinaunix.net/uid-23886490-id-3565908.html" target="_blank" rel="noopener">模板文件的详解</a>参考其他的博客吧、这里不再详细说明</p>
-</li>
-<li><p>执行安装 <code>~/database/runInstaller -silent -force -responseFile ~/database/response/db_install.rsp</code></p>
-</li>
+<li>解压Oracle数据库软件压缩文件<code>unzip ~/linux.x64_11gR2_database_1of2.zip &amp;&amp; unzip ~/linux.x64_11gR2_database_1of2.zip</code></li>
+<li>打开<code>vi ~/.bash_profile</code>添加以下安装所需环境变量：<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ORACLE_BASE=/u01/app/oracle</span><br><span class="line">ORACLE_SID=orcl</span><br><span class="line"><span class="built_in">export</span> ORACLE_BASE ORACLE_SID</span><br></pre></td></tr></table></figure></li>
+<li>编辑静默安装模板文件（软件相关配置）、模板文件在解压后的目录下<code>database/response/db_install.rsp</code>、<a target="_blank" rel="noopener" href="http://blog.chinaunix.net/uid-23886490-id-3565908.html">模板文件的详解</a>参考其他的博客吧、这里不再详细说明</li>
+<li>执行安装 <code>~/database/runInstaller -silent -force -responseFile ~/database/response/db_install.rsp</code></li>
 </ul>
 </li>
 <li><p>执行清单权限相关脚本 ——  <font color='red'><strong>root用户操作</strong></font></p>
@@ -418,24 +359,13 @@ oracle          hard    stack           32768</code></pre></li>
 </li>
 </ul>
 </li>
-</ol>
-<ol start="8">
 <li><p>配置Oracle数据库 ——  <font color='red'><strong>oracle用户操作</strong></font></p>
 <ul>
 <li><p>打开<code>vi ~/.bash_profile</code>添加以下软件所需环境变量：</p>
-<pre class=" language-bash"><code class="language-bash">ORACLE_HOME<span class="token operator">=</span><span class="token variable">$ORACLE_BASE</span>/product/11.2.0/dbhome_1
-TNS_ADMIN<span class="token operator">=</span><span class="token variable">$ORACLE_HOME</span>/network/admin
-PATH<span class="token operator">=</span><span class="token variable">$PATH</span><span class="token keyword">:</span><span class="token variable">$ORACLE_HOME</span>/bin
-LD_LIBRARY_PATH<span class="token operator">=</span><span class="token variable">$LD_LIBRARY_PATH</span><span class="token keyword">:</span><span class="token variable">$ORACLE_HOME</span>/lib:/lib:/usr/lib:/usr/local/lib
-CLASSPATH<span class="token operator">=</span><span class="token variable">$CLASSPATH</span><span class="token keyword">:</span><span class="token variable">$ORACLE_HOME</span>/jlib:<span class="token variable">$ORACLE_HOME</span>/rdbms/jlib:<span class="token variable">$ORACLE_HOME</span>/network/jlib:<span class="token variable">$ORACLE_HOME</span>/lib:<span class="token variable">$ORACLE_HOME</span>/ctx/lib
-ORACLE_OWNER<span class="token operator">=</span>oracle
-SPFILE_PATH<span class="token operator">=</span><span class="token variable">$ORACLE_HOME</span>/dbs
-ORA_NLS10<span class="token operator">=</span><span class="token variable">$ORACLE_HOME</span>/nls/data
-<span class="token function">export</span> ORACLE_HOME TNS_ADMIN PATH LD_LIBRARY_PATH CLASSPATH ORACLE_OWNER SPFILE_PATH ORA_NLS10</code></pre>
-</li>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">ORACLE_HOME=<span class="variable">$ORACLE_BASE</span>/product/11.2.0/dbhome_1</span><br><span class="line">TNS_ADMIN=<span class="variable">$ORACLE_HOME</span>/network/admin</span><br><span class="line">PATH=<span class="variable">$PATH</span>:<span class="variable">$ORACLE_HOME</span>/bin</span><br><span class="line">LD_LIBRARY_PATH=<span class="variable">$LD_LIBRARY_PATH</span>:<span class="variable">$ORACLE_HOME</span>/lib:/lib:/usr/lib:/usr/<span class="built_in">local</span>/lib</span><br><span class="line">CLASSPATH=<span class="variable">$CLASSPATH</span>:<span class="variable">$ORACLE_HOME</span>/jlib:<span class="variable">$ORACLE_HOME</span>/rdbms/jlib:<span class="variable">$ORACLE_HOME</span>/network/jlib:<span class="variable">$ORACLE_HOME</span>/lib:<span class="variable">$ORACLE_HOME</span>/ctx/lib</span><br><span class="line">ORACLE_OWNER=oracle</span><br><span class="line">SPFILE_PATH=<span class="variable">$ORACLE_HOME</span>/dbs</span><br><span class="line">ORA_NLS10=<span class="variable">$ORACLE_HOME</span>/nls/data</span><br><span class="line"><span class="built_in">export</span> ORACLE_HOME TNS_ADMIN PATH LD_LIBRARY_PATH CLASSPATH ORACLE_OWNER SPFILE_PATH ORA_NLS10</span><br></pre></td></tr></table></figure></li>
 <li><p>配置监听 <code>$ORACLE_HOME/bin/netca /silent /responseFile ~/database/response/netca.rsp</code></p>
 </li>
-<li><p>编辑数据库实例模板文件（<em>实例相关配置</em>）、模板文件在解压后的目录下<code>database/response/dbca.rsp</code>、<a href="http://blog.csdn.net/yinzhipeng123/article/details/53144589" target="_blank" rel="noopener">模板文件的详解</a>参考其他的博客吧、这里不再详细说明</p>
+<li><p>编辑数据库实例模板文件（<em>实例相关配置</em>）、模板文件在解压后的目录下<code>database/response/dbca.rsp</code>、<a target="_blank" rel="noopener" href="http://blog.csdn.net/yinzhipeng123/article/details/53144589">模板文件的详解</a>参考其他的博客吧、这里不再详细说明</p>
 </li>
 <li><p>创建实例 <code>$ORACLE_HOME/bin/dbca -silent -responseFile ~/database/response/dbca.rsp</code></p>
 </li>
@@ -443,69 +373,10 @@ ORA_NLS10<span class="token operator">=</span><span class="token variable">$ORAC
 </li>
 </ol>
 <h2 id="四、配置"><a href="#四、配置" class="headerlink" title="四、配置"></a>四、配置</h2><h3 id="（一）自启动"><a href="#（一）自启动" class="headerlink" title="（一）自启动"></a>（一）自启动</h3><ol>
-<li>修改vi /etc/oratab ——  <font color='red'><strong>root用户操作</strong></font><pre class=" language-bash"><code class="language-bash"><span class="token comment" spellcheck="true"># This file is used by ORACLE utilities.  It is created by root.sh</span>
-<span class="token comment" spellcheck="true"># and updated by the Database Configuration Assistant when creating</span>
-<span class="token comment" spellcheck="true"># a database.</span>
- <span class="token comment" spellcheck="true">#</span>
-<span class="token comment" spellcheck="true"># A colon, ':', is used as the field terminator.  A new line terminates</span>
-<span class="token comment" spellcheck="true"># the entry.  Lines beginning with a pound sign, '#', are comments.</span>
-<span class="token comment" spellcheck="true">#</span>
-<span class="token comment" spellcheck="true"># Entries are of the form:</span>
-<span class="token comment" spellcheck="true">#   $ORACLE_SID:$ORACLE_HOME:&lt;N|Y>:</span>
-<span class="token comment" spellcheck="true">#</span>
-<span class="token comment" spellcheck="true"># The first and second fields are the system identifier and home</span>
-<span class="token comment" spellcheck="true"># directory of the database respectively.  The third filed indicates</span>
-<span class="token comment" spellcheck="true"># to the dbstart utility that the database should , "Y", or should not,</span>
-<span class="token comment" spellcheck="true"># "N", be brought up at system boot time.</span>
-<span class="token comment" spellcheck="true">#</span>
-<span class="token comment" spellcheck="true"># Multiple entries with the same $ORACLE_SID are not allowed.</span>
-<span class="token comment" spellcheck="true">#</span>
-<span class="token comment" spellcheck="true"># 改变此处N为Y</span>
-MFGS:/u01/app/oracle/product/11.2.0/dbhome_1:Y</code></pre>
-</li>
-</ol>
-<ol start="2">
+<li><p>修改vi /etc/oratab ——  <font color='red'><strong>root用户操作</strong></font></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># This file is used by ORACLE utilities.  It is created by root.sh</span></span><br><span class="line"><span class="comment"># and updated by the Database Configuration Assistant when creating</span></span><br><span class="line"><span class="comment"># a database.</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># A colon, &#x27;:&#x27;, is used as the field terminator.  A new line terminates</span></span><br><span class="line"><span class="comment"># the entry.  Lines beginning with a pound sign, &#x27;#&#x27;, are comments.</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># Entries are of the form:</span></span><br><span class="line"><span class="comment">#   $ORACLE_SID:$ORACLE_HOME:&lt;N|Y&gt;:</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># The first and second fields are the system identifier and home</span></span><br><span class="line"><span class="comment"># directory of the database respectively.  The third filed indicates</span></span><br><span class="line"><span class="comment"># to the dbstart utility that the database should , &quot;Y&quot;, or should not,</span></span><br><span class="line"><span class="comment"># &quot;N&quot;, be brought up at system boot time.</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># Multiple entries with the same $ORACLE_SID are not allowed.</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># 改变此处N为Y</span></span><br><span class="line">MFGS:/u01/app/oracle/product/11.2.0/dbhome_1:Y</span><br></pre></td></tr></table></figure></li>
 <li><p>配置自启动脚本 ——  <font color='red'><strong>root用户操作</strong></font></p>
-<pre class=" language-bash"><code class="language-bash"><span class="token shebang important">#!/bin/sh</span>
-<span class="token comment" spellcheck="true">#chkconfig: 345 91 91</span>
-<span class="token comment" spellcheck="true">#description: oracle autorun services</span>
-<span class="token comment" spellcheck="true">#/etc/init.d/oracle</span>
-<span class="token comment" spellcheck="true">#</span>
-<span class="token comment" spellcheck="true">#Run-level Stratup script for the Oracle Instance, Listener, and Web Interface</span>
-
-AUTO_FILE_NAME<span class="token operator">=</span>oracle
-<span class="token function">export</span> ORACLE_BASE<span class="token operator">=</span>/u01/app/oracle
-<span class="token function">export</span> ORACLE_HOME<span class="token operator">=</span><span class="token variable">$ORACLE_BASE</span>/product/11.2.0/dbhome_1
-<span class="token function">export</span> ORACLE_SID<span class="token operator">=</span>orcl
-<span class="token function">export</span> PATH<span class="token operator">=</span><span class="token variable">$PATH</span><span class="token keyword">:</span><span class="token variable">$ORACLE_HOME</span>/bin
-
-ORA_OWNR<span class="token operator">=</span><span class="token string">"oracle"</span>
-
-<span class="token keyword">case</span> <span class="token string">"<span class="token variable">$1</span>"</span> <span class="token keyword">in</span>
- start<span class="token punctuation">)</span>
-     <span class="token function">su</span> <span class="token variable">$ORA_OWNR</span> -lc <span class="token variable">$ORACLE_HOME</span>/bin/dbstart
-     <span class="token function">touch</span> /var/lock/subsys/<span class="token variable">$AUTO_FILE_NAME</span>
-     <span class="token keyword">echo</span> <span class="token string">"Oracle Start Successful!"</span>
-     <span class="token punctuation">;</span><span class="token punctuation">;</span>
- stop<span class="token punctuation">)</span>
-     <span class="token function">su</span> <span class="token variable">$ORA_OWNR</span> -lc <span class="token variable">$ORACLE_HOME</span>/bin/dbshut
-   <span class="token function">rm</span> -f /var/lock/subsys/<span class="token variable">$AUTO_FILE_NAME</span>
-     <span class="token keyword">echo</span> <span class="token string">"Oracle Stop Successful!"</span>
-     <span class="token punctuation">;</span><span class="token punctuation">;</span>
- reload<span class="token operator">|</span>restart<span class="token punctuation">)</span>
-     <span class="token variable">$0</span> stop
-     <span class="token variable">$0</span> start
-     <span class="token punctuation">;</span><span class="token punctuation">;</span>
- *<span class="token punctuation">)</span>
-     <span class="token keyword">echo</span> <span class="token string">"Usage: <span class="token variable"><span class="token variable">`</span><span class="token function">basename</span> $0<span class="token variable">`</span></span> {start|stop|reload|restart}"</span>
-     <span class="token keyword">exit</span> 1
-esac
-<span class="token keyword">exit</span> 0
-
-<span class="token comment" spellcheck="true">#chmod 755 /etc/init.d/oracle</span>
-<span class="token comment" spellcheck="true">#chkconfig --add oracle</span>
-<span class="token comment" spellcheck="true">#chkconfig --list oracle</span></code></pre>
-</li>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/sh</span></span><br><span class="line">  <span class="comment">#chkconfig: 345 91 91</span></span><br><span class="line">  <span class="comment">#description: oracle autorun services</span></span><br><span class="line">  <span class="comment">#/etc/init.d/oracle</span></span><br><span class="line">  <span class="comment">#</span></span><br><span class="line">  <span class="comment">#Run-level Stratup script for the Oracle Instance, Listener, and Web Interface</span></span><br><span class="line"></span><br><span class="line">  AUTO_FILE_NAME=oracle</span><br><span class="line">  <span class="built_in">export</span> ORACLE_BASE=/u01/app/oracle</span><br><span class="line">  <span class="built_in">export</span> ORACLE_HOME=<span class="variable">$ORACLE_BASE</span>/product/11.2.0/dbhome_1</span><br><span class="line">  <span class="built_in">export</span> ORACLE_SID=orcl</span><br><span class="line">  <span class="built_in">export</span> PATH=<span class="variable">$PATH</span>:<span class="variable">$ORACLE_HOME</span>/bin</span><br><span class="line">   </span><br><span class="line">  ORA_OWNR=<span class="string">&quot;oracle&quot;</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">case</span> <span class="string">&quot;<span class="variable">$1</span>&quot;</span> <span class="keyword">in</span></span><br><span class="line">    start)</span><br><span class="line">        su <span class="variable">$ORA_OWNR</span> -lc <span class="variable">$ORACLE_HOME</span>/bin/dbstart</span><br><span class="line">        touch /var/lock/subsys/<span class="variable">$AUTO_FILE_NAME</span></span><br><span class="line">        <span class="built_in">echo</span> <span class="string">&quot;Oracle Start Successful!&quot;</span></span><br><span class="line">        ;;</span><br><span class="line">    stop)</span><br><span class="line">        su <span class="variable">$ORA_OWNR</span> -lc <span class="variable">$ORACLE_HOME</span>/bin/dbshut</span><br><span class="line">  	rm -f /var/lock/subsys/<span class="variable">$AUTO_FILE_NAME</span></span><br><span class="line">        <span class="built_in">echo</span> <span class="string">&quot;Oracle Stop Successful!&quot;</span></span><br><span class="line">        ;;</span><br><span class="line">    reload|restart)</span><br><span class="line">        <span class="variable">$0</span> stop</span><br><span class="line">        <span class="variable">$0</span> start</span><br><span class="line">        ;;</span><br><span class="line">    *)</span><br><span class="line">        <span class="built_in">echo</span> <span class="string">&quot;Usage: `basename <span class="variable">$0</span>` &#123;start|stop|reload|restart&#125;&quot;</span></span><br><span class="line">        <span class="built_in">exit</span> 1</span><br><span class="line">  <span class="keyword">esac</span></span><br><span class="line">  <span class="built_in">exit</span> 0</span><br><span class="line"></span><br><span class="line">  <span class="comment">#chmod 755 /etc/init.d/oracle</span></span><br><span class="line">  <span class="comment">#chkconfig --add oracle</span></span><br><span class="line">  <span class="comment">#chkconfig --list oracle</span></span><br></pre></td></tr></table></figure></li>
 </ol>
 <h2 id="五、完成"><a href="#五、完成" class="headerlink" title="五、完成"></a>五、完成</h2>
     </div>
@@ -596,14 +467,14 @@ esac
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、下载"><span class="nav-number">1.</span> <span class="nav-text">一、下载</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、准备"><span class="nav-number">2.</span> <span class="nav-text">二、准备</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#（一）内存空间"><span class="nav-number">2.1.</span> <span class="nav-text">（一）内存空间</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#（一）磁盘空间"><span class="nav-number">2.2.</span> <span class="nav-text">（一）磁盘空间</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、安装"><span class="nav-number">3.</span> <span class="nav-text">三、安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四、配置"><span class="nav-number">4.</span> <span class="nav-text">四、配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#（一）自启动"><span class="nav-number">4.1.</span> <span class="nav-text">（一）自启动</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#五、完成"><span class="nav-number">5.</span> <span class="nav-text">五、完成</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E4%B8%8B%E8%BD%BD"><span class="nav-text">一、下载</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E5%87%86%E5%A4%87"><span class="nav-text">二、准备</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BC%88%E4%B8%80%EF%BC%89%E5%86%85%E5%AD%98%E7%A9%BA%E9%97%B4"><span class="nav-text">（一）内存空间</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BC%88%E4%B8%80%EF%BC%89%E7%A3%81%E7%9B%98%E7%A9%BA%E9%97%B4"><span class="nav-text">（一）磁盘空间</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E5%AE%89%E8%A3%85"><span class="nav-text">三、安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E9%85%8D%E7%BD%AE"><span class="nav-text">四、配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BC%88%E4%B8%80%EF%BC%89%E8%87%AA%E5%90%AF%E5%8A%A8"><span class="nav-text">（一）自启动</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%94%E3%80%81%E5%AE%8C%E6%88%90"><span class="nav-text">五、完成</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <img class="site-author-image" itemprop="image" alt="程大明"
-      src="/uploads/avatar.jpg">
+      src="/images/avatar.jpg">
   <p class="site-author-name" itemprop="name">程大明</p>
   <div class="site-description" itemprop="description">唯有坚持不懈</div>
 </div>
@@ -612,7 +483,7 @@ esac
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">15</span>
+          <span class="site-state-item-count">16</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -625,7 +496,7 @@ esac
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">61</span>
+        <span class="site-state-item-count">63</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -666,7 +537,7 @@ esac
 <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2020</span>
+  <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
