@@ -74,7 +74,7 @@
     <link href="http://www.msyy233.com/posts/49866.html"/>
     <id>http://www.msyy233.com/posts/49866.html</id>
     <published>2021-07-01T03:07:39.405Z</published>
-    <updated>2019-08-04T16:01:38.319Z</updated>
+    <updated>2021-07-24T16:40:46.324Z</updated>
     
     <summary type="html">
     
@@ -95,10 +95,6 @@
       <category term="io" scheme="http://www.msyy233.com/categories/io/"/>
     
     
-      <category term="nio" scheme="http://www.msyy233.com/tags/nio/"/>
-    
-      <category term="io" scheme="http://www.msyy233.com/tags/io/"/>
-    
       <category term="channel" scheme="http://www.msyy233.com/tags/channel/"/>
     
       <category term="buffer" scheme="http://www.msyy233.com/tags/buffer/"/>
@@ -106,6 +102,10 @@
       <category term="selector" scheme="http://www.msyy233.com/tags/selector/"/>
     
       <category term="java" scheme="http://www.msyy233.com/tags/java/"/>
+    
+      <category term="io" scheme="http://www.msyy233.com/tags/io/"/>
+    
+      <category term="nio" scheme="http://www.msyy233.com/tags/nio/"/>
     
   </entry>
   
@@ -215,9 +215,9 @@
       <category term="io" scheme="http://www.msyy233.com/categories/io/"/>
     
     
-      <category term="nio" scheme="http://www.msyy233.com/tags/nio/"/>
-    
       <category term="io" scheme="http://www.msyy233.com/tags/io/"/>
+    
+      <category term="nio" scheme="http://www.msyy233.com/tags/nio/"/>
     
       <category term="直接IO" scheme="http://www.msyy233.com/tags/%E7%9B%B4%E6%8E%A5IO/"/>
     
@@ -311,12 +311,12 @@
     <link href="http://www.msyy233.com/posts/12817.html"/>
     <id>http://www.msyy233.com/posts/12817.html</id>
     <published>2018-06-25T03:06:25.000Z</published>
-    <updated>2018-06-28T03:06:25.000Z</updated>
+    <updated>2021-07-24T16:40:20.711Z</updated>
     
     <summary type="html">
     
-      &lt;h1 id=&quot;一、领导分配的任务&quot;&gt;&lt;a href=&quot;#一、领导分配的任务&quot; class=&quot;headerlink&quot; title=&quot;一、领导分配的任务&quot;&gt;&lt;/a&gt;一、领导分配的任务&lt;/h1&gt;&lt;p&gt;&lt;strong&gt;刘总：&lt;/strong&gt;小明、你把我给的这些菜单信息导入数据库、&lt;br&gt;&lt;strong&gt;小明：&lt;/strong&gt;好的、刘总&lt;/p&gt;
-&lt;p&gt;&lt;em&gt;然后小明作为一个小小的码农、丝毫没有反抗的想法、默默的拿着这样一份的Excel开始想办法&lt;/em&gt;  &lt;/p&gt;
+      &lt;h1 id=&quot;一、领导分配的任务&quot;&gt;&lt;a href=&quot;#一、领导分配的任务&quot; class=&quot;headerlink&quot; title=&quot;一、领导分配的任务&quot;&gt;&lt;/a&gt;一、领导分配的任务&lt;/h1&gt;&lt;p&gt;&lt;strong&gt;刘总：&lt;/strong&gt;小明、你把我给的这些菜单信息导入数据库、&lt;br&gt;&lt;strong&gt;小明：&lt;/strong&gt;好的、刘总  &lt;/p&gt;
+&lt;p&gt;&lt;em&gt;然后小明作为一个小小的码农、丝毫没有反抗的想法、默默的拿着这样一份的Excel开始想办法&lt;/em&gt; &lt;/p&gt;
 &lt;p&gt;&lt;img src=&quot;http://assets.msyy233.com/20180625/1642428c8.png!blog&quot; alt=&quot;菜单图片&quot;&gt;  &lt;/p&gt;
     
     </summary>
@@ -382,11 +382,11 @@
       <category term="io" scheme="http://www.msyy233.com/categories/io/"/>
     
     
-      <category term="io模型" scheme="http://www.msyy233.com/tags/io%E6%A8%A1%E5%9E%8B/"/>
+      <category term="io" scheme="http://www.msyy233.com/tags/io/"/>
     
       <category term="nio" scheme="http://www.msyy233.com/tags/nio/"/>
     
-      <category term="io" scheme="http://www.msyy233.com/tags/io/"/>
+      <category term="io模型" scheme="http://www.msyy233.com/tags/io%E6%A8%A1%E5%9E%8B/"/>
     
       <category term="aio" scheme="http://www.msyy233.com/tags/aio/"/>
     
