@@ -74,7 +74,7 @@
     <link href="http://www.msyy233.com/posts/49866.html"/>
     <id>http://www.msyy233.com/posts/49866.html</id>
     <published>2021-07-01T03:07:39.405Z</published>
-    <updated>2021-07-24T16:40:46.324Z</updated>
+    <updated>2021-07-24T18:57:00.046Z</updated>
     
     <summary type="html">
     
@@ -159,7 +159,7 @@
     <link href="http://www.msyy233.com/posts/25037.html"/>
     <id>http://www.msyy233.com/posts/25037.html</id>
     <published>2019-08-03T23:53:37.000Z</published>
-    <updated>2020-12-14T09:11:01.412Z</updated>
+    <updated>2021-07-24T18:52:47.919Z</updated>
     
     <summary type="html">
     
@@ -431,6 +431,31 @@
   </entry>
   
   <entry>
+    <title>Java不定长参数</title>
+    <link href="http://www.msyy233.com/posts/33024.html"/>
+    <id>http://www.msyy233.com/posts/33024.html</id>
+    <published>2018-05-12T06:32:37.000Z</published>
+    <updated>2018-05-14T06:32:37.000Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;em&gt;在Java5中提供了不定长参数（varargs:variable number of arguments）、也就是在方法定义中可以使用个数不确定的参数、对于同一方法可以使用不同个数的参数调用、下面介绍如何定义不定长参数、以及如何使用不定长参数、&lt;/em&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&quot;一、不定长参数的基本使用&quot;&gt;&lt;a href=&quot;#一、不定长参数的基本使用&quot; class=&quot;headerlink&quot; title=&quot;一、不定长参数的基本使用&quot;&gt;&lt;/a&gt;一、不定长参数的基本使用&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;定义实参个数可变的方法：只要在一个形参的类型与参数名之间加上三个连续的 “.”（即 “…”、英文里的句中省略号）、就可以让它和不确定个实参相匹配。&lt;/strong&gt;&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="java" scheme="http://www.msyy233.com/categories/java/"/>
+    
+    
+      <category term="java" scheme="http://www.msyy233.com/tags/java/"/>
+    
+      <category term="varargs" scheme="http://www.msyy233.com/tags/varargs/"/>
+    
+  </entry>
+  
+  <entry>
     <title>JavaEE通过路径或域名获取资源</title>
     <link href="http://www.msyy233.com/posts/29966.html"/>
     <id>http://www.msyy233.com/posts/29966.html</id>
@@ -458,36 +483,11 @@
   </entry>
   
   <entry>
-    <title>Java不定长参数</title>
-    <link href="http://www.msyy233.com/posts/33024.html"/>
-    <id>http://www.msyy233.com/posts/33024.html</id>
-    <published>2018-05-12T06:32:37.000Z</published>
-    <updated>2018-05-14T06:32:37.000Z</updated>
-    
-    <summary type="html">
-    
-      &lt;p&gt;&lt;em&gt;在Java5中提供了不定长参数（varargs:variable number of arguments）、也就是在方法定义中可以使用个数不确定的参数、对于同一方法可以使用不同个数的参数调用、下面介绍如何定义不定长参数、以及如何使用不定长参数、&lt;/em&gt;&lt;/p&gt;
-&lt;hr&gt;
-&lt;h2 id=&quot;一、不定长参数的基本使用&quot;&gt;&lt;a href=&quot;#一、不定长参数的基本使用&quot; class=&quot;headerlink&quot; title=&quot;一、不定长参数的基本使用&quot;&gt;&lt;/a&gt;一、不定长参数的基本使用&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;定义实参个数可变的方法：只要在一个形参的类型与参数名之间加上三个连续的 “.”（即 “…”、英文里的句中省略号）、就可以让它和不确定个实参相匹配。&lt;/strong&gt;&lt;/p&gt;
-    
-    </summary>
-    
-    
-      <category term="java" scheme="http://www.msyy233.com/categories/java/"/>
-    
-    
-      <category term="java" scheme="http://www.msyy233.com/tags/java/"/>
-    
-      <category term="varargs" scheme="http://www.msyy233.com/tags/varargs/"/>
-    
-  </entry>
-  
-  <entry>
     <title>Windows和Linux下JDK安装配置</title>
     <link href="http://www.msyy233.com/posts/1678.html"/>
     <id>http://www.msyy233.com/posts/1678.html</id>
     <published>2018-05-10T06:41:14.000Z</published>
-    <updated>2018-05-16T06:41:14.000Z</updated>
+    <updated>2021-07-25T03:22:06.971Z</updated>
     
     <summary type="html">
     
